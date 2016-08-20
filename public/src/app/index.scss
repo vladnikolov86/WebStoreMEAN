@@ -1,0 +1,83 @@
+/**
+ *  If you want to override some bootstrap variables, you have to change values here.
+ *  The list of variables are listed here bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss
+ */
+$icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/";
+
+/**
+ *  Do not remove the comments below. It's the markers used by wiredep to inject
+ *  sass dependencies when defined in the bower.json of your dependencies
+ */
+// bower:scss
+// endbower
+
+//Phone
+@media screen and (max-width: 766px) {
+  @import "sass/phone.scss";
+}
+
+//Tablet
+@media screen and (min-width: 767px) and (max-width: 1280px) {
+  @import "sass/tablet.scss";
+}
+
+//Desktop
+@media screen and (min-width: 1280px) {
+  @import "sass/desktop.scss";
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.helvetica-font{
+  font-family:"Helvetica Neue Light";
+}
+div{
+  @extend .helvetica-font;
+}
+
+body{
+  background: rgba(226,226,226,1);
+  background: -moz-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(209,209,209,1) 4%, rgba(219,219,219,1) 24%, rgba(254,254,254,1) 100%);
+  background: -webkit-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(209,209,209,1) 4%, rgba(219,219,219,1) 24%, rgba(254,254,254,1) 100%);
+  background: -o-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(209,209,209,1) 4%, rgba(219,219,219,1) 24%, rgba(254,254,254,1) 100%);
+  background: -ms-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(209,209,209,1) 4%, rgba(219,219,219,1) 24%, rgba(254,254,254,1) 100%);
+  background: linear-gradient(to right, rgba(226,226,226,1) 0%, rgba(209,209,209,1) 4%, rgba(219,219,219,1) 24%, rgba(254,254,254,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe', GradientType=1 );
+}
+
+
+.navbar {
+  background: #f0f9ff; /* Old browsers */
+  background: -moz-linear-gradient(top, #f0f9ff 0%, #cbebff 64%, #a1dbff 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, #f0f9ff 0%, #cbebff 64%, #a1dbff 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, #f0f9ff 0%, #cbebff 64%, #a1dbff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
+//region Carousel
+.ident-options {
+  padding: 0 30px
+}
+.carousel-image-main{
+  width:80%;
+  height:250px;
+}
+.carousel-indicators{
+  bottom:0;
+}
+.carousel-control{
+  background-image:none!important;
+}
+//endregion
+
+
+
+
+/**
+ *  Do not remove the comments below. It's the markers used by gulp-inject to inject
+ *  all your sass files automatically
+ */
+// injector
+// endinjector
+

@@ -1,0 +1,49 @@
+(function () {
+  'use strict';
+
+  angular
+    .module('spaStore')
+    .controller('MainController', function ($q, $http) {
+      var vm = this;
+
+      // vm.getUnpaidServices = function () {
+      //   var deferred = $q.defer();
+      //
+      //   $http.get("http://localhost:3030/main1", {
+      //     'Content-Type': 'application/json'
+      //   }).success(function (response) {
+      //     console.log(response);
+      //   }).error(function (err) {
+      //     console.log(err)
+      //   });
+      // };
+
+      // vm.getUnpaidServices();
+
+      vm.navbarLinkItems = [
+        'Начало', 'За Козметици', 'Проомоции'
+      ];
+
+      //TODO Add api end point for that
+      vm.allCategories = [
+        {
+          name: 'Козметика за лице',
+          type: 'main'
+        },
+        {
+          name: 'Суха кожа',
+          type: 'sub'
+        }
+
+      ];
+      vm.selectedCategory = '';
+
+      vm.allBrands = [
+        'ANESI', 'Depileve', 'Belfeet', 'Ramason'
+      ];
+      vm.selectedBrand = '';
+
+
+
+    });
+})();
