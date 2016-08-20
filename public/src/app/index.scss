@@ -29,6 +29,9 @@ $icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/"
 .inline-block {
   display: inline-block;
 }
+.block{
+  display: block;
+}
 
 .helvetica-font{
   font-family:"Helvetica Neue Light";
@@ -71,7 +74,20 @@ body{
 }
 //endregion
 
+.centered-content{
+  margin:0 auto;
+}
+.centered-text{
+  text-align:center;
+}
 
+//region Admin
+.input-admin{
+  width:20%;
+}
+
+
+//endregion
 
 
 /**

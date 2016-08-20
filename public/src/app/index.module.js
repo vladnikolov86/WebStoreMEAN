@@ -4,7 +4,9 @@
   angular
     .module('spaStore', [
       'ui.router',
-      'ui.bootstrap'
+      'ui.bootstrap',
+      'spaStore.admin',
+      'ui.checkbox'
     ])
     .constant({
       CONSTANTS: {}
