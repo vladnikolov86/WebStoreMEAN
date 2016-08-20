@@ -17,10 +17,8 @@ app.use(function (req, res, next) {
     next();
 });
 
-//Internal for the app
 app.get('/api/main1', function (req, res) {
-    var requestHost = req.get('host');
-    
+   // var requestHost = req.get('host');
     res.send({proba: 'test'});
 
 });
