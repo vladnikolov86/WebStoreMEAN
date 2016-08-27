@@ -1,7 +1,14 @@
-var currentHost = {
-    host: 'localhost',
-    port: 3030
+var config ={
+    development:{
+        connectionString: 'mongodb://localhost:8086/spaStore',
+        secret: 'ilovescotchyscotch'
+    }, production:{
+        connectionString: 'mongodb://dasdasdas'
+    }, common:{
+        host: 'localhost',
+        port: 3030
+    }
 };
-currentHost.allHost = currentHost.host + ':' + currentHost.port;
 
-module.exports = currentHost;
+
+module.exports = config;
