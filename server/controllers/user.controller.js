@@ -24,18 +24,23 @@ module.exports=function (app) {
                     res.json(users);
                 });
             });
-            
-        })
+                    })
         .post(function (req, res) {
-            var token = jwt.sign({exp: 14400000 }, 'spaPrivateKey' ,{ algorithm: 'RS256'});
+            console.log('jwt')
+            //var token = jwt.sign({exp: 14400000 }, 'spaPrivateKey' ,{ algorithm: 'RS256'});
+            //
+            //res.json({
+            //    success: true,
+            //    message: 'Enjoy your token!',
+            //    token: token
+            //});
 
-            res.json({
-                success: true,
-                message: 'Enjoy your token!',
-                token: token
-            });
+            var jwt = require('jsonwebtoken');
+            var token = jwt.sign({ foo: 'bar' }, 'shhhhh');
+//backdate a jwt 30 seconds
+            var older_token = jwt.sign({ foo: 'bar', iat: Math.floor(Date.now() / 1000) - 30 }, 'shhhhh');
 
-
+            res.json(token);
 
         });
 }

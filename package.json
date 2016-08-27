@@ -10,10 +10,10 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "child_process": "^1.0.2",
     "express": "^4.14.0",
     "jsonwebtoken": "^7.1.9",
-    "mongoose": "^4.5.9",
-    "morgan": "^1.7.0"
+    "mongoose": "^4.5.9"
   },
   "devDependencies": {
     "browser-sync": "~2.9.11",
