@@ -10,6 +10,9 @@ module.exports = function (app) {
     //Set path for all public resources
     app.use(express.static(__dirname + '/../../public/dist'));
 
+    app.use(bodyParser.urlencoded());
+    app.use(bodyParser.json());
+
     app.get('/api/about', function (req, res) {
         // var requestHost = req.get('host');
         res.send({proba: 'test'});

@@ -3,8 +3,12 @@ module.exports = function(mongoose) {
     
     var User = mongoose.model('User', new Schema({
         name: String,
+        username: String,
         password: String,
-        admin: Boolean
+        isAdmin: Boolean,
+        address:Object,
+        invoiceDetails:Object,
+        isCorporate: Boolean
     }));
 
     return User;

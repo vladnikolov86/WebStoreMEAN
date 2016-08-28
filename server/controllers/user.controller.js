@@ -8,11 +8,10 @@ module.exports = function (app) {
     app.route('/api/users')
         .get(function (req, res) {
             //Get all users TODO temporary
-
             var nick = new User({
-                name: 'Nick Cerminara',
-                password: 'password',
-                admin: true
+                username: 'Goshu',
+                password: 'parola',
+                isAdmin: true
             });
 
             nick.save(function (err) {
@@ -24,11 +23,12 @@ module.exports = function (app) {
                     res.json(users);
                 });
             });
+
         })
         .post(function (req, res) {
             //TODO VALIDATE USER
 
-            var token = require('../services/token.service')(jwt);
+            var token = require('../services/token.service')(jwt).getToken;
 
             res.json({
                 success: true,
@@ -37,35 +37,40 @@ module.exports = function (app) {
 
         });
 
-    app.route('/api/auth')
-        .get(function (req, res) {
-            //Get all users TODO temporary
-
-            var nick = new User({
-                name: 'Nick Cerminara',
-                password: 'password',
-                admin: true
-            });
-
-            nick.save(function (err) {
-                if (err) throw err;
-
-                console.log('User saved successfully');
-
-                User.find({}, function (err, users) {
-                    res.json(users);
-                });
-            });
-        })
+    app.route('/api/token')
         .post(function (req, res) {
-            //TODO VALIDATE USER
+            User.findOne({username: req.body.Username}, function (err, user) {
+                if (err) {
+                    return res.json(err);
+                }
+                if (!user) {
+                    return res.json('No such user.');
+                }
 
-            var token = require('../services/token.service')(jwt);
+                if (user.password != req.body.Password) {
+                    res.json({success: false, message: 'Authentication failed. Wrong password.'});
+                } else {
+                    var token = require('../services/token.service')(jwt,{},user.isAdmin).getToken();
 
-            res.json({
-                success: true,
-                token: token
-            });
+                    res.json({
+                        success: true,
+                        token: token
+                    });
+                }
+
+            })
+
+
+        });
+
+
+    app.route('/api/auth')
+        .post(function (req, res) {
+            var tokenFromBody = req.headers.authorization.split(' ')[1]
+console.log(tokenFromBody)
+            var token = require('../services/token.service')(jwt,tokenFromBody).decodeToken();
+            console.log(token);
+            res.json(token);
 
         });
 };
