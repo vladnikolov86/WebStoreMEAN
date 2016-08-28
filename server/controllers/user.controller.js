@@ -3,6 +3,21 @@ var jwt = require('jsonwebtoken');
 
 var User = require('../models/user')(mongoose);
 
+var authorizeAdmin=require('../services/authorization.service');
+//function authorizeAdmin(req, res, next) {
+//    var tokenFromBody = req.headers.authorization.split(' ')[1];
+//    var role = require('../services/token.service')(jwt, tokenFromBody).getRole()
+//        .then(function(response){
+//            console.log(response)
+//            if(response.role=='admin'){
+//                next();
+//            }
+//        },function(error){
+//            res.json(error);
+//        })
+//}
+
+
 
 module.exports = function (app) {
     app.route('/api/users')
@@ -11,7 +26,7 @@ module.exports = function (app) {
             var nick = new User({
                 username: 'Goshu',
                 password: 'parola',
-                isAdmin: true
+                role: 'admin'
             });
 
             nick.save(function (err) {
@@ -25,15 +40,8 @@ module.exports = function (app) {
             });
 
         })
-        .post(function (req, res) {
-            //TODO VALIDATE USER
-
-            var token = require('../services/token.service')(jwt).getToken;
-
-            res.json({
-                success: true,
-                token: token
-            });
+        .post(authorizeAdmin,function (req, res) {
+            res.json('hello');
 
         });
 
@@ -50,7 +58,7 @@ module.exports = function (app) {
                 if (user.password != req.body.Password) {
                     res.json({success: false, message: 'Authentication failed. Wrong password.'});
                 } else {
-                    var token = require('../services/token.service')(jwt,{},user.isAdmin).getToken();
+                    var token = require('../services/token.service')(jwt, {}, user.role).getToken();
 
                     res.json({
                         success: true,
@@ -66,11 +74,24 @@ module.exports = function (app) {
 
     app.route('/api/auth')
         .post(function (req, res) {
-            var tokenFromBody = req.headers.authorization.split(' ')[1]
-console.log(tokenFromBody)
-            var token = require('../services/token.service')(jwt,tokenFromBody).decodeToken();
-            console.log(token);
+            var tokenFromBody = req.headers.authorization.split(' ')[1];
+            var token = require('../services/token.service')(jwt, tokenFromBody).decodeToken();
             res.json(token);
+
+        });
+
+    app.route('/api/auth1')
+        .get(function (req, res) {
+            var tokenFromBody = req.headers.authorization.split(' ')[1];
+            var role = require('../services/token.service')(jwt, tokenFromBody).getRole()
+                .then(function(response){
+                    console.log(response)
+                    res.json(response);
+                },function(error){
+                    console.log(error)
+                    res.json(error);
+                })
+
 
         });
 };

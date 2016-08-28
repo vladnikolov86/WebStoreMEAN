@@ -5,12 +5,15 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     path = require('path');
 
+
+
+
 module.exports = function (app) {
 
     //Set path for all public resources
     app.use(express.static(__dirname + '/../../public/dist'));
 
-    app.use(bodyParser.urlencoded());
+    app.use(bodyParser.urlencoded({extended :false}));
     app.use(bodyParser.json());
 
     app.get('/api/about', function (req, res) {

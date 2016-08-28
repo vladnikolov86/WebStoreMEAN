@@ -1,7 +1,6 @@
-var guid = require('node-uuid');
 var Promise = require('promise');
 
-var secretKey = 'constant';
+var secretKey = 'secretKeyGonnaChangeIt'
 
 var payload = {
     "iss": "spaStore",
@@ -11,13 +10,24 @@ var payload = {
 module.exports = function (jwt, token, role) {
     return {
         getToken: function () {
-            console.log('hereeeeeeee')
-            payload.isAdmin = role;
+            payload.role = role;
             return jwt.sign(payload, secretKey);
         },
         decodeToken: function () {
-            return jwt.verify(token, secretKey)
+            return jwt.verify(token, secretKey);
+        },
+        getRole: function () {
+            var promise = new Promise(function (resolve, reject) {
+                jwt.verify(token, secretKey,function(err,success){
+                    if(err){
+                        reject(err);
+                    }else{
+                        resolve(success);
+                    }
+                });
+            });
+
+            return promise;
         }
     }
-
 };

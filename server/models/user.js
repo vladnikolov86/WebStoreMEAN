@@ -5,10 +5,9 @@ module.exports = function(mongoose) {
         name: String,
         username: String,
         password: String,
-        isAdmin: Boolean,
         address:Object,
         invoiceDetails:Object,
-        isCorporate: Boolean
+        role: String
     }));
 
     return User;
