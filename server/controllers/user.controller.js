@@ -3,45 +3,45 @@ var jwt = require('jsonwebtoken');
 
 var User = require('../models/user')(mongoose);
 
-var authorizeAdmin=require('../services/authorization.service');
-//function authorizeAdmin(req, res, next) {
-//    var tokenFromBody = req.headers.authorization.split(' ')[1];
-//    var role = require('../services/token.service')(jwt, tokenFromBody).getRole()
-//        .then(function(response){
-//            console.log(response)
-//            if(response.role=='admin'){
-//                next();
-//            }
-//        },function(error){
-//            res.json(error);
-//        })
-//}
+var authorizeAdmin = require('../services/authorization.service');
 
-
+var validateUser = require('../services/validators/userValidator');
 
 module.exports = function (app) {
     app.route('/api/users')
-        .get(function (req, res) {
-            //Get all users TODO temporary
-            var nick = new User({
-                username: 'Goshu',
-                password: 'parola',
-                role: 'admin'
-            });
+        .get(authorizeAdmin, function (req, res) {
 
-            nick.save(function (err) {
-                if (err) throw err;
 
-                console.log('User saved successfully');
-
-                User.find({}, function (err, users) {
-                    res.json(users);
-                });
+            User.find({}, 'name username address invoiceDetails role', function (err, users) {
+                res.json(users);
             });
 
         })
-        .post(authorizeAdmin,function (req, res) {
-            res.json('hello');
+        .post(function (req, res) {
+            var userIsValid = validateUser(req.body);
+            if (!userIsValid) {
+                res.json('Username object is not valid');
+            }
+
+            var user = new User({
+                username: req.body.Username,
+                password: req.body.Password,
+                name: req.body.Name,
+                address: req.body.Address,
+                invoiceDetails: req.body.InvoiceDetails,
+                email:req.body.Email,
+                role: 'client'
+            });
+
+
+            user.save(function (err) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.json('User registered successfully!');
+                }
+            });
+
 
         });
 
@@ -84,10 +84,10 @@ module.exports = function (app) {
         .get(function (req, res) {
             var tokenFromBody = req.headers.authorization.split(' ')[1];
             var role = require('../services/token.service')(jwt, tokenFromBody).getRole()
-                .then(function(response){
+                .then(function (response) {
                     console.log(response)
                     res.json(response);
-                },function(error){
+                }, function (error) {
                     console.log(error)
                     res.json(error);
                 })
