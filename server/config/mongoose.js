@@ -5,11 +5,11 @@ var constants = require('../../common/constants');
 
 module.exports = function(constants,env){
     //Start mongodb daemon
-    var commandToExexute = constants.development.mongoDbCommand;
-    exec(commandToExexute, function(error, stdout, stderr) {
-       console.log(error);
-    });
-
+    // var commandToExexute = constants.development.mongoDbCommand;
+    // exec(commandToExexute, function(error, stdout, stderr) {
+    //    console.log(error);
+    // });
+    //
 
     //Connect to db
     mongoose.connect(constants[env].connectionString);
