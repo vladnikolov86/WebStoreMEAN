@@ -10,12 +10,10 @@ var validateUser = require('../services/validators/userValidator');
 module.exports = function (app) {
     app.route('/api/users')
         .get(authorizeAdmin, function (req, res) {
-
-
-            User.find({}, 'name username address invoiceDetails role', function (err, users) {
+            User.find({}, 'name username address invoiceDetails role additionalInfo isSubscribed', function (err, users) {
                 res.json(users);
             });
-
+            console.log('proba')
         })
         .post(function (req, res) {
             var userIsValid = validateUser(req.body);
@@ -30,13 +28,13 @@ module.exports = function (app) {
                 address: req.body.Address,
                 invoiceDetails: req.body.InvoiceDetails,
                 email:req.body.Email,
-                role: 'client'
+                role: 'admin'
             });
-
-
+            
             user.save(function (err) {
                 if (err) {
-                    console.log(err);
+                   res.json(err.errmsg);
+
                 } else {
                     res.json('User registered successfully!');
                 }
@@ -51,6 +49,7 @@ module.exports = function (app) {
                 if (err) {
                     return res.json(err);
                 }
+                
                 if (!user) {
                     return res.json('No such user.');
                 }
@@ -58,37 +57,36 @@ module.exports = function (app) {
                 if (user.password != req.body.Password) {
                     res.json({success: false, message: 'Authentication failed. Wrong password.'});
                 } else {
-                    var token = require('../services/token.service')(jwt, {}, user.role).getToken();
+                    var userToAdd = {
+                        role:user.role,
+                        username: req.body.Username
+                    };
+                    var token = require('../services/token.service')(jwt, {}, userToAdd).getToken();
 
                     res.json({
                         success: true,
                         token: token
                     });
                 }
-
             })
-
-
         });
 
+
+    // app.route('/api/decodeToken')
+    //     .post(function (req, res) {
+    //         var tokenFromBody = req.headers.authorization.split(' ')[1];
+    //         var token = require('../services/token.service')(jwt, tokenFromBody).decodeToken();
+    //         res.json(token);
+    //
+    //     });
 
     app.route('/api/auth')
-        .post(function (req, res) {
-            var tokenFromBody = req.headers.authorization.split(' ')[1];
-            var token = require('../services/token.service')(jwt, tokenFromBody).decodeToken();
-            res.json(token);
-
-        });
-
-    app.route('/api/auth1')
         .get(function (req, res) {
             var tokenFromBody = req.headers.authorization.split(' ')[1];
             var role = require('../services/token.service')(jwt, tokenFromBody).getRole()
                 .then(function (response) {
-                    console.log(response)
                     res.json(response);
                 }, function (error) {
-                    console.log(error)
                     res.json(error);
                 })
 

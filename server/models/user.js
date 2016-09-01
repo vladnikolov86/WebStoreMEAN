@@ -10,7 +10,8 @@ module.exports = function (mongoose) {
         },
         username: {
             type: String,
-            required: true
+            required: true,
+            unique: true
         },
         password: {
             type: String,
@@ -26,6 +27,14 @@ module.exports = function (mongoose) {
         role: {
             type: String,
             required: true
+        },
+        isSubscribed: {
+            type: String,
+            required: false
+        },
+        additionalInfo:{
+            type: String,
+            required: false
         }
     }));
 
