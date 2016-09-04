@@ -13,7 +13,6 @@ module.exports = function (app) {
             User.find({}, 'name username address invoiceDetails role additionalInfo isSubscribed', function (err, users) {
                 res.json(users);
             });
-            console.log('proba')
         })
         .post(function (req, res) {
             var userIsValid = validateUser(req.body);
@@ -22,13 +21,13 @@ module.exports = function (app) {
             }
 
             var user = new User({
-                username: req.body.Username,
-                password: req.body.Password,
-                name: req.body.Name,
-                address: req.body.Address,
-                invoiceDetails: req.body.InvoiceDetails,
-                email:req.body.Email,
-                role: 'admin'
+                username: req.body.username,
+                password: req.body.password,
+                name: req.body.name,
+                address: req.body.address,
+                invoiceDetails: req.body.invoiceDetails,
+                email:req.body.email,
+                role: 'client'
             });
             
             user.save(function (err) {

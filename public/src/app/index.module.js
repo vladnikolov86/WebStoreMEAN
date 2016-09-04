@@ -5,11 +5,17 @@
     .module('spaStore', [
       'ui.router',
       'ui.bootstrap',
+      'ui.checkbox',
       'spaStore.admin',
-      'ui.checkbox'
+      'spaStore.users'
     ])
     .constant({
-      CONSTANTS: {}
+      CONSTANTS: {
+        USERS_ENDPOINT:'api/users/',
+        DEVELOPMENT:{
+          DEVELOPMENT_BASE:'http://localhost:3030/'
+        }
+      }
     })
     .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
       $locationProvider.html5Mode({

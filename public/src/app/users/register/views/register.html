@@ -1,0 +1,98 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-10 col-sm-5 col-md-4">
+      <div class="form-group">
+        <label for="usernameRegister">{{register.registerForm.username}}<span class="red-color">*</span></label>
+        <input type="text" class="form-control" id="usernameRegister" ng-model="register.userData.username"
+               placeholder="{{register.registerForm.username}}">
+      </div>
+      <div class="form-group">
+        <label for="passwordRegister">{{register.registerForm.password}}<span class="red-color">*</span></label>
+        <input type="password" class="form-control" id="passwordRegister" ng-model="register.userData.password"
+               placeholder="{{register.registerForm.password}}">
+      </div>
+      <div class="form-group">
+        <label for="confirmPassRegister">{{register.registerForm.confirmPassword}}<span class="red-color">*</span></label>
+        <input type="password" class="form-control" id="confirmPassRegister"
+               ng-model="register.userData.confirmPassword"
+               placeholder="{{register.registerForm.confirmPassword}}">
+      </div>
+      <div class="form-group">
+        <label for="emailRegister">{{register.registerForm.email}}<span class="red-color">*</span></label>
+        <input type="email" class="form-control" id="emailRegister" ng-model="register.userData.email"
+               placeholder="{{register.registerForm.email}}">
+      </div>
+
+      <div class="form-group">
+        <label for="phoneRegister">{{register.registerForm.phone}}</label>
+        <input type="text" class="form-control" id="phoneRegister" ng-model="register.userData.phone"
+               placeholder="{{register.registerForm.phone}}">
+      </div>
+    </div>
+
+    <div class="col-xs-10 col-sm-5 col-md-4">
+      <div class="form-group">
+        <label for="shippingAddress">{{register.registerForm.shippingAddress}}</label>
+        <textarea class="form-control" ng-model="register.userData.shippingAddress" rows="5" id="shippingAddress"
+                  placeholder="Град, улица, номер"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="invoiceDetails">{{register.registerForm.invoiceDetails}}</label>
+        <textarea class="form-control" ng-model="register.userData.invoiceDetails" rows="5" id="invoiceDetails"
+                  placeholder="Данни за фактура - първа фирма"></textarea>
+      </div>
+
+      <div class="from-group">
+        <div class="btn btn-info" ng-click="register.hasSecondInvoice = !register.hasSecondInvoice">Добави/Премахни
+          втора фирма
+        </div>
+      </div>
+
+      <div class="clearfix">&nbsp</div>
+      <div class="form-group" ng-if="register.hasSecondInvoice">
+        <label for="invoiceDetails1">{{register.registerForm.invoiceDetails}}</label>
+        <textarea class="form-control" ng-model="register.userData.invoiceDetails1" rows="5" id="invoiceDetails1"
+                  placeholder="Данни за фактура - втора фирма"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="notesRegister">{{register.registerForm.notes}}</label>
+        <textarea class="form-control" ng-model="register.userData.notes" rows="5" id="notesRegister"
+                  placeholder="Други забележки"></textarea>
+      </div>
+
+    </div>
+
+
+  </div>
+  <div class="row centered-text">
+    <div class="col-xs-10 col-sm-10 col-md-8">
+
+      <div class="inline-block">Съгласен съм с обшите условия<span class="red-color">*</span></div>
+      <checkbox
+        ng-model="register.userData.disclaimer"
+      ></checkbox>
+
+      <div class="inline-block">Абонирам се за известия</div>
+      <checkbox
+        ng-model="register.userData.isSubscribed"
+      ></checkbox>
+
+    </div>
+  </div>
+  <div class="clearfix">&nbsp</div>
+  <div class="row centered-text big-font" ng-if="register.formIsInvalid">
+    <div class="col-xs-10 col-sm-10 col-md-8">
+     <div class="red-color">{{register.errorMessage}}</div>
+    </div>
+  </div>
+  <div class="clearfix">&nbsp</div>
+  <div class="row centered-text">
+    <div class="col-xs-10 col-sm-10 col-md-8">
+      <div class="btn btn-success" ng-click="register.registerUser()">Регистрирай ме</div>
+    </div>
+  </div>
+</div>
+
+

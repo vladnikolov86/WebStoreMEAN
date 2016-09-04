@@ -1,3 +1,4 @@
 module.exports = function (model) {
-    return model.Username.length > 2;
+    console.log(model)
+    return model.username!=undefined && model.username.length > 2 ;
 };

@@ -22,6 +22,9 @@ module.exports = function (mongoose) {
             required: true,
             unique: true
         },
+        phone: {
+            type: String
+        },
         address: Object,
         invoiceDetails: Object,
         role: {
@@ -32,7 +35,7 @@ module.exports = function (mongoose) {
             type: String,
             required: false
         },
-        additionalInfo:{
+        additionalInfo: {
             type: String,
             required: false
         }
