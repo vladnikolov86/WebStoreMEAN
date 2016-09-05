@@ -4,6 +4,7 @@ var jwt = require('jsonwebtoken');
 var User = require('../models/user')(mongoose);
 
 var authorizeAdmin = require('../services/authorization.service');
+var role = require('../services/token.service');
 
 var validateUser = require('../services/validators/userValidator');
 
@@ -26,20 +27,28 @@ module.exports = function (app) {
                 name: req.body.name,
                 address: req.body.address,
                 invoiceDetails: req.body.invoiceDetails,
-                email:req.body.email,
+                email: req.body.email,
                 role: 'client'
             });
-            
-            user.save(function (err) {
-                if (err) {
-                   res.json(err.errmsg);
 
-                } else {
-                    res.json('User registered successfully!');
-                }
-            });
-
-
+            User.find({$or: [{'username': req.body.username}, {'email': req.body.email}]},
+                function (err, response) {
+                    //user with email or username already exists
+                    if (response.length != 0) {
+                        res.status(400);
+                        res.json('Username or email already exists');
+                    } else {
+                        user.save(function (err) {
+                            if (err) {
+                                res.status(400);
+                                res.json(err);
+                            } else {
+                                res.status(200);
+                                res.json('User registered successfully!');
+                            }
+                        });
+                    }
+                });
         });
 
     app.route('/api/token')
@@ -48,7 +57,7 @@ module.exports = function (app) {
                 if (err) {
                     return res.json(err);
                 }
-                
+
                 if (!user) {
                     return res.json('No such user.');
                 }
@@ -57,7 +66,7 @@ module.exports = function (app) {
                     res.json({success: false, message: 'Authentication failed. Wrong password.'});
                 } else {
                     var userToAdd = {
-                        role:user.role,
+                        role: user.role,
                         username: req.body.Username
                     };
                     var token = require('../services/token.service')(jwt, {}, userToAdd).getToken();
@@ -82,7 +91,7 @@ module.exports = function (app) {
     app.route('/api/auth')
         .get(function (req, res) {
             var tokenFromBody = req.headers.authorization.split(' ')[1];
-            var role = require('../services/token.service')(jwt, tokenFromBody).getRole()
+            role(jwt, tokenFromBody).getRole()
                 .then(function (response) {
                     res.json(response);
                 }, function (error) {

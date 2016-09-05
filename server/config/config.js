@@ -29,17 +29,17 @@ module.exports = function (app) {
             res.send('Post Hello')
         });
 
-    //User routes
-    require('../controllers/user.controller')(app);
-
-    app.get('/api/brands', require('../controllers/admin.controller'));
-
 
     app.use(function (req, res, next) {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         next();
     });
+
+    //User routes
+    require('../controllers/user.controller')(app);
+
+    app.get('/api/brands', require('../controllers/admin.controller'));
 
     app.get('*', function (req, res) {
         res.sendFile(path.join(__dirname + '/../../public/dist/index.html'));

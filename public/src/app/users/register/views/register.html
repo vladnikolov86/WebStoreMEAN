@@ -17,6 +17,15 @@
                ng-model="register.userData.confirmPassword"
                placeholder="{{register.registerForm.confirmPassword}}">
       </div>
+
+      <div class="form-group">
+        <label for="nameRegister">{{register.registerForm.name}}<span class="red-color">*</span></label>
+        <input type="text" class="form-control" id="nameRegister" ng-model="register.userData.name"
+               placeholder="{{register.registerForm.name}}">
+      </div>
+
+
+
       <div class="form-group">
         <label for="emailRegister">{{register.registerForm.email}}<span class="red-color">*</span></label>
         <input type="email" class="form-control" id="emailRegister" ng-model="register.userData.email"
