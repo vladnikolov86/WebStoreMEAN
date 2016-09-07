@@ -17,8 +17,10 @@ module.exports = function (app) {
         })
         .post(function (req, res) {
             var userIsValid = validateUser(req.body);
-            if (!userIsValid) {
-                res.json('Username object is not valid');
+            if (typeof userIsValid=='string') {
+                res.status(400);
+                res.json(userIsValid);
+                return;
             }
 
             var user = new User({
@@ -69,7 +71,7 @@ module.exports = function (app) {
                         role: user.role,
                         username: req.body.Username
                     };
-                    var token = require('../services/token.service')(jwt, {}, userToAdd).getToken();
+                    var token = role(jwt, {}, userToAdd).getToken();
 
                     res.json({
                         success: true,
