@@ -12,6 +12,15 @@
           controller: 'RegisterController',
           controllerAs: 'register'
         })
+
+        .state('main.login', {
+          url: '/login',
+          templateUrl: 'app/users/login/views/login.html',
+          controller: 'LoginController',
+          controllerAs: 'login'
+        })
     })
+  
+  
 
 })();

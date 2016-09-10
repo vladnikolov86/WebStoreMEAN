@@ -25,8 +25,15 @@ module.exports = function (mongoose) {
         phone: {
             type: String
         },
-        address: Object,
-        invoiceDetails: Object,
+        address: {
+            type:String
+        },
+        invoiceDetails: {
+            type:String
+        },
+        secondInvoiceDetails: {
+            type:String
+        },
         role: {
             type: String,
             required: true

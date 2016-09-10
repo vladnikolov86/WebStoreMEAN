@@ -27,9 +27,12 @@ module.exports = function (app) {
                 username: req.body.username,
                 password: req.body.password,
                 name: req.body.name,
-                address: req.body.address,
+                address: req.body.shippingAddress,
                 invoiceDetails: req.body.invoiceDetails,
+                secondInvoiceDetails: req.body.secondInvoiceDetails,
                 email: req.body.email,
+                phone: req.body.phone,
+                additionalInfo: req.body.additionalInfo,
                 role: 'client'
             });
 

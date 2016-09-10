@@ -44,6 +44,7 @@
           registerService.registerUser(vm.userData)
             .then(function (res) {
               vm.registerInProgress = false;
+              $location.path('/dashboard');
               console.log(res)
             }, function (err) {
               vm.registerInProgress = false;

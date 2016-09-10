@@ -61,13 +61,13 @@
       <div class="clearfix">&nbsp</div>
       <div class="form-group" ng-if="register.hasSecondInvoice">
         <label for="invoiceDetails1">{{register.registerForm.invoiceDetails}}</label>
-        <textarea class="form-control" ng-model="register.userData.invoiceDetails1" rows="5" id="invoiceDetails1"
+        <textarea class="form-control" ng-model="register.userData.secondInvoiceDetails" rows="5" id="invoiceDetails1"
                   placeholder="Данни за фактура - втора фирма"></textarea>
       </div>
 
       <div class="form-group">
         <label for="notesRegister">{{register.registerForm.notes}}</label>
-        <textarea class="form-control" ng-model="register.userData.notes" rows="5" id="notesRegister"
+        <textarea class="form-control" ng-model="register.userData.additionalInfo" rows="5" id="notesRegister"
                   placeholder="Други забележки"></textarea>
       </div>
 
