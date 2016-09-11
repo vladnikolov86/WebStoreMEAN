@@ -3,7 +3,7 @@
 
   angular
     .module('spaStore.users')
-    .controller('RegisterController', function (registerHelper, registerService, $timeout,$location,$scope) {
+    .controller('RegisterController', function (registerHelper, registerService, $timeout, $location, toastr) {
       var vm = this;
 
       vm.hasSecondInvoice = false;
@@ -33,7 +33,7 @@
 
           if (typeof userModelIsValid != 'boolean') {
             vm.formIsInvalid = true;
-            vm.errorMessage = userModelIsValid;
+            toastr.error(userModelIsValid);
             $timeout(function () {
               vm.formIsInvalid = false;
             }, 4000);
@@ -44,8 +44,10 @@
           registerService.registerUser(vm.userData)
             .then(function (res) {
               vm.registerInProgress = false;
-              $location.path('/dashboard');
-              console.log(res)
+              toastr.success('Потребителят е регистриран успешно');
+              $timeout(function () {
+                $location.path('/dashboard');
+              }, 2000);
             }, function (err) {
               vm.registerInProgress = false;
               console.log(err)
@@ -57,9 +59,6 @@
 
         console.log(vm.userData)
       }
-
-
-
 
 
     });

@@ -6,6 +6,8 @@
       'ui.router',
       'ui.bootstrap',
       'ui.checkbox',
+      'ngAnimate',
+      'toastr',
       'spaStore.admin',
       'spaStore.users'
     ])
