@@ -3,7 +3,7 @@
 
   angular
     .module('spaStore')
-    .factory('userInfoService', function (commonMethods,$location) {
+    .factory('userInfoService', function (commonMethods,$location,$window) {
       var userInfoService = this,
         userInfo;
 
@@ -41,28 +41,23 @@
         return userInfo;
       };
 
-      authData.checkTokenExpiration = function () {
-        var currentDate = new Date();
-        currentDate.setSeconds(currentDate.getSeconds() + 10);
-        currentDate = Date.parse(currentDate);
-
-        var tokenDate = Date.parse($window.localStorage.expires);
-
-        if (isNaN(tokenDate)) {
-          return false;
-        }
-
-        return currentDate > tokenDate;
-      };
+      // userInfoService.checkTokenExpiration = function () {
+      //   var currentDate = new Date();
+      //   currentDate.setSeconds(currentDate.getSeconds() + 10);
+      //   currentDate = Date.parse(currentDate);
+      //
+      //   var tokenDate = Date.parse($window.localStorage.expires);
+      //
+      //   if (isNaN(tokenDate)) {
+      //     return false;
+      //   }
+      //
+      //   return currentDate > tokenDate;
+      // };
 
       userInfoService.logout = function () {
         $window.localStorage.clear();
         $window.sessionStorage.clear();
-        userInfoService.userInfo = {
-          clientIsAuthenticated: false,
-          clientUsername: '',
-          storageInUse: ''
-        };
         $location.path('/login');
       };
 

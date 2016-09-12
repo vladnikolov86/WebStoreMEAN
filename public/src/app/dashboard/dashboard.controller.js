@@ -3,7 +3,7 @@
 
   angular
     .module('spaStore')
-    .controller('DashboardController', function ($q, $http) {
+    .controller('DashboardController', function ($q, userInfoService) {
       var vm = this;
 
       //region Caroussel

@@ -58,16 +58,19 @@ module.exports = function (app) {
 
     app.route('/api/token')
         .post(function (req, res) {
-            User.findOne({username: req.body.Username}, function (err, user) {
+            User.findOne({username: req.body.username}, function (err, user) {
                 if (err) {
+                    res.status(401);
                     return res.json(err);
                 }
 
                 if (!user) {
+                    res.status(401);
                     return res.json('No such user.');
                 }
 
-                if (user.password != req.body.Password) {
+                if (user.password != req.body.password) {
+                    res.status(401);
                     res.json({success: false, message: 'Authentication failed. Wrong password.'});
                 } else {
                     var userToAdd = {

@@ -13,9 +13,9 @@
     ])
     .constant({
       CONSTANTS: {
-        USERS_ENDPOINT:'api/users/',
-        DEVELOPMENT:{
-          DEVELOPMENT_BASE:'http://localhost:3030/'
+        USERS_ENDPOINT: 'api/users/',
+        DEVELOPMENT: {
+          DEVELOPMENT_BASE: 'http://localhost:3030/'
         }
       }
     })
@@ -30,17 +30,16 @@
       $stateProvider
         .state('main', {
           templateUrl: 'app/main/views/main.html',
-          abstract: true,
           controller: 'MainController',
+          abstract: true,
           controllerAs: 'main',
           resolve: {
             auth: function () {
-              console.log('hi')
+              console.log('here')
             }
           }
-        });
+        })
 
-      $stateProvider
         .state('main.dashboard', {
           templateUrl: 'app/dashboard/views/dashboard.html',
           url: '/dashboard',
@@ -49,7 +48,14 @@
           },
           controller: 'DashboardController',
           controllerAs: 'dashboard'
-        });
+        })
+
+        .state('login', {
+          url: '/login',
+          templateUrl: 'app/users/login/views/login.html',
+          controller: 'LoginController',
+          controllerAs: 'login'
+        })
     })
 
 })();

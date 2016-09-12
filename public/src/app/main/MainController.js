@@ -3,7 +3,7 @@
 
   angular
     .module('spaStore')
-    .controller('MainController', function ($q, $http) {
+    .controller('MainController', function ($q, userInfoService) {
       var vm = this;
 
       // vm.getUnpaidServices = function () {
@@ -42,6 +42,20 @@
         'ANESI', 'Depileve', 'Belfeet', 'Ramason'
       ];
       vm.selectedBrand = '';
+
+      vm.getUserInfo = function(){
+        debugger;
+        vm.userInfo =  userInfoService.getUserInfo();
+        if(!vm.userInfo){
+          vm.userInfo = {};
+          vm.userInfo.username= 'Гост'
+        }
+      };
+      vm.getUserInfo();
+
+      vm.logout = function(){
+        userInfoService.logout();
+      }
 
 
 
