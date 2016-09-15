@@ -3,7 +3,7 @@
 
   angular
     .module('spaStore')
-    .controller('DashboardController', function ($q, userInfoService) {
+    .controller('DashboardController', function ($q,$rootScope, userInfoService) {
       var vm = this;
 
       //region Caroussel
@@ -25,5 +25,7 @@
 
       //endregion
 
+
+      $rootScope.userInfo = userInfoService.getUserInfo();
     });
 })();

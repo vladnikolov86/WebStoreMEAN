@@ -32,12 +32,7 @@
           templateUrl: 'app/main/views/main.html',
           controller: 'MainController',
           abstract: true,
-          controllerAs: 'main',
-          resolve: {
-            auth: function () {
-              console.log('here')
-            }
-          }
+          controllerAs: 'main'
         })
 
         .state('main.dashboard', {
@@ -50,11 +45,24 @@
           controllerAs: 'dashboard'
         })
 
-        .state('login', {
+        .state('main.login', {
           url: '/login',
           templateUrl: 'app/users/login/views/login.html',
           controller: 'LoginController',
-          controllerAs: 'login'
+          controllerAs: 'login',
+          resolve: {
+            auth: function (userInfoService, $location,$timeout,$rootScope) {
+              var user = userInfoService.getUserInfo();
+              if(user){
+                if(user.username && user.username != 'Гост'){
+                  $location.path('/dashboard');
+                  $timeout(function(){
+                    $rootScope.apply();
+                  },10)
+                }
+              }
+            }
+          }
         })
     })
 
