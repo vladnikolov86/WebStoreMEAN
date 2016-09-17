@@ -18,4 +18,6 @@ In server folder -
 In public folder  
 1.npm install  
 2.bower install  
-3.gulp serve  
+3.gulp build  
+
+Access the application at http://localhost:3030/
