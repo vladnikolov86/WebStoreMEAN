@@ -12,8 +12,8 @@ How to start the application
 ----------------------------
 In server folder -   
 1.npm install  
-2.nodemon server /or node server/  
-3.mongod --dbpath PATH_OF_DATA --port 8086  
+2.mongod --dbpath PATH_OF_DATA --port 8086  
+3.nodemon server /or node server/    
 
 In public folder  
 1.npm install  
