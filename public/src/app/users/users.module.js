@@ -10,8 +10,16 @@
           url: '/register',
           templateUrl: 'app/users/register/views/register.html',
           controller: 'RegisterController',
-          controllerAs: 'register'
-        })
+          controllerAs: 'register',
+          resolve:{
+            auth: function($location,userInfoService){
+              var user = userInfoService.getUserInfo();
+              if(user){
+                $location.path('/dashboard');
+              }
+            }
+          }
+        });
 
         // .state('login', {
         //   url: '/login',

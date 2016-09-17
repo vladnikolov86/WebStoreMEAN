@@ -3,7 +3,7 @@
 
   angular
     .module('spaStore')
-    .factory('commonMethods', function ($window, $timeout) {
+    .factory('commonMethods', function ($window) {
       var commonMethods = this;
 
       commonMethods.getObjectFromLocalStorage = function (objectKey) {
@@ -33,7 +33,7 @@
       commonMethods.setObjectInSessionStorage = function (objectKey, object) {
         $window.sessionStorage.setItem(objectKey, JSON.stringify(object));
       };
-      
+
       return this;
     });
 

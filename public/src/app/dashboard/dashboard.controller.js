@@ -3,7 +3,7 @@
 
   angular
     .module('spaStore')
-    .controller('DashboardController', function ($q,$rootScope, userInfoService) {
+    .controller('DashboardController', function ($q, $rootScope, userInfoService) {
       var vm = this;
 
       //region Caroussel
@@ -26,6 +26,25 @@
       //endregion
 
 
-      $rootScope.userInfo = userInfoService.getUserInfo();
+      userInfoService.loggedUser();
+
+      vm.mainCategories = [
+        {
+          name: 'Козметика за лице',
+          subCategories: [{
+            name: 'Суха Кожа',
+            subCategories: []
+          },{
+            name: 'Нормална Кожа',
+            subCategories: []
+          }
+          ]
+        },
+        {
+          name: 'Козметика за тяло',
+          subCategories: []
+        }
+      ];
+
     });
 })();

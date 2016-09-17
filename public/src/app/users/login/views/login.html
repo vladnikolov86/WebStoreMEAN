@@ -4,7 +4,7 @@
     <input class="form-control input-admin centered-content" type="text" placeholder="Потребителско име" ng-model="login.user.username">
     <input class="form-control input-admin centered-content" type="password" placeholder="Парола" ng-model="login.user.password">
     <div class="centered-text">
-      <div class="btn btn-default inline-block" ng-click="login.loginUser()">Влез</div>
+      <div class="btn btn-default inline-block" ng-click="login.loginUser()" execute-on-enter>Влез</div>
       <div class="inline-block">Запомни ме!</div>
       <checkbox
         ng-model="login.rememberMeClicked"

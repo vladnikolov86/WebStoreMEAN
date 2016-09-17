@@ -12,6 +12,11 @@ $icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/"
 // endbower
 $large-font: 18px;
 
+//region Colors
+$menu-color: #b3ecff;
+$menu-color-hover: #00ace6;
+
+//endregion
 
 //Phone
 @media screen and (max-width: 766px) {
@@ -31,52 +36,82 @@ $large-font: 18px;
 .inline-block {
   display: inline-block;
 }
-.block{
+
+.block {
   display: block;
 }
 
-.helvetica-font{
-  font-family:"Helvetica Neue Light";
+.helvetica-font {
+  font-family: "Helvetica Neue Light";
 }
-div{
+
+div {
   @extend .helvetica-font;
 }
 
-body{
-  background: rgba(226,226,226,1);
-  background: -moz-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(209,209,209,1) 4%, rgba(219,219,219,1) 24%, rgba(254,254,254,1) 100%);
-  background: -webkit-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(209,209,209,1) 4%, rgba(219,219,219,1) 24%, rgba(254,254,254,1) 100%);
-  background: -o-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(209,209,209,1) 4%, rgba(219,219,219,1) 24%, rgba(254,254,254,1) 100%);
-  background: -ms-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(209,209,209,1) 4%, rgba(219,219,219,1) 24%, rgba(254,254,254,1) 100%);
-  background: linear-gradient(to right, rgba(226,226,226,1) 0%, rgba(209,209,209,1) 4%, rgba(219,219,219,1) 24%, rgba(254,254,254,1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe', GradientType=1 );
+body {
+  background: rgba(226, 226, 226, 1);
+  background: -moz-linear-gradient(left, rgba(226, 226, 226, 1) 0%, rgba(209, 209, 209, 1) 4%, rgba(219, 219, 219, 1) 24%, rgba(254, 254, 254, 1) 100%);
+  background: -webkit-linear-gradient(left, rgba(226, 226, 226, 1) 0%, rgba(209, 209, 209, 1) 4%, rgba(219, 219, 219, 1) 24%, rgba(254, 254, 254, 1) 100%);
+  background: -o-linear-gradient(left, rgba(226, 226, 226, 1) 0%, rgba(209, 209, 209, 1) 4%, rgba(219, 219, 219, 1) 24%, rgba(254, 254, 254, 1) 100%);
+  background: -ms-linear-gradient(left, rgba(226, 226, 226, 1) 0%, rgba(209, 209, 209, 1) 4%, rgba(219, 219, 219, 1) 24%, rgba(254, 254, 254, 1) 100%);
+  background: linear-gradient(to right, rgba(226, 226, 226, 1) 0%, rgba(209, 209, 209, 1) 4%, rgba(219, 219, 219, 1) 24%, rgba(254, 254, 254, 1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e2e2e2', endColorstr='#fefefe', GradientType=1);
   min-height: 100%;
 }
 
-.centered-content{
-  margin:0 auto;
+.centered-content {
+  margin: 0 auto;
 }
-.centered-text{
-  text-align:center;
+
+.centered-text {
+  text-align: center;
 }
 
 //region Colors
-.red-color{
-  color:red;
+.red-color {
+  color: red;
 }
 
-
 //endregion
-
 
 //region fonts
-.big-font{
-  font-size:$large-font;
+.big-font {
+  font-size: $large-font;
 }
-
 
 //endregion
 
+//region Navigation
+.navbar-sidebar {
+  background: #f0f9ff; /* Old browsers */
+  background: -moz-linear-gradient(top, #f0f9ff 0%, #cbebff 64%, #a1dbff 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, #f0f9ff 0%, #cbebff 64%, #a1dbff 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, #f0f9ff 0%, #cbebff 64%, #a1dbff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
+.navbar {
+  @extend .navbar-sidebar;
+}
+
+.navbar-sidebar-menu {
+  background: $menu-color;
+}
+
+.navbar-sidebar-menu:hover {
+  background: $menu-color-hover;
+}
+
+.list-group.panel > .list-group-item {
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px
+}
+
+.list-group-submenu {
+  margin-left: 20px;
+}
+
+//endregion
 
 /**
  *  Do not remove the comments below. It's the markers used by gulp-inject to inject

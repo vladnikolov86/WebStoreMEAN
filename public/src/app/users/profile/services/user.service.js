@@ -3,7 +3,7 @@
 
   angular
     .module('spaStore')
-    .factory('userInfoService', function (commonMethods,$location,$window) {
+    .factory('userInfoService', function (commonMethods,$location,$window,$rootScope) {
       var userInfoService = this,
         userInfo;
 
@@ -59,6 +59,15 @@
         $window.localStorage.clear();
         $window.sessionStorage.clear();
         $location.path('/login');
+      };
+
+
+      userInfoService.loggedUser = function(){
+        $rootScope.userInfo =  userInfoService.getUserInfo();
+        if(!$rootScope.userInfo){
+          $rootScope.userInfo = {};
+          $rootScope.userInfo.username= 'Гост'
+        }
       };
 
       return this;
