@@ -2,7 +2,7 @@
 
 Prerequisites
 -----------
-install node js - global
+install node js - global   
 install bower - global
 install gulp -global
 install mongodb 
