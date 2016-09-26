@@ -33,8 +33,11 @@
           name: 'Козметика за лице',
           subCategories: [{
             name: 'Суха Кожа',
-            subCategories: []
-          },{
+            subCategories: [
+              {name: 'TestovaCategoriq1'},
+              {name: 'TestovaCategoriq2'}
+            ]
+          }, {
             name: 'Нормална Кожа',
             subCategories: []
           }

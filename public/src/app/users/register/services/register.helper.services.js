@@ -13,6 +13,7 @@
           return re.test(email);
         }
 
+
         registerHelper.validateUserModel = function (userModel) {
           //Check disclaimer
           if (!userModel.disclaimer) {
@@ -30,6 +31,11 @@
           //validate username
           if (userModel.username == null || userModel.username.length <= 4) {
             return 'Потребителското име трябва да е с минумум 5 символа';
+          }
+
+          //validate name
+          if (userModel.name == null || userModel.name.length <= 4) {
+            return 'Полето с име е задължително';
           }
 
           //validate Email
