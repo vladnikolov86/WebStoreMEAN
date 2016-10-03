@@ -1,5 +1,3 @@
-var uniqueValidator = require('mongoose-unique-validator');
-
 module.exports = function (mongoose) {
     var Schema = mongoose.Schema;
 
