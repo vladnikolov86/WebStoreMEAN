@@ -13,6 +13,7 @@
     ])
     .constant({
       CONSTANTS: {
+        BASE:  'http://localhost:3030/api/',
         USERS_ENDPOINT: 'api/users/',
         DEVELOPMENT: {
           DEVELOPMENT_BASE: 'http://localhost:3030/'
@@ -46,8 +47,8 @@
         })
 
         .state('main.login', {
-          url: '/login',
           templateUrl: 'app/users/login/views/login.html',
+          url: '/login',
           controller: 'LoginController',
           controllerAs: 'login',
           resolve: {

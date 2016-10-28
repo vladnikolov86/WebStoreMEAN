@@ -21,12 +21,6 @@
           }
         });
 
-        // .state('login', {
-        //   url: '/login',
-        //   templateUrl: 'app/users/login/views/login.html',
-        //   controller: 'LoginController',
-        //   controllerAs: 'login'
-        // })
     })
 
 

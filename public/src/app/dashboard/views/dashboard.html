@@ -1,4 +1,4 @@
-<div style="height: 305px" ng-controller="DashboardController">
+<div style="height: 305px" ng-controller="DashboardController" ng-init="dashboard.getCategories()">
   <div uib-carousel active="dashboard.carousselActive" interval="dashboard.carousselInterval"
        no-wrap="dashboard.noWrapSlides">
     <div uib-slide ng-repeat="slide in dashboard.carousselImages track by slide.id" index="slide.id">

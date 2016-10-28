@@ -3,7 +3,7 @@
 
   angular
     .module('spaStore')
-    .controller('DashboardController', function ($q, $rootScope, userInfoService) {
+    .controller('DashboardController', function ($q, $rootScope, userInfoService,dashboardService) {
       var vm = this;
 
       //region Caroussel
@@ -27,6 +27,16 @@
 
 
       userInfoService.loggedUser();
+
+      vm.getCategories = function(){
+        dashboardService.getCategories()
+          .then(function(res){
+            vm.mainCategories = [];
+            vm.mainCategories.push(res[6])
+          },function(err){
+            console.log(err)
+          })
+      }
 
       vm.mainCategories = [
         {

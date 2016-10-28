@@ -38,6 +38,9 @@ module.exports = function (app) {
 
     //User routes
     require('../controllers/user.controller')(app);
+    
+    //Category routes
+    require('../controllers/category.controller')(app);
 
     app.get('/api/brands', require('../controllers/admin.controller'));
 

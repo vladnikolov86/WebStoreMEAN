@@ -7,7 +7,7 @@ module.exports = function (mongoose) {
             required: true
         },
         subCategories: {
-            type: Mixed,
+            type: 'Mixed',
             required: false,
             unique: false
         }
