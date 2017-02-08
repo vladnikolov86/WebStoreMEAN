@@ -13,8 +13,7 @@ module.exports = function (app) {
                 if (err) {
                     res.status(400);
                     res.json(err)
-                } else {
-                    console.log('penis')
+                } else {                
                     res.json(categories);
                 }
             });
