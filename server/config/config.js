@@ -5,15 +5,12 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     path = require('path');
 
-
-
-
 module.exports = function (app) {
 
     //Set path for all public resources
     app.use(express.static(__dirname + '/../../public/dist'));
 
-    app.use(bodyParser.urlencoded({extended :false}));
+    app.use(bodyParser.urlencoded({extended: false}));
     app.use(bodyParser.json());
 
     app.get('/api/about', function (req, res) {
@@ -21,14 +18,14 @@ module.exports = function (app) {
         res.send({proba: 'test'});
     });
 
-    app.route('/about')
+    app
+        .route('/about')
         .get(function (req, res) {
             res.send('Hello');
         })
         .post(function (req, res) {
             res.send('Post Hello')
         });
-
 
     app.use(function (req, res, next) {
         res.header("Access-Control-Allow-Origin", "*");
@@ -38,9 +35,12 @@ module.exports = function (app) {
 
     //User routes
     require('../controllers/user.controller')(app);
-    
+
     //Category routes
     require('../controllers/category.controller')(app);
+
+    //Products routes
+    require('../controllers/product.controller')(app);
 
     app.get('/api/brands', require('../controllers/admin.controller'));
 
