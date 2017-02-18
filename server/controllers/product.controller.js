@@ -22,6 +22,31 @@ module.exports = function (app) {
                 })
         });
 
+    //Get by product ID - receives number
+    app
+        .route('/api/products/:inventoryId')
+        .get(function (req, res) {
+
+            let inventoryId = Number.parseInt(req.params.inventoryId);
+
+            Product.find({
+                'inventoryId': inventoryId
+            }, function (err, products) {
+                if (err) {
+                    res.status(400);
+                    res.send(err + ' An error occured while retrieving products!');
+                } else {
+                    if (products.length == 0) {
+                        res.send('No products found, matching the criteria');
+                        return;
+                    }
+                    res.status(200);
+                    res.send(products);
+                }
+            })
+        });
+
+    //Paging for products
     app
         .route('/api/products/:productsByPage/:pageNumber')
         .get(function (req, res) {
@@ -32,11 +57,17 @@ module.exports = function (app) {
                 .find({})
                 .skip(productsByPage * (pageNumber - 1))
                 .limit(productsByPage)
-                .exec(function (response) {
+                .exec(function (err, response) {
+                    if (err) {
+                        res.send(err);
+                        res.status(400);
+                        return;
+                    }
+
                     res.send(response)
                 })
 
-        })
+        });
 
     //authorize!
     app
@@ -70,6 +101,23 @@ module.exports = function (app) {
                     res.json('Product saved successfully!');
                 }
             });
-        })
+        });
 
+    //authorize
+    app
+        .route('/api/products/delete/:id')
+        .put(function (req, res) {
+            let dbId = req.params.id;
+
+            Product
+                .findOneAndRemove({'_id': dbId})
+                .exec(function (err, doc) {
+                    if (err) {
+                        res.status(400);
+                        res.send(err.message); 
+                        return;
+                    }
+                    res.send(doc);
+                })
+        });
 }
