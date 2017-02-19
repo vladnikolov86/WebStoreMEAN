@@ -5,6 +5,14 @@
 display:none!important;
 }
 
+.padding-15px{
+  padding:15px;
+}
+
+.margin-top-5px{
+  margin-top:5px;
+}
+
 //region Carousel
 .ident-options {
   padding: 0 30px
@@ -32,5 +40,12 @@ display:none!important;
   width:70%;
 }
 
+
+//endregion
+
+//region Dashboard
+.background-product-catalog{
+  background-color:rgb(237, 241, 244);
+}
 
 //endregion

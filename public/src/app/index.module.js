@@ -46,6 +46,13 @@
           controllerAs: 'dashboard'
         })
 
+        .state('main.dashboard.product', {
+          templateUrl: 'app/product/views/product.html',
+          url: '/product',
+          controller: 'ProductController',
+          controllerAs: 'product'
+        })
+
         .state('main.login', {
           templateUrl: 'app/users/login/views/login.html',
           url: '/login',

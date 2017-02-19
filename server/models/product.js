@@ -19,7 +19,7 @@ module.exports = function (mongoose) {
             required: true
         },
         subCategory: {
-            type: String
+            type: Array
         },
         inventoryId: {
             type: Number,
@@ -38,7 +38,11 @@ module.exports = function (mongoose) {
             type: Number
         },
         reviews: {
-            type: Array
+            type: 'Mixed'
+        },
+        updated: {
+            type: Date,
+            default: Date.now
         }
     }));
 

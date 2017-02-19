@@ -6,6 +6,12 @@ var authorizeAdmin = require('../services/authorization.service');
 
 var validateProduct = require('../services/validators/productValidator');
 
+var tokenService = require('../services/token.service');
+
+var jwt = require('jsonwebtoken');
+
+
+
 module.exports = function (app) {
     app
         .route('/api/products')
@@ -55,6 +61,7 @@ module.exports = function (app) {
 
             Product
                 .find({})
+                .sort({updated: 'desc'})
                 .skip(productsByPage * (pageNumber - 1))
                 .limit(productsByPage)
                 .exec(function (err, response) {
@@ -64,6 +71,15 @@ module.exports = function (app) {
                         return;
                     }
 
+                   let tokenFromBody = req.headers.authorization.split(' ')[1];
+                    var role = roleService(jwt, tokenFromBody)
+                        .getRole()
+                        .then(function (res) {
+                            if (response.user.role == 'admin') {
+                                res.priceHome = '';
+                                res.price = res.priceProfessional;
+                            }
+                        }, function () {})
                     res.send(response)
                 })
 
@@ -103,6 +119,40 @@ module.exports = function (app) {
             });
         });
 
+    app
+        .route('/api/products/edit/:id')
+        .post(function (req, res) {
+            var productIsValid = validateProduct(req.body);
+            if (typeof categoryIsValid == 'string') {
+                res.status(400);
+                res.json(productIsValid);
+                return;
+            }
+            let dbId = req.params.id;
+
+            var product = new Product({
+                name: req.body.Name,
+                heading: req.body.Heading,
+                description: req.body.Description,
+                category: req.body.Category,
+                subCategory: req.body.SubCategory,
+                inventoryId: req.body.InventoryId,
+                picturePreview: req.body.PicturePreview,
+                priceProfessionals: req.body.PriceProfessionals,
+                priceHome: req.body.PriceHome
+            })
+
+            product.save(function (err) {
+                if (err) {
+                    res.status(400);
+                    res.json(err);
+                } else {
+                    res.status(200);
+                    res.json('Product saved successfully!');
+                }
+            });
+        });
+
     //authorize
     app
         .route('/api/products/delete/:id')
@@ -114,7 +164,7 @@ module.exports = function (app) {
                 .exec(function (err, doc) {
                     if (err) {
                         res.status(400);
-                        res.send(err.message); 
+                        res.send(err.message);
                         return;
                     }
                     res.send(doc);
