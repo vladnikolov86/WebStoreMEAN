@@ -8,7 +8,7 @@
 
 
       dashboardService.getCategories = function () {
-        let deferred = $q.defer();
+        var deferred = $q.defer();
 
         $http.get(CONSTANTS.BASE+'category', {
           'Content-Type': 'application/json'

@@ -11,7 +11,6 @@
       },
       templateUrl:'app/dashboard/directives/productDashboard.html',
       controller: function($scope){
-console.log($scope)
       }
     }
   })

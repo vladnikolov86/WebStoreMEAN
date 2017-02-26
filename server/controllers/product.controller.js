@@ -10,8 +10,6 @@ var tokenService = require('../services/token.service');
 
 var jwt = require('jsonwebtoken');
 
-
-
 module.exports = function (app) {
     app
         .route('/api/products')
@@ -70,16 +68,22 @@ module.exports = function (app) {
                         res.status(400);
                         return;
                     }
+                    if (req.headers.authorization) {
+                        var tokenFromBody = req
+                            .headers
+                            .authorization
+                            .split(' ')[1];
 
-                   let tokenFromBody = req.headers.authorization.split(' ')[1];
-                    var role = roleService(jwt, tokenFromBody)
-                        .getRole()
-                        .then(function (res) {
-                            if (response.user.role == 'admin') {
-                                res.priceHome = '';
-                                res.price = res.priceProfessional;
-                            }
-                        }, function () {})
+                        var role = roleService(jwt, tokenFromBody)
+                            .getRole()
+                            .then(function (role) {
+                                if (role.user.role == 'admin') {
+                                    response.priceHome = '';
+                                    response.price = response.priceProfessional;
+                                }
+                            }, function () {})
+                    }
+
                     res.send(response)
                 })
 

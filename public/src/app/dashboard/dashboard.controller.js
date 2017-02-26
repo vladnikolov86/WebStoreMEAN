@@ -31,38 +31,35 @@
         dashboardService
           .getCategories()
           .then(function (res) {
-            vm.mainCategories = [];
-            vm
-              .mainCategories
-              .push(res[6])
+            vm.mainCategories = res;
           }, function (err) {
             console.log(err)
           })
       }
 
-      vm.mainCategories = [
-        {
-          name: 'Козметика за лице',
-          subCategories: [
-            {
-              name: 'Суха Кожа',
-              subCategories: [
-                {
-                  name: 'TestovaCategoriq1'
-                }, {
-                  name: 'TestovaCategoriq2'
-                }
-              ]
-            }, {
-              name: 'Нормална Кожа',
-              subCategories: []
-            }
-          ]
-        }, {
-          name: 'Козметика за тяло',
-          subCategories: []
-        }
-      ];
+      // vm.mainCategories = [
+      //   {
+      //     name: 'Козметика за лице',
+      //     subCategories: [
+      //       {
+      //         name: 'Суха Кожа',
+      //         subCategories: [
+      //           {
+      //             name: 'TestovaCategoriq1'
+      //           }, {
+      //             name: 'TestovaCategoriq2'
+      //           }
+      //         ]
+      //       }, {
+      //         name: 'Нормална Кожа',
+      //         subCategories: []
+      //       }
+      //     ]
+      //   }, {
+      //     name: 'Козметика за тяло',
+      //     subCategories: []
+      //   }
+      // ];
 
       vm.products = [
         {
@@ -88,8 +85,34 @@
           price: 40,
           reviews: ['Супер кремче', 'Тест ревю']
 
+        },
+        {
+          name: 'Крем за лице Аква Витал',
+          heading: 'Крем Аква Витал',
+          description: 'Някакъв примерен дескрипшън, тестов. Много хубав крем.',
+          category: 'Козметика за лице',
+          subCategory: ['За суха кожа'],
+          iventoryId: 5,
+          picturePreview: 'http://anesibeaute.com/sites/default/files/styles/product_full/public/product/an' +
+              'esi_haute_protection_creme_50ml_a_2.png?itok=FGV8xdvx',
+          price: 40,
+          reviews: ['Супер кремче', 'Тест ревю']
+        },
+        {
+          name: 'Крем за лице Аква Витал',
+          heading: 'Крем Аква Витал',
+          description: 'Някакъв примерен дескрипшън, тестов. Много хубав крем.',
+          category: 'Козметика за лице',
+          subCategory: ['За суха кожа'],
+          iventoryId: 5,
+          picturePreview: 'http://anesibeaute.com/sites/default/files/styles/product_full/public/product/an' +
+              'esi_haute_protection_creme_50ml_a_2.png?itok=FGV8xdvx',
+          price: 40,
+          reviews: ['Супер кремче', 'Тест ревю']
         }
       ]
+
+      console.log(vm.mainCategories)
 
     });
 })();

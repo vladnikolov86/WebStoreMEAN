@@ -14,7 +14,7 @@ $large-font: 18px;
 
 //region Colors
 $menu-color: #b3ecff;
-$menu-color-hover: #00ace6;
+
 
 //endregion
 
@@ -98,9 +98,6 @@ body {
   background: $menu-color;
 }
 
-.navbar-sidebar-menu:hover {
-  background: $menu-color-hover;
-}
 
 .list-group.panel > .list-group-item {
   border-bottom-right-radius: 4px;

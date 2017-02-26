@@ -1,4 +1,4 @@
-<div style="height: 305px" ng-controller="DashboardController" ng-init="dashboard.getCategories()">
+<div style="height: 305px" ng-init="dashboard.getCategories()">
 <div uib-carousel active="dashboard.carousselActive" interval="dashboard.carousselInterval" no-wrap="dashboard.noWrapSlides">
   <div uib-slide ng-repeat="slide in dashboard.carousselImages track by slide.id" index="slide.id">
     <img class="carousel-image-main" ng-src="{{slide.image}}" style="margin:auto;">
@@ -12,24 +12,32 @@
 <div class="row">
   <div class="col-md-3">
 
-    <div id="MainMenu">
+      <div id="MainMenu">
       <div class="list-group panel navbar-sidebar-menu">
         <div ng-repeat="mainCategory in dashboard.mainCategories" class="navbar-sidebar-menu">
           <a data-target="{{'#mainCategoryName'+$index}}" class="list-group-item list-group-item navbar-sidebar-menu" data-toggle="collapse"
-            data-parent="#MainMenu">{{mainCategory.name}}</a>
+            data-parent="#MainMenu">{{mainCategory.name}} <img src="/app/assets/icons/expand.png" ng-if="mainCategory.subCategories.length>1" width="15" height="15" />  </a>
           <div class="collapse navbar-sidebar-menu list-group-submenu " id="{{'mainCategoryName'+$index}}">
-            <div class="navbar-sidebar-menu" ng-if="mainCategory.subCategories.length>0" ng-repeat="subCategory in mainCategory.subCategories">
-              <a data-target="{{'#subCategory'+$index}}" class="list-group-item navbar-sidebar-menu" data-toggle="collapse" data-parent="{{'#mainCategoryName'+$index}}">{{subCategory.name}}</a>
-              <div class="collapse list-group-submenu navbar-sidebar-menu" id="{{'subCategory'+$index}}">
-                <a class="list-group-item navbar-sidebar-menu" data-parent="{{'#subCategory'+$index}}" ng-repeat="subSubCategory in subCategory.subCategories">{{subSubCategory.name}}</a>
+            <div class="navbar-sidebar-menu" ng-repeat="subCategory in mainCategory.subCategories">
+              <a data-target="{{'#'+subCategory.$$hashKey[subCategory.$$hashKey.length-2]+subCategory.$$hashKey[subCategory.$$hashKey.length-1]}}" class="list-group-item navbar-sidebar-menu" data-toggle="collapse" data-parent="{{'#mainCategoryName'+$index}}">{{subCategory.name}} <img src="/app/assets/icons/expand.png" ng-if="subCategory.subCategories.length>1" width="15" height="15" /></a>
+              <div class="collapse list-group-submenu navbar-sidebar-menu" id="{{subCategory.$$hashKey[subCategory.$$hashKey.length-2]+subCategory.$$hashKey[subCategory.$$hashKey.length-1]}}">
+                <div class="navbar-sidebar-menu" ng-repeat="subSubCategory in subCategory.subCategories">
+                   <a class="list-group-item navbar-sidebar-menu" data-parent="{{subCategory.$$hashKey[subCategory.$$hashKey.length-2]+subCategory.$$hashKey[subCategory.$$hashKey.length-1]}}">{{subSubCategory.name}}</a>
+                </div>
               </div>
             </div>
           </div>
+
         </div>
+
       </div>
+
+
     </div>
 
   </div>
+
+
   <div ui-view>
 
 
@@ -47,4 +55,9 @@
 
 
   </div>
+
+
+
+
+
 </div>
