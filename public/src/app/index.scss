@@ -14,6 +14,7 @@ $large-font: 18px;
 
 //region Colors
 $menu-color: #b3ecff;
+$button-color: #b3ecff;
 
 
 //endregion
@@ -109,6 +110,13 @@ body {
 }
 
 //endregion
+
+
+.custom-button{
+background-color: $button-color;
+border:none;
+color:black;
+}
 
 /**
  *  Do not remove the comments below. It's the markers used by gulp-inject to inject
