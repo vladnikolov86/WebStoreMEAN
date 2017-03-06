@@ -37,6 +37,12 @@ module.exports = function (mongoose) {
         priceHome: {
             type: Number
         },
+        pricePromotionalHome: {
+            type: Number
+        },
+        pricePromotionalProfessional: {
+            type: Number
+        },
         reviews: {
             type: 'Mixed'
         },

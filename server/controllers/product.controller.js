@@ -2,6 +2,8 @@ var mongoose = require('mongoose');
 
 var Product = require('../models/product')(mongoose);
 
+var ProductDTO = require('../models/productDTO');
+
 var authorizeAdmin = require('../services/authorization.service');
 
 var validateProduct = require('../services/validators/productValidator');
@@ -21,7 +23,29 @@ module.exports = function (app) {
                         res.send(err + ' An error occured while retrieving products!');
                     } else {
                         res.status(200);
-                        res.send(products);
+                        let productsToReturn = products;
+                        if (req.headers.authorization) {
+                            let tokenFromBody = req.headers.authorization.split(' ')[1];
+
+                            try {
+                                var token = tokenService(jwt, tokenFromBody).decodeToken();
+                            } catch (ex) {
+                                if (ex) {
+                                    res.send('invalid token');
+                                }
+                            }
+
+
+
+                            res.send(token);
+                            //manage prices
+                        } else {
+                            res.send('No token');
+                            //manage prices
+                        }
+
+
+                        // res.send(productsToReturn);
                     }
                 })
         });
@@ -59,7 +83,7 @@ module.exports = function (app) {
 
             Product
                 .find({})
-                .sort({updated: 'desc'})
+                .sort({ updated: 'desc' })
                 .skip(productsByPage * (pageNumber - 1))
                 .limit(productsByPage)
                 .exec(function (err, response) {
@@ -81,7 +105,7 @@ module.exports = function (app) {
                                     response.priceHome = '';
                                     response.price = response.priceProfessional;
                                 }
-                            }, function () {})
+                            }, function () { })
                     }
 
                     res.send(response)
@@ -164,7 +188,24 @@ module.exports = function (app) {
             let dbId = req.params.id;
 
             Product
-                .findOneAndRemove({'_id': dbId})
+                .findOneAndRemove({ '_id': dbId })
+                .exec(function (err, doc) {
+                    if (err) {
+                        res.status(400);
+                        res.send(err.message);
+                        return;
+                    }
+                    res.send(doc);
+                })
+        });
+
+    app
+        .route('/api/products/seed')
+        .put(function (req, res) {
+            let dbId = req.params.id;
+
+            Product
+                .findOneAndRemove({ '_id': dbId })
                 .exec(function (err, doc) {
                     if (err) {
                         res.status(400);
