@@ -18,6 +18,10 @@ module.exports = function (mongoose) {
             type: String,
             required: true
         },
+        brand: {
+            type: String,
+            required: true,
+        },
         subCategory: {
             type: Array
         },

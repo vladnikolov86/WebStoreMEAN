@@ -23,7 +23,7 @@ module.exports = function (app) {
                         res.send(err + ' An error occured while retrieving products!');
                     } else {
                         res.status(200);
-                        let productsToReturn = products;
+                        var productsToReturn = products;
                         if (req.headers.authorization) {
                             let tokenFromBody = req.headers.authorization.split(' ')[1];
 
@@ -32,12 +32,17 @@ module.exports = function (app) {
                             } catch (ex) {
                                 if (ex) {
                                     res.send('invalid token');
+                                }else{
+                                    var productsDTO = [];
+                                    for (let product of products){
+var prodDTO = new ProductDTO()
+                                    }
                                 }
                             }
 
 
 
-                            res.send(token);
+                            res.send(productsToReturn);
                             //manage prices
                         } else {
                             res.send('No token');
@@ -201,18 +206,68 @@ module.exports = function (app) {
 
     app
         .route('/api/products/seed')
-        .put(function (req, res) {
-            let dbId = req.params.id;
+        .post(function (req, res) {
 
-            Product
-                .findOneAndRemove({ '_id': dbId })
-                .exec(function (err, doc) {
-                    if (err) {
-                        res.status(400);
-                        res.send(err.message);
-                        return;
-                    }
-                    res.send(doc);
+            var products = [
+                {
+                    name: 'Нагреввател',
+                    heading: 'Професионален крем за бръчки',
+                    description: 'НАГРЕВАТЕЛ - Професионален крем за бръчки описание.Професионален крем за бръчки описание.Професионален крем за бръчки описание. ',
+                    category: 'Козметика за лице',
+                    brand: 'Depileve',
+                    subCategory: ['Епилация','Нагреватели'],
+                    inventoryId: 4,
+                    picturePreview: 'pic.png',
+                    picturesOthers: ['picOthers'],
+                    priceProfessional: 200,
+                    priceHome: 300   
+                },  {
+                    name: 'Крем за бръчки',
+                    heading: 'Професионален крем за бръчки',
+                    description: 'Професионален крем за бръчки описание.Професионален крем за бръчки описание.Професионален крем за бръчки описание. ',
+                    category: 'Козметика за лице',
+                    brand: 'ANESI',
+                    subCategory: ['Нормална кожа'],
+                    inventoryId: 5,
+                    picturePreview: 'pic1.png',
+                    picturesOthers: ['picOthers1'],
+                    priceProfessional: 30,
+                    priceHome: 40   
+                }
+            ];
+
+             for (let product of products) {
+                let proudctToSave = new Product({
+                    name: product.name,
+                    heading: product.heading,
+                    description: product.description,
+                    category: product.category,
+                    brand: product.brand,
+                    subCategory: product.subCategory,
+                    inventoryId: product.inventoryId,
+                    picturePreview : product.picturePreview,
+                    pictureOthers: product.picturesOthers,
+                    priceProfessional: product.priceProfessional,
+                    priceHome: product.priceHome
+
+                
                 })
+
+                
+
+                proudctToSave.save(function (err) {
+                    if (err) {
+                       
+                    } else {
+                       
+                    }
+                });
+
+                res.status(200);
+                res.send('Added');
+            }
+
+
+
         });
 }
