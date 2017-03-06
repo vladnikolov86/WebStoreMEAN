@@ -18,6 +18,10 @@ module.exports = function (mongoose) {
             type: String,
             required: true
         },
+        brand: {
+            type: String,
+            required: true,
+        },
         subCategory: {
             type: Array
         },
@@ -35,6 +39,12 @@ module.exports = function (mongoose) {
             type: Number
         },
         priceHome: {
+            type: Number
+        },
+        pricePromotionalHome: {
+            type: Number
+        },
+        pricePromotionalProfessional: {
             type: Number
         },
         reviews: {
