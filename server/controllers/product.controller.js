@@ -25,30 +25,23 @@ module.exports = function (app) {
                         res.status(200);
                         var productsToReturn = products;
                         if (req.headers.authorization) {
-                            let tokenFromBody = req.headers.authorization.split(' ')[1];
-
+                            var tokenFromBody = req.headers.authorization.split(' ')[1];
                             try {
                                 var token = tokenService(jwt, tokenFromBody).decodeToken();
                             } catch (ex) {
                                 if (ex) {
                                     res.send('invalid token');
-                                }else{
-                                    var productsDTO = [];
-                                    for (let product of products){
-var prodDTO = new ProductDTO()
-                                    }
+                                    return;
                                 }
                             }
-
-
-
-                            res.send(productsToReturn);
-                            //manage prices
-                        } else {
-                            res.send('No token');
-                            //manage prices
                         }
-
+                        var allProductsDTO = [];
+                        var productsDTO = [];
+                        for (let product of products) {
+                            var prodDTO = new ProductDTO(product, token);
+                            allProductsDTO.push(prodDTO);
+                        }
+                        res.send(allProductsDTO);
 
                         // res.send(productsToReturn);
                     }
@@ -215,13 +208,13 @@ var prodDTO = new ProductDTO()
                     description: 'НАГРЕВАТЕЛ - Професионален крем за бръчки описание.Професионален крем за бръчки описание.Професионален крем за бръчки описание. ',
                     category: 'Козметика за лице',
                     brand: 'Depileve',
-                    subCategory: ['Епилация','Нагреватели'],
+                    subCategory: ['Епилация', 'Нагреватели'],
                     inventoryId: 4,
                     picturePreview: 'pic.png',
                     picturesOthers: ['picOthers'],
                     priceProfessional: 200,
-                    priceHome: 300   
-                },  {
+                    priceHome: 300
+                }, {
                     name: 'Крем за бръчки',
                     heading: 'Професионален крем за бръчки',
                     description: 'Професионален крем за бръчки описание.Професионален крем за бръчки описание.Професионален крем за бръчки описание. ',
@@ -232,11 +225,11 @@ var prodDTO = new ProductDTO()
                     picturePreview: 'pic1.png',
                     picturesOthers: ['picOthers1'],
                     priceProfessional: 30,
-                    priceHome: 40   
+                    priceHome: 40
                 }
             ];
 
-             for (let product of products) {
+            for (let product of products) {
                 let proudctToSave = new Product({
                     name: product.name,
                     heading: product.heading,
@@ -245,21 +238,21 @@ var prodDTO = new ProductDTO()
                     brand: product.brand,
                     subCategory: product.subCategory,
                     inventoryId: product.inventoryId,
-                    picturePreview : product.picturePreview,
+                    picturePreview: product.picturePreview,
                     pictureOthers: product.picturesOthers,
                     priceProfessional: product.priceProfessional,
                     priceHome: product.priceHome
 
-                
+
                 })
 
-                
+
 
                 proudctToSave.save(function (err) {
                     if (err) {
-                       
+
                     } else {
-                       
+
                     }
                 });
 
