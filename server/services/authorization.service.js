@@ -1,5 +1,6 @@
 var jwt = require('jsonwebtoken');
 var roleService = require(__dirname + '/token.service');
+var enumerations = require('../../common/enumerations.js');
 
 module.exports = function (req, res, next) {
     if(!req.headers.authorization){
@@ -10,7 +11,7 @@ module.exports = function (req, res, next) {
     var tokenFromBody = req.headers.authorization.split(' ')[1];
     var role = roleService(jwt, tokenFromBody).getRole()
         .then(function(response){
-            if(response.role=='admin'){
+            if(response.role==enumerations().user().admin){
                 next();
             }else{
                 res.status(401);

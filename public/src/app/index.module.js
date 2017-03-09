@@ -14,10 +14,11 @@
     .constant({
       CONSTANTS: {
         BASE:  'http://localhost:3030/api/',
-        USERS_ENDPOINT: 'api/users/',
+        USERS_ENDPOINT: 'users/',
         DEVELOPMENT: {
-          DEVELOPMENT_BASE: 'http://localhost:3030/'
-        }
+          DEVELOPMENT_BASE: 'http://localhost:3030/api/'
+        },
+        PRODUCT_ENDPOINT: 'products/'
       }
     })
     .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {

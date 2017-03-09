@@ -3,18 +3,19 @@
 
   angular
     .module('spaStore.users')
-    .factory('loginService',
+    .factory('productService',
       function (CONSTANTS, $http, $q) {
 
-        var loginService = this;
-        var baseEndPoint = CONSTANTS.DEVELOPMENT.DEVELOPMENT_BASE,
-          usersEndPoint = CONSTANTS.USERS_ENDPOINT;
+        var productService = this;
+        var baseEndPoint = CONSTANTS.BASE,
+          productEndPoint = CONSTANTS.PRODUCT_ENDPOINT;
 
 
-        loginService.loginUser = function (userModel) {
+        productService.getAllProducts = function () {
+        
           var deferred = $q.defer();
 
-          $http.post(baseEndPoint +  'token', userModel, {
+          $http.get(baseEndPoint +productEndPoint,  {
             headers: {}
           }).success(function (response) {
             deferred.resolve(response);
@@ -26,6 +27,6 @@
         };
 
 
-        return loginService;
+        return productService;
       });
 }());

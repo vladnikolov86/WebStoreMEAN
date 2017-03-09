@@ -1,3 +1,5 @@
+var enumerations = require('../../common/enumerations.js');
+
 module.exports = class ProductDTO {
     constructor(productObject, token) {
         this.id = productObject.id;
@@ -41,7 +43,7 @@ module.exports = class ProductDTO {
             }
             return;
         }
-        else if (token.role == 'admin' || token.role == 'corporate') {
+        else if (token.role == enumerations().user().admin || token.role == enumerations().user().corporate) {
             this.price = productObject.priceProfessional;
             if (inPromotion) {
                 this.promoPrice = productObject.pricePromotionalProfessional;
