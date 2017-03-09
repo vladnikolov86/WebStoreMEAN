@@ -10,7 +10,7 @@ module.exports = function (req, res, next) {
     var tokenFromBody = req.headers.authorization.split(' ')[1];
     var role = roleService(jwt, tokenFromBody).getRole()
         .then(function(response){
-            if(response.user.role=='admin'){
+            if(response.role=='admin'){
                 next();
             }else{
                 res.status(401);

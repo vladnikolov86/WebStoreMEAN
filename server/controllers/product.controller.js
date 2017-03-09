@@ -10,7 +10,20 @@ var validateProduct = require('../services/validators/productValidator');
 
 var tokenService = require('../services/token.service');
 
+var tokenFromRequest = require('../services/getTokenFromRequest');
+
 var jwt = require('jsonwebtoken');
+
+function addProducts(products,token) {
+    var allProductsDTO = [];
+    var productsDTO = [];
+    for (let product of products) {
+        var prodDTO = new ProductDTO(product, token);
+        allProductsDTO.push(prodDTO);
+    }
+
+    return allProductsDTO;
+}
 
 module.exports = function (app) {
     app
@@ -22,28 +35,12 @@ module.exports = function (app) {
                         res.status(400);
                         res.send(err + ' An error occured while retrieving products!');
                     } else {
-                        res.status(200);
                         var productsToReturn = products;
-                        if (req.headers.authorization) {
-                            var tokenFromBody = req.headers.authorization.split(' ')[1];
-                            try {
-                                var token = tokenService(jwt, tokenFromBody).decodeToken();
-                            } catch (ex) {
-                                if (ex) {
-                                    res.send('invalid token');
-                                    return;
-                                }
-                            }
-                        }
-                        var allProductsDTO = [];
-                        var productsDTO = [];
-                        for (let product of products) {
-                            var prodDTO = new ProductDTO(product, token);
-                            allProductsDTO.push(prodDTO);
-                        }
-                        res.send(allProductsDTO);
+                        var token = tokenFromRequest(req);
+                        var productsDTO = addProducts(products,token)
 
-                        // res.send(productsToReturn);
+                        res.send(productsDTO);
+                        res.status(200);
                     }
                 })
         });

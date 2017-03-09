@@ -12,7 +12,11 @@ module.exports = function (app) {
     app.route('/api/users')
         .get(authorizeAdmin, function (req, res) {
             User.find({}, 'name username address invoiceDetails role additionalInfo isSubscribed', function (err, users) {
-                res.json(users);
+                if(err){
+                    res.send(err);
+                    return;
+                }
+                res.send(users);
             });
         })
         .post(function (req, res) {
