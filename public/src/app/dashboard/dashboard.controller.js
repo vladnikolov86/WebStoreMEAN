@@ -114,13 +114,11 @@
 
         productService.getAllProducts()
         .then(function (res) {
-          console.log(res)
           vm.products = res;
         }, function (err) {
 
         })
 
-      console.log(vm.mainCategories)
 
     });
 })();

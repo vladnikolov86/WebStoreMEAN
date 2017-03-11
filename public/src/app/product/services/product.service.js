@@ -27,6 +27,25 @@
         };
 
 
+        productService.getProductsById = function (inventoryId) {
+        
+          var deferred = $q.defer();
+          var url = baseEndPoint +productEndPoint+inventoryId;
+
+          $http.get(url,{
+            headers: {
+              'Content-type':'application/x-www-form-urlencoded'
+            }
+          }).success(function (response) {
+            deferred.resolve(response);
+          }).error(function (err) {
+            deferred.reject(err);
+          });
+
+          return deferred.promise;
+        };
+
+
         return productService;
       });
 }());

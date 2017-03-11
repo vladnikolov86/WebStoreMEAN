@@ -50,6 +50,9 @@ module.exports = function (mongoose) {
         reviews: {
             type: 'Mixed'
         },
+        quantity: {
+            type: String
+        },
         updated: {
             type: Date,
             default: Date.now

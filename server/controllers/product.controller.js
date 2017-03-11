@@ -14,7 +14,7 @@ var tokenFromRequest = require('../services/getTokenFromRequest');
 
 var jwt = require('jsonwebtoken');
 
-function addProducts(products,token) {
+function addProducts(products, token) {
     var allProductsDTO = [];
     var productsDTO = [];
     for (let product of products) {
@@ -26,25 +26,6 @@ function addProducts(products,token) {
 }
 
 module.exports = function (app) {
-    app
-        .route('/api/products')
-        .get(function (req, res) {
-            Product
-                .find({}, function (err, products) {
-                    if (err) {
-                        res.status(400);
-                        res.send(err + ' An error occured while retrieving products!');
-                    } else {
-                        var productsToReturn = products;
-                        var token = tokenFromRequest(req);
-                        var productsDTO = addProducts(products,token)
-
-                        res.send(productsDTO);
-                        res.status(200);
-                    }
-                })
-        });
-
     //Get by product ID - receives number
     app
         .route('/api/products/:inventoryId')
@@ -63,11 +44,37 @@ module.exports = function (app) {
                         res.send('No products found, matching the criteria');
                         return;
                     }
+                    var token = tokenFromRequest(req);
+                    var productsDTO = addProducts(products, token)
+
+                    res.send(productsDTO);
                     res.status(200);
-                    res.send(products);
                 }
             })
         });
+
+
+
+    app
+        .route('/api/products')
+        .get(function (req, res) {
+            Product
+                .find({}, function (err, products) {
+                    if (err) {
+                        res.status(400);
+                        res.send(err + ' An error occured while retrieving products!');
+                    } else {
+                        var productsToReturn = products;
+                        var token = tokenFromRequest(req);
+                        var productsDTO = addProducts(products, token)
+
+                        res.send(productsDTO);
+                        res.status(200);
+                    }
+                })
+        });
+
+
 
     //Paging for products
     app
@@ -201,8 +208,8 @@ module.exports = function (app) {
             var products = [
                 {
                     name: 'Нагреввател',
-                    heading: 'Професионален крем за бръчки',
-                    description: 'НАГРЕВАТЕЛ - Професионален крем за бръчки описание.Професионален крем за бръчки описание.Професионален крем за бръчки описание. ',
+                    heading: 'Професионален нагревател',
+                    description: '<span>НАГРЕВАТЕЛ - Професионален нагревател за кола.Професионален крем за бръчки описание.Професионален крем за бръчки описание.</span>',
                     category: 'Козметика за лице',
                     brand: 'Depileve',
                     subCategory: ['Епилация', 'Нагреватели'],
@@ -210,11 +217,12 @@ module.exports = function (app) {
                     picturePreview: 'pic.png',
                     picturesOthers: ['picOthers'],
                     priceProfessional: 200,
-                    priceHome: 300
+                    priceHome: 300,
+                    quantity: '1бр.'
                 }, {
                     name: 'Крем за бръчки',
                     heading: 'Професионален крем за бръчки',
-                    description: 'Професионален крем за бръчки описание.Професионален крем за бръчки описание.Професионален крем за бръчки описание. ',
+                    description: '<span>Професионален крем за бръчки описание.Професионален крем за бръчки описание.Професионален крем за бръчки описание. </span>',
                     category: 'Козметика за лице',
                     brand: 'ANESI',
                     subCategory: ['Нормална кожа'],
@@ -222,7 +230,8 @@ module.exports = function (app) {
                     picturePreview: 'pic1.png',
                     picturesOthers: ['picOthers1'],
                     priceProfessional: 30,
-                    priceHome: 40
+                    priceHome: 40,
+                    quantity: '50ml.'
                 }
             ];
 
@@ -238,8 +247,8 @@ module.exports = function (app) {
                     picturePreview: product.picturePreview,
                     pictureOthers: product.picturesOthers,
                     priceProfessional: product.priceProfessional,
-                    priceHome: product.priceHome
-
+                    priceHome: product.priceHome,
+                    quantity: product.quantity
 
                 })
 
@@ -253,11 +262,11 @@ module.exports = function (app) {
                     }
                 });
 
-                res.status(200);
-                res.send('Added');
+
             }
 
-
+            res.status(200);
+            res.send('Added');
 
         });
 }

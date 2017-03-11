@@ -3,10 +3,10 @@
     <img src="{{imageUrl}}"
       width="99%" height="99%">
   </div>
-  <div class="text-center">{{heading}}</div>
-  <div class="text-center">Цена: {{price}}</div>
+  <div class="text-center">{{product.heading}}</div>
+  <div class="text-center">Цена: {{product.price}}</div>
   <div class="text-center">
-    <div class="btn btn-primary" ui-sref="main.dashboard.product">Детайли</div>
+    <div class="btn btn-primary" ui-sref="main.dashboard.product({id:product.inventoryId})">Детайли</div>
   </div>
 
   <div class="text-center margin-top-5px">

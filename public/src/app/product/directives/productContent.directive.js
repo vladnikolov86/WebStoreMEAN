@@ -3,7 +3,7 @@
 
     angular
         .module('spaStore')
-        .directive('productContent', function ($compile) {
+        .directive('productContent', function ($compile,$timeout) {
             return {
                 restrict: 'E',
                 scope: {
@@ -11,11 +11,17 @@
                 },
                 templateUrl: '/app/product/directives/productContent.html',
                 link: function (scope,el) {
-                   var tpl = $compile(scope.description)(scope);
-el.append(tpl); console.log(scope.compiledDescription)
+
+
+scope.$watch('description',function(oldval, newval){
+    console.log(newval)
+                   var tpl = $compile(oldval)(scope);
+el.append(tpl);
+})
+
                 },
                 controller: function ($scope) {
-              
+             
                 }
             }
         })

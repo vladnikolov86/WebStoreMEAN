@@ -14,6 +14,7 @@ module.exports = class ProductDTO {
         this.reviews = productObject.reviews;
         this.updated = productObject.updated;
         this.brand = productObject.brand;
+        this.quantity= productObject.quantity;
         this.checkForPromo(productObject);
         this.addPrice(token, productObject)
     }

@@ -5,12 +5,11 @@
     return {
       restrict: 'E',
       scope:{
-        imageUrl: '=',
-        heading:'=',
-        price:'='
+        product:'='
       },
       templateUrl:'app/dashboard/directives/productDashboard.html',
       controller: function($scope){
+
       }
     }
   })

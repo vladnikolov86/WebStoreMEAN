@@ -49,7 +49,7 @@
 
         .state('main.dashboard.product', {
           templateUrl: 'app/product/views/product.html',
-          url: '/product/{id}',
+          url: '/product/:id',
           controller: 'ProductController',
           controllerAs: 'product'
         })
