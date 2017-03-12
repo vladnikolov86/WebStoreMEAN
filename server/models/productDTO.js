@@ -37,14 +37,14 @@ module.exports = class ProductDTO {
     addPrice(token, productObject) {
         var inPromotion = this.inPromotion;
 
-        if (!token) {
+        if (!token || !token.user) {
             this.price = productObject.priceHome;
             if (inPromotion) {
                 this.promoPrice = productObject.pricePromotionalHome;
             }
             return;
         }
-        else if (token.role == enumerations().user().admin || token.role == enumerations().user().corporate) {
+        else if (token.user.role == enumerations().user().admin || token.user.role == enumerations().user().corporate) {
             this.price = productObject.priceProfessional;
             if (inPromotion) {
                 this.promoPrice = productObject.pricePromotionalProfessional;

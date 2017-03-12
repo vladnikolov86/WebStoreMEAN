@@ -5,7 +5,7 @@
     "jquery": "~2.1.4",
     "angular-ui-router": "~0.2.15",
     "bootstrap-sass": "~3.3.5",
-    "angular": "~1.6",
+    "angular": "^1.6.3",
     "angular-bootstrap": "^2.1.0",
     "angular-bootstrap-checkbox": "^0.5.0",
     "angular-toastr": "^2.1.1",

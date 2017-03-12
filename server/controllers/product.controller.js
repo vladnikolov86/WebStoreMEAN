@@ -44,11 +44,19 @@ module.exports = function (app) {
                         res.send('No products found, matching the criteria');
                         return;
                     }
-                    var token = tokenFromRequest(req);
-                    var productsDTO = addProducts(products, token)
+                    tokenFromRequest(req)
+                        .then(function (response) {
+                            var productsDTO = addProducts(products, response)
 
-                    res.send(productsDTO);
-                    res.status(200);
+                            res.send(productsDTO);
+                            res.status(200);
+                        }, function (err) {
+                            var productsDTO = addProducts(products, err)
+
+                            res.send(productsDTO);
+                            res.status(200);
+                        })
+
                 }
             })
         });
@@ -65,11 +73,18 @@ module.exports = function (app) {
                         res.send(err + ' An error occured while retrieving products!');
                     } else {
                         var productsToReturn = products;
-                        var token = tokenFromRequest(req);
-                        var productsDTO = addProducts(products, token)
+                        tokenFromRequest(req)
+                            .then(function (response) {
+                                var productsDTO = addProducts(products, response)
 
-                        res.send(productsDTO);
-                        res.status(200);
+                                res.send(productsDTO);
+                                res.status(200);
+                            }, function (err) {
+                                var productsDTO = addProducts(products, err)
+
+                                res.send(productsDTO);
+                                res.status(200);
+                            })
                     }
                 })
         });

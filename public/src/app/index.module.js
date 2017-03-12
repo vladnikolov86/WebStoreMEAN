@@ -21,7 +21,7 @@
         PRODUCT_ENDPOINT: 'products/'
       }
     })
-    .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
+    .config(function ($stateProvider, $urlRouterProvider, $locationProvider,$httpProvider) {
       $locationProvider.html5Mode({
         enabled: true,
         requireBase: false
@@ -60,19 +60,20 @@
           controller: 'LoginController',
           controllerAs: 'login',
           resolve: {
-            auth: function (userInfoService, $location,$timeout,$rootScope) {
+            auth: function (userInfoService,$timeout,$state) {
               var user = userInfoService.getUserInfo();
               if(user){
                 if(user.username && user.username != 'Гост'){
-                  $location.path('/dashboard');
+              
                   $timeout(function(){
-                    $rootScope.apply();
+                    $state.go('main.dashboard');
                   },10)
                 }
               }
             }
           }
         })
+        $httpProvider.interceptors.push('httpInteceptors');
     })
 
 })();
