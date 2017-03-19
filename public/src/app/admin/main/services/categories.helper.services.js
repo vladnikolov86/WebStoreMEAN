@@ -21,7 +21,9 @@
                             .push({name: nameOfNewCategory});
                     }
 
-                    if (level == 2) {}
+                    if (level == 2) {
+
+                    }
                 }
 
                 if (action == 'delete') {
@@ -32,6 +34,14 @@
                                 break;
                             }
                         }
+                    }
+                    if (level == 2){
+                        for (var prop in mainCollection[currentActiveCategory].subCategories[activeIndexSubCategory][subCategories]) {
+                            if(mainCollection[currentActiveCategory].subCategories[activeIndexSubCategory][subCategories][prop].isSelected){
+                                mainCollection[currentActiveCategory].subCategories[activeIndexSubCategory][subCategories].splice(prop,1);
+                                break;
+                            }
+                        } 
                     }
                 }
                 return mainCollection;

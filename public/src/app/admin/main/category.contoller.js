@@ -44,6 +44,7 @@
             
             vm.setActiveSubCategory = function (index) {
                 vm.indexOfCurrentActiveSubCategory = index;
+                console.log(vm.indexOfCurrentActiveSubCategory)
             }
 
             vm.deselectCategories = function (category, collection, compareBy) {
