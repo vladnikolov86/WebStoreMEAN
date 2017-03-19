@@ -3,10 +3,8 @@
 
     angular
         .module('spaStore')
-        .controller('MainAdminController', function (dashboardService, categoriesServices, toastr, $window) {
+        .controller('CategoryController', function (dashboardService, categoriesServices, toastr, $window, categoriesHelperServices) {
             var vm = this;
-
-            //region categories
 
             vm.getCategories = function () {
                 dashboardService
@@ -37,6 +35,15 @@
                     vm.subSubCategories = [];
                 }
 
+            }
+
+            vm.setActiveMainCategory = function (index) {
+                vm.indexOfCurrentActiveCategory = index;
+            }
+
+            
+            vm.setActiveSubCategory = function (index) {
+                vm.indexOfCurrentActiveSubCategory = index;
             }
 
             vm.deselectCategories = function (category, collection, compareBy) {
@@ -95,8 +102,36 @@
                         toastr.error('An error occured!Try again later!');
                     })
             }
+            vm.addSubCategory = function () {
+                vm.confirmAddSub = !vm.confirmAddSub;
+            }
 
-            //endregion
+            vm.deleteSubCategory = function (){
+                vm.confirmDeleteSub = !vm.confirmDeleteSub;
+            }
+
+            vm.editMainCategory = function (level, action, nameOfNewCategory) {
+
+                if (vm.indexOfCurrentActiveCategory === undefined) {
+                    toastr.error('Select main category first!');
+                    return;
+                }
+
+                vm.mainCategories = categoriesHelperServices.editMainCategory(vm.indexOfCurrentActiveCategory, action, level, vm.mainCategories, nameOfNewCategory);
+
+                categoriesServices
+                    .replace(vm.mainCategories[vm.indexOfCurrentActiveCategory])
+                    .then(function (res) {
+                        console.log('sucessfully replaced');
+                        vm.subCategories = [];
+                        vm.subSubCategories = [];
+                        vm.getCategories();
+                    }, function (err) {
+                        console.log(err);
+                        console.log('error')
+                    })
+
+            }
 
         });
 })();

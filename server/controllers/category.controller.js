@@ -47,8 +47,8 @@ module.exports = function (app) {
 
     app
         .route('/api/category/edit')
-        .put(authorizeAdmin, function (req, res) {
-            var categoryIsValid = validateCategory(req.body.category);
+        .post(authorizeAdmin, function (req, res) {
+            var categoryIsValid = validateCategory(req.body);
             if (typeof categoryIsValid == 'string') {
                 res.status(400);
                 res.json(categoryIsValid);
@@ -57,12 +57,17 @@ module.exports = function (app) {
 
             let dbId = req.body._id;
             var category = new Category({
-                name: req.body.category.Name,
-                subCategories: req.body.category.subCategories || null
+                name: req.body.name,
+                subCategories: req.body.subCategories || null
             });
+           
 
-            Category
-                .findOneAndReplace({'_id': dbId},category)
+            Category.update({
+                '_id': dbId
+            }, {
+                    name: category.name,
+                    subCategories: category.subCategories
+                })
                 .exec(function (err, doc) {
                     if (err) {
                         res.status(400);

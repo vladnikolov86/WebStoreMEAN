@@ -41,13 +41,9 @@
 
             categoriesServices.replace = function (categ) {
                 var deferred = $q.defer();
-                var newCategory = {
-                    category: categ,
-                    _id: categ._id
-                }
-
+             
                 $http
-                    .post(CONSTANTS.BASE + 'category/edit', newCategory, {'Content-Type': 'application/json'})
+                    .post(CONSTANTS.BASE + 'category/edit', categ, {'Content-Type': 'application/json'})
                     .success(function (response) {
                         deferred.resolve(response);
                         console.log(response);

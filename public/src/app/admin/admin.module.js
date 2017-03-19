@@ -16,14 +16,14 @@
          .state('admin-main', {
           url: '/admin/main',
           templateUrl: 'app/admin/main/views/main-admin.html',
-          controller: 'MainAdminController',
+          controller: 'CategoryController',
           controllerAs: 'admin'
         })
 
           .state('admin-main.categories', {
           url: '/categories',
           templateUrl: 'app/admin/main/views/_categories.html',
-          controller: 'MainAdminController',
+          controller: 'CategoryController',
           controllerAs: 'admin'
         })
     })
