@@ -3,7 +3,7 @@
 
     angular
         .module('spaStore')
-        .controller('MainAdminController', function (dashboardService, categoriesServices, toastr,$window) {
+        .controller('MainAdminController', function (dashboardService, categoriesServices, toastr, $window) {
             var vm = this;
 
             //region categories
@@ -67,12 +67,33 @@
                         console.log('deleted');
                         toastr.success('Category deleted!');
 
-                        $window.location.reload();
+                        vm.subCategories = [];
+                        vm.subSubCategories = [];
+                        vm.getCategories();
                     }, function (err) {
                         toastr.error('An error occured!Try again later!');
                         console.log(err)
                     })
+            }
 
+            vm.addMainCategory = function () {
+                vm.confirmAdd = !vm.confirmAdd;
+            }
+
+            vm.confirmAddMainCategory = function () {
+                var categoryToAdd = {
+                    Name: vm.newMainCategory
+                };
+                categoriesServices
+                    .addCategory(categoryToAdd)
+                    .then(function (res) {
+                        toastr.success('Category added!');
+                        vm.subCategories = [];
+                        vm.subSubCategories = [];
+                        vm.getCategories();
+                    }, function (err) {
+                        toastr.error('An error occured!Try again later!');
+                    })
             }
 
             //endregion

@@ -46,8 +46,37 @@ module.exports = function (app) {
         });
 
     app
+        .route('/api/category/edit')
+        .put(authorizeAdmin, function (req, res) {
+            var categoryIsValid = validateCategory(req.body.category);
+            if (typeof categoryIsValid == 'string') {
+                res.status(400);
+                res.json(categoryIsValid);
+                return;
+            }
+
+            let dbId = req.body._id;
+            var category = new Category({
+                name: req.body.category.Name,
+                subCategories: req.body.category.subCategories || null
+            });
+
+            Category
+                .findOneAndReplace({'_id': dbId},category)
+                .exec(function (err, doc) {
+                    if (err) {
+                        res.status(400);
+                        res.send(err.message);
+                        return;
+                    }
+                    res.send(doc);
+                })
+
+        });
+
+    app
         .route('/api/category/delete/:id')
-        .put(authorizeAdmin,function (req, res) {
+        .put(authorizeAdmin, function (req, res) {
             let dbId = req.params.id;
 
             Category

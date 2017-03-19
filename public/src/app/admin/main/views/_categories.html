@@ -10,13 +10,24 @@
                     <checkbox ng-model="category.isSelected" ng-change="admin.deselectCategories(category,admin.mainCategories,'_id')"></checkbox>{{category.name}}</a>
             </li>
 
-            <button class="btn btn-success">Добави</button>
+            <button class="btn btn-success" ng-click="admin.addMainCategory()">Добави</button>
             <button class="btn btn-danger" ng-click="admin.deleteMainCategory()">Изтрий</button>
+
             <div ng-if="admin.confirmDelete">
                 <div>Are you sure you want to delete category: {{admin.mainCategories[admin.indexOfCategoryToDelete].name}} </div>
                 <button class="btn btn-danger" ng-click="admin.confirmDeleteMainCategory()">Yes</button>
                 <button class="btn btn-success" ng-click="admin.deleteMainCategory()">No</button>
             </div>
+
+            <div ng-if="admin.confirmAdd">
+                <div>
+                    Name of the new category:  
+                    <input type="text" ng-model="admin.newMainCategory">
+                    </div>
+                <button class="btn btn-success" ng-click="admin.confirmAddMainCategory()">Submit</button>
+                <button class="btn btn-danger" ng-click="admin.addMainCategory()">Cancel</button>
+            </div>
+
         </ul>
 
         <ul class="list-group col-md-3 inline-block" ng-if="admin.subCategories.length>0" style="list-style:none">
