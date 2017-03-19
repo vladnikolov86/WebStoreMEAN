@@ -37,7 +37,7 @@ module.exports = function (app) {
                 email: req.body.email,
                 phone: req.body.phone,
                 additionalInfo: req.body.additionalInfo,
-                role: 'corporate'
+                role: 'admin'
             });
 
             User.find({$or: [{'username': req.body.username}, {'email': req.body.email}]},
