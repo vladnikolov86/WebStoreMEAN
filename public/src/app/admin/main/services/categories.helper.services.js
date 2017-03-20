@@ -22,7 +22,7 @@
                     }
 
                     if (level == 2) {
-                        if (mainCollection[currentActiveCategory].subCategories[activeIndexSubCategory].subCategories === null) {
+                        if (!mainCollection[currentActiveCategory].subCategories[activeIndexSubCategory].subCategories) {
                             mainCollection[currentActiveCategory].subCategories[activeIndexSubCategory].subCategories = [];
                         }
                          mainCollection[currentActiveCategory]

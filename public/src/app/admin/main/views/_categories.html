@@ -54,13 +54,13 @@
 
             <div ng-if="admin.confirmDeleteSub">
                 <div>Are you sure you want to delete category: {{admin.mainCategories[admin.indexOfCurrentActiveCategory].subCategories[admin.indexOfCurrentActiveSubCategory].name}}
-                    </div>
+                </div>
                 <button class="btn btn-danger" ng-click="admin.editMainCategory(1,'delete',admin.newSubCategory)">Yes</button>
                 <button class="btn btn-success" ng-click="admin.deleteSubCategory()">No</button>
             </div>
         </ul>
 
-        <ul class="list-group col-md-3 inline-block" ng-if="admin.subSubCategories.length>0" style="list-style:none">
+        <ul class="list-group col-md-3 inline-block"  style="list-style:none">
 
 
             <h4>Подкатегории</h4>
@@ -86,7 +86,7 @@
 
             <div ng-if="admin.confirmDeleteSubSub">
                 <div>Are you sure you want to delete category: {{admin.mainCategories[admin.indexOfCurrentActiveCategory].subCategories[admin.indexOfCurrentActiveSubCategory].subCategories[admin.indexOfCurrentActiveSubSubCategory].name}}
-                    </div>
+                </div>
                 <button class="btn btn-danger" ng-click="admin.editMainCategory(2,'delete',admin.newSubCategory)">Yes</button>
                 <button class="btn btn-success" ng-click="admin.deleteSubSubCategory()">No</button>
             </div>
@@ -94,5 +94,9 @@
 
 
     </div>
+
+    <div>{{admin.indexOfCurrentActiveCategory}}</div>
+    <div>{{admin.indexOfCurrentActiveSubCategory}}</div>
+    <div>{{admin.indexOfCurrentActiveSubSubCategory}}</div>
 
 </div>
