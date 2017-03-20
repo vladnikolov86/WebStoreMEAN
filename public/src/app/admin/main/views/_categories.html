@@ -1,0 +1,77 @@
+<div class="container">
+
+    <div class="row">
+        <ul class="list-group col-md-3 inline-block" style="list-style:none">
+            <h4>Основни категории</h4>
+
+            <li ng-repeat="category in admin.mainCategories track by $index" ng-click="admin.getSubCategories(category);admin.setActiveMainCategory($index)">
+
+                <a href="#" class="list-group-item">
+                    <checkbox ng-model="category.isSelected" ng-change="admin.deselectCategories(category,admin.mainCategories,'_id')"></checkbox>{{category.name}}</a>
+            </li>
+
+            <button class="btn btn-success" ng-click="admin.addMainCategory()">Добави</button>
+            <button class="btn btn-danger" ng-click="admin.deleteMainCategory()">Изтрий</button>
+
+            <div ng-if="admin.confirmDelete">
+                <div>Are you sure you want to delete category: {{admin.mainCategories[admin.indexOfCategoryToDelete].name}} </div>
+                <button class="btn btn-danger" ng-click="admin.confirmDeleteMainCategory()">Yes</button>
+                <button class="btn btn-success" ng-click="admin.deleteMainCategory()">No</button>
+            </div>
+
+            <div ng-if="admin.confirmAdd">
+                <div>
+                    Name of the new category:
+                    <input type="text" ng-model="admin.newMainCategory">
+                </div>
+                <button class="btn btn-success" ng-click="admin.confirmAddMainCategory()">Submit</button>
+                <button class="btn btn-danger" ng-click="admin.addMainCategory()">Cancel</button>
+            </div>
+
+        </ul>
+
+        <ul class="list-group col-md-3 inline-block" style="list-style:none">
+
+            <h4>Подкатегории</h4>
+            <li ng-repeat="category in admin.subCategories track by $index" ng-click="admin.getSubSubCategories(category);admin.setActiveSubCategory($index)">
+                <a href="#" class="list-group-item">
+                    <checkbox ng-model="category.isSelected" ng-change="admin.deselectCategories(category,admin.subCategories,'name')"></checkbox>{{category.name}}</a>
+            </li>
+
+            <button class="btn btn-success" ng-click="admin.addSubCategory()">Добави</button>
+            <button class="btn btn-danger" ng-click="admin.deleteSubCategory()">Изтрий</button>
+
+
+            <div ng-if="admin.confirmAddSub">
+                <div>
+                    Name of the new category:
+                    <input type="text" ng-model="admin.newSubCategory">
+                </div>
+                <button class="btn btn-success" ng-click="admin.editMainCategory(1,'add',admin.newSubCategory)">Submit</button>
+                <button class="btn btn-danger" ng-click="admin.addSubCategory()">Cancel</button>
+            </div>
+
+            
+            <div ng-if="admin.confirmDeleteSub">
+                <div>Are you sure you want to delete category: {{admin.mainCategories[admin.indexOfCurrentActiveCategory].subCategories[admin.indexOfCurrentActiveSubCategory].name}} </div>
+                <button class="btn btn-danger" ng-click="admin.editMainCategory(1,'delete',admin.newSubCategory)">Yes</button>
+                <button class="btn btn-success" ng-click="admin.deleteSubCategory()">No</button>
+            </div>
+        </ul>
+
+        <ul class="list-group col-md-3 inline-block" ng-if="admin.subSubCategories.length>0" style="list-style:none">
+
+
+            <h4>Подкатегории</h4>
+            <li ng-repeat="category in admin.subSubCategories track by $index">
+                <a href="#" class="list-group-item">
+                    <checkbox ng-model="category.isSelected" ng-change="admin.deselectCategories(category,admin.subSubCategories,'name')"></checkbox>{{category.name}}</a>
+            </li>
+            <button class="btn btn-success">Добави</button>
+            <button class="btn btn-danger">Изтрий</button>
+        </ul>
+
+
+    </div>
+
+</div>

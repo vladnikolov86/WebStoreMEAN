@@ -46,6 +46,57 @@ module.exports = function (app) {
         });
 
     app
+        .route('/api/category/edit')
+        .post(authorizeAdmin, function (req, res) {
+            var categoryIsValid = validateCategory(req.body);
+            if (typeof categoryIsValid == 'string') {
+                res.status(400);
+                res.json(categoryIsValid);
+                return;
+            }
+
+            let dbId = req.body._id;
+            var category = new Category({
+                name: req.body.name,
+                subCategories: req.body.subCategories || null
+            });
+           
+
+            Category.update({
+                '_id': dbId
+            }, {
+                    name: category.name,
+                    subCategories: category.subCategories
+                })
+                .exec(function (err, doc) {
+                    if (err) {
+                        res.status(400);
+                        res.send(err.message);
+                        return;
+                    }
+                    res.send(doc);
+                })
+
+        });
+
+    app
+        .route('/api/category/delete/:id')
+        .put(authorizeAdmin, function (req, res) {
+            let dbId = req.params.id;
+
+            Category
+                .findOneAndRemove({'_id': dbId})
+                .exec(function (err, doc) {
+                    if (err) {
+                        res.status(400);
+                        res.send(err.message);
+                        return;
+                    }
+                    res.send(doc);
+                })
+        });
+
+    app
         .route('/api/category/seed')
         .post(function (req, res) {
 
@@ -94,22 +145,17 @@ module.exports = function (app) {
                 })
 
                 categoryToSave.save(function (err) {
-                    if (err) {
-                       
-                    } else {
-                       
-                    }
+                    if (err) {} else {}
                 });
 
                 res.status(200);
                 res.send('Added');
             }
 
-            // var category = new Category({     name: 'Козметика за лице',
-            // subCategories: req.body.subCategories || null }); category.save(function
-            // (err) {     if (err) {         res.status(400);         res.json(err);     }
-            // else {         res.status(200);         res.json('Category saved
-            // successfully!');     } });
+            // var category = new Category({     name: 'Козметика за лице', subCategories:
+            // req.body.subCategories || null }); category.save(function (err) {     if
+            // (err) {         res.status(400);         res.json(err);     } else {
+            // res.status(200);         res.json('Category saved successfully!');     } });
         })
 
 };

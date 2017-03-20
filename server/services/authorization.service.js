@@ -11,14 +11,16 @@ module.exports = function (req, res, next) {
     var tokenFromBody = req.headers.authorization.split(' ')[1];
     var role = roleService(jwt, tokenFromBody).getRole()
         .then(function(response){
-            if(response.role==enumerations().user().admin){
+            if(response.user.role==enumerations().user().admin){
                 next();
             }else{
                 res.status(401);
-                res.json('You do not have admin access')
+                res.json('You do not have admin access');
+                return;
             }
         },function(error){
             res.status(401);
             res.json(error);
+            return;
         })
 };
