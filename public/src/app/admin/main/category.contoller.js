@@ -41,10 +41,13 @@
                 vm.indexOfCurrentActiveCategory = index;
             }
 
-            
+
             vm.setActiveSubCategory = function (index) {
                 vm.indexOfCurrentActiveSubCategory = index;
-                console.log(vm.indexOfCurrentActiveSubCategory)
+            }
+
+            vm.setActiveSubSubCategory = function (index){
+                 vm.indexOfCurrentActiveSubSubCategory = index;
             }
 
             vm.deselectCategories = function (category, collection, compareBy) {
@@ -107,8 +110,16 @@
                 vm.confirmAddSub = !vm.confirmAddSub;
             }
 
-            vm.deleteSubCategory = function (){
+            vm.addSubSubCategory = function (){
+                vm.confirmAddSubSub = !vm.confirmAddSubSub;
+            }
+
+            vm.deleteSubCategory = function () {
                 vm.confirmDeleteSub = !vm.confirmDeleteSub;
+            }
+
+            vm.deleteSubSubCategory = function () {
+                vm.confirmDeleteSubSub = !vm.confirmDeleteSubSub;
             }
 
             vm.editMainCategory = function (level, action, nameOfNewCategory) {
@@ -118,7 +129,7 @@
                     return;
                 }
 
-                vm.mainCategories = categoriesHelperServices.editMainCategory(vm.indexOfCurrentActiveCategory, action, level, vm.mainCategories, nameOfNewCategory);
+                vm.mainCategories = categoriesHelperServices.editMainCategory(vm.indexOfCurrentActiveCategory, action, level, vm.mainCategories, nameOfNewCategory,vm.indexOfCurrentActiveSubCategory);
 
                 categoriesServices
                     .replace(vm.mainCategories[vm.indexOfCurrentActiveCategory])

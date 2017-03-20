@@ -51,9 +51,10 @@
                 <button class="btn btn-danger" ng-click="admin.addSubCategory()">Cancel</button>
             </div>
 
-            
+
             <div ng-if="admin.confirmDeleteSub">
-                <div>Are you sure you want to delete category: {{admin.mainCategories[admin.indexOfCurrentActiveCategory].subCategories[admin.indexOfCurrentActiveSubCategory].name}} </div>
+                <div>Are you sure you want to delete category: {{admin.mainCategories[admin.indexOfCurrentActiveCategory].subCategories[admin.indexOfCurrentActiveSubCategory].name}}
+                    </div>
                 <button class="btn btn-danger" ng-click="admin.editMainCategory(1,'delete',admin.newSubCategory)">Yes</button>
                 <button class="btn btn-success" ng-click="admin.deleteSubCategory()">No</button>
             </div>
@@ -63,12 +64,32 @@
 
 
             <h4>Подкатегории</h4>
-            <li ng-repeat="category in admin.subSubCategories track by $index">
+            <li ng-repeat="category in admin.subSubCategories track by $index" ng-click="admin.setActiveSubSubCategory($index)">
                 <a href="#" class="list-group-item">
                     <checkbox ng-model="category.isSelected" ng-change="admin.deselectCategories(category,admin.subSubCategories,'name')"></checkbox>{{category.name}}</a>
             </li>
-            <button class="btn btn-success">Добави</button>
-            <button class="btn btn-danger">Изтрий</button>
+            <button class="btn btn-success" ng-click="admin.addSubSubCategory()">Добави</button>
+            <button class="btn btn-danger" ng-click="admin.deleteSubSubCategory()">Изтрий</button>
+
+
+
+            <div ng-if="admin.confirmAddSubSub">
+                <div>
+                    Name of the new category:
+                    <input type="text" ng-model="admin.newSubSubCategory">
+                </div>
+                <button class="btn btn-success" ng-click="admin.editMainCategory(2,'add',admin.newSubSubCategory)">Submit</button>
+                <button class="btn btn-danger" ng-click="admin.addSubSubCategory()">Cancel</button>
+            </div>
+
+
+
+            <div ng-if="admin.confirmDeleteSubSub">
+                <div>Are you sure you want to delete category: {{admin.mainCategories[admin.indexOfCurrentActiveCategory].subCategories[admin.indexOfCurrentActiveSubCategory].subCategories[admin.indexOfCurrentActiveSubSubCategory].name}}
+                    </div>
+                <button class="btn btn-danger" ng-click="admin.editMainCategory(2,'delete',admin.newSubCategory)">Yes</button>
+                <button class="btn btn-success" ng-click="admin.deleteSubSubCategory()">No</button>
+            </div>
         </ul>
 
 
