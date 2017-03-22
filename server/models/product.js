@@ -6,6 +6,10 @@ module.exports = function (mongoose) {
             type: String,
             required: true
         },
+        inPromotion: {
+            type: Boolean,
+            default: false,
+        },
         heading: {
             type: String,
             required: true
@@ -51,7 +55,7 @@ module.exports = function (mongoose) {
             type: 'Mixed'
         },
         quantity: {
-            type: String
+            type: Number
         },
         updated: {
             type: Date,

@@ -9,7 +9,8 @@
       'ngAnimate',
       'toastr',
       'spaStore.admin',
-      'spaStore.users'
+      'spaStore.users',
+      'froala'
     ])
     .constant({
       CONSTANTS: {

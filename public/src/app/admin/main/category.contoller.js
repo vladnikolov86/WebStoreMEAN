@@ -145,5 +145,14 @@
 
             }
 
+
+            //Products
+
+            vm.addNewProduct = false;
+            vm.toggleAddNewProduct = function (){
+                 vm.addNewProduct = ! vm.addNewProduct;
+                 console.log(vm.newProduct);
+            }
+
         });
 })();

@@ -15,24 +15,10 @@ module.exports = class ProductDTO {
         this.updated = productObject.updated;
         this.brand = productObject.brand;
         this.quantity= productObject.quantity;
-        this.checkForPromo(productObject);
+        this.inPromotion = productObject.inPromotion;
         this.addPrice(token, productObject)
     }
 
-
-    checkForPromo(product) {
-        var inPromo = false;
-        for (let prop in product) {
-            if (prop == 'pricePromotionalHome' || prop == 'pricePromotionalProfessional') {
-                if (product[prop] > 0) {
-                    inPromo = true;
-                    break;
-                }
-            }
-        }
-        this.inPromotion = inPromo;
-        return inPromo;
-    }
 
     addPrice(token, productObject) {
         var inPromotion = this.inPromotion;
