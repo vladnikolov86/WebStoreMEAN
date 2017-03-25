@@ -10,7 +10,8 @@
       'toastr',
       'spaStore.admin',
       'spaStore.users',
-      'froala'
+      'froala',
+      'ngFileUpload'
     ])
     .constant({
       CONSTANTS: {

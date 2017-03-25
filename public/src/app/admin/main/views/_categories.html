@@ -116,12 +116,40 @@
         <textarea froala ng-model="admin.newProduct.description"></textarea>
         <div><span>Upload main picture</span> </div>
         <div><span>Upload other pictures</span></div>
+        <!--<form ref='uploadForm' id='uploadForm' action='http://localhost:3030/api/upload/images' method='post' encType="multipart/form-data">
+            <input type="file" name="sampleFile" />
+            <input type='submit' value='Upload!' />
+        </form>-->
+        <form name="form">
+            Single Image with validations
+            <div class="button" ngf-select ng-model="admin.newProduct.mainImage" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="2MB">Select</div>
+
+            <div class="button" ngf-select ng-model="admin.newProduct.secondImage" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="2MB">Select</div>
+            
+            <div class="button" ngf-select ng-model="admin.newProduct.thirdImage" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="2MB">Select</div>
+            
+            <div class="button" ngf-select ng-model="admin.newProduct.forthImage" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="2MB">Select</div>
+            <button type="submit" ng-click="admin.upload()">submit</button>
+        </form>
+        <!--<form  name="form">
+            Single Image with validations
+            <div class="button" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB"
+                ngf-min-height="100" ngf-resize="{width: 100, height: 100}">Select</div>
+            Multiple files
+            <div class="button" ngf-select ng-model="files" ngf-multiple="true">Select</div>
+            Drop files:
+            <div ngf-drop ng-model="files" class="drop-box">Drop</div>
+            <button type="submit" ng-click="submit()">submit</button>
+        </form>-->
+
+
+
         <div><span>Цена за корпоративни клиенти</span> <input ng-model="admin.newProduct.priceProfessional" type="number"></div>
         <div><span>Цена за клиенти</span> <input ng-model="admin.newProduct.priceHome" type="number"></div>
         <div><span>Промоционална цена за корпоративни клиенти</span> <input ng-model="admin.newProduct.pricePromotionalProfessional"
                 type="number"></div>
         <div><span>Промоционална цена за клиенти</span> <input ng-model="admin.newProduct.pricePromotionalHome" type="number"></div>
-         <div><span>Промоционална цена за клиенти</span> <input ng-model="admin.newProduct.quantity" type="number"></div>
+        <div><span>Промоционална цена за клиенти</span> <input ng-model="admin.newProduct.quantity" type="number"></div>
 
     </div>
 

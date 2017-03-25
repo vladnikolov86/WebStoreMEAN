@@ -3,7 +3,7 @@
 
     angular
         .module('spaStore')
-        .controller('CategoryController', function (dashboardService, categoriesServices, toastr, $window, categoriesHelperServices) {
+        .controller('CategoryController', function (dashboardService, categoriesServices, toastr, $window, categoriesHelperServices, Upload) {
             var vm = this;
 
             vm.getCategories = function () {
@@ -41,13 +41,12 @@
                 vm.indexOfCurrentActiveCategory = index;
             }
 
-
             vm.setActiveSubCategory = function (index) {
                 vm.indexOfCurrentActiveSubCategory = index;
             }
 
-            vm.setActiveSubSubCategory = function (index){
-                 vm.indexOfCurrentActiveSubSubCategory = index;
+            vm.setActiveSubSubCategory = function (index) {
+                vm.indexOfCurrentActiveSubSubCategory = index;
             }
 
             vm.deselectCategories = function (category, collection, compareBy) {
@@ -110,7 +109,7 @@
                 vm.confirmAddSub = !vm.confirmAddSub;
             }
 
-            vm.addSubSubCategory = function (){
+            vm.addSubSubCategory = function () {
                 vm.confirmAddSubSub = !vm.confirmAddSubSub;
             }
 
@@ -129,7 +128,7 @@
                     return;
                 }
 
-                vm.mainCategories = categoriesHelperServices.editMainCategory(vm.indexOfCurrentActiveCategory, action, level, vm.mainCategories, nameOfNewCategory,vm.indexOfCurrentActiveSubCategory);
+                vm.mainCategories = categoriesHelperServices.editMainCategory(vm.indexOfCurrentActiveCategory, action, level, vm.mainCategories, nameOfNewCategory, vm.indexOfCurrentActiveSubCategory);
 
                 categoriesServices
                     .replace(vm.mainCategories[vm.indexOfCurrentActiveCategory])
@@ -145,14 +144,59 @@
 
             }
 
-
             //Products
 
             vm.addNewProduct = false;
-            vm.toggleAddNewProduct = function (){
-                 vm.addNewProduct = ! vm.addNewProduct;
-                 console.log(vm.newProduct);
+            vm.toggleAddNewProduct = function () {
+                vm.addNewProduct = !vm.addNewProduct;
+                console.log(vm.newProduct);
             }
 
-        });
+            vm.upload = function (file, fileType) {
+                if (!vm.newProduct.mainImage) {
+                    toastr.error('No image uploaded');
+                    return;
+                }
+                if (vm.newProduct.mainImage) {
+                    vm.newProduct.fileType = 'productImagesMain';
+                }
+
+                if (vm.newProduct.secondImage) {
+                    vm.newProduct.additionalImage = true;
+                }
+
+                if (vm.newProduct.thirdImage) {
+                    vm.newProduct.additionalImageSecond = true;
+                }
+
+                if (vm.newProduct.forthImage) {
+                    vm.newProduct.additionalImageThird = true;
+                }
+
+                // categoriesServices     .uploadProduct(vm.newProduct)     .then(function (res)
+                // {         console.log(res);         console.log('succeeded')     }, function
+                // (err) {         console.log(err);     })
+
+                Upload.upload({
+                    url: 'http://localhost:3030/api/products/add',
+                    headers: {
+                        "Content-Type": 'multipart/form-data'
+                    },
+                        data: {
+                            product:vm.newProduct
+                        }
+                    })
+                    .then(function (resp) {
+                        toastr.success('File uploaded succesfully ');
+                    }, function (resp) {
+                        toastr.error(' File is not uploaded ');
+                    }, function (evt) {
+                        var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                        // console.log(progressPercentage) //
+                        // console.log('progress: ' + progressPercentage + '% ' + //
+                        //         evt.config.data.file.name);
+                    });
+            };
+
+        })
 })();

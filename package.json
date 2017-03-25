@@ -12,6 +12,7 @@
     "body-parser": "^1.15.2",
     "child_process": "^1.0.2",
     "express": "^4.14.0",
+    "express-fileupload": "^0.1.2",
     "jsonwebtoken": "^7.1.9",
     "mongoose": "^4.5.9",
     "node-uuid": "^1.4.7",

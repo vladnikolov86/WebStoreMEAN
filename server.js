@@ -6,6 +6,7 @@ var constants = require('./common/constants');
 var env = process.env.NODE_ENV || 'development';
 var app = express();
 
+
 //Server configuration
 require('./server/config/config')(app);
 

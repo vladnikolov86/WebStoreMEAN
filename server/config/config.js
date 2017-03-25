@@ -3,19 +3,21 @@
  */
 var express = require('express'),
     bodyParser = require('body-parser'),
-    path = require('path');
-
+    path = require('path'),
+    fileUpload = require('express-fileupload');
+    
 module.exports = function (app) {
 
     //Set path for all public resources
     app.use(express.static(__dirname + '/../../public/dist'));
 
-    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(bodyParser.urlencoded({extended: false}));
     app.use(bodyParser.json());
+    app.use(fileUpload());
 
     app.get('/api/about', function (req, res) {
         // var requestHost = req.get('host');
-        res.send({ proba: 'test' });
+        res.send({proba: 'test'});
     });
 
     app
@@ -32,7 +34,7 @@ module.exports = function (app) {
         res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
         next();
-    
+
     });
 
     //User routes

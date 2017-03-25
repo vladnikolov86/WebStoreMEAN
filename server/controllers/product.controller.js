@@ -61,8 +61,6 @@ module.exports = function (app) {
             })
         });
 
-
-
     app
         .route('/api/products')
         .get(function (req, res) {
@@ -73,23 +71,20 @@ module.exports = function (app) {
                         res.send(err + ' An error occured while retrieving products!');
                     } else {
                         var productsToReturn = products;
-                        tokenFromRequest(req)
-                            .then(function (response) {
-                                var productsDTO = addProducts(products, response)
+                        tokenFromRequest(req).then(function (response) {
+                            var productsDTO = addProducts(products, response)
 
-                                res.send(productsDTO);
-                                res.status(200);
-                            }, function (err) {
-                                var productsDTO = addProducts(products, err)
+                            res.send(productsDTO);
+                            res.status(200);
+                        }, function (err) {
+                            var productsDTO = addProducts(products, err)
 
-                                res.send(productsDTO);
-                                res.status(200);
-                            })
+                            res.send(productsDTO);
+                            res.status(200);
+                        })
                     }
                 })
         });
-
-
 
     //Paging for products
     app
@@ -100,7 +95,7 @@ module.exports = function (app) {
 
             Product
                 .find({})
-                .sort({ updated: 'desc' })
+                .sort({updated: 'desc'})
                 .skip(productsByPage * (pageNumber - 1))
                 .limit(productsByPage)
                 .exec(function (err, response) {
@@ -122,7 +117,7 @@ module.exports = function (app) {
                                     response.priceHome = '';
                                     response.price = response.priceProfessional;
                                 }
-                            }, function () { })
+                            }, function () {})
                     }
 
                     res.send(response)
@@ -134,35 +129,96 @@ module.exports = function (app) {
     app
         .route('/api/products/add')
         .post(function (req, res) {
-            var productIsValid = validateProduct(req.body);
-            if (typeof categoryIsValid == 'string') {
-                res.status(400);
-                res.json(productIsValid);
-                return;
-            }
+            // var productIsValid = validateProduct(req.body);
+            // if (typeof productIsValid == 'string') {
+            //     res.status(400);
+            //     res.json(productIsValid);
+            //     return;
+            // }
 
+            if (!req.files) 
+                return res.status(400).send('No files were uploaded.');
+            
             var product = new Product({
-                name: req.body.Name,
-                heading: req.body.Heading,
-                description: req.body.Description,
-                category: req.body.Category,
-                subCategory: req.body.SubCategory,
-                inventoryId: req.body.InventoryId,
-                picturePreview: req.body.PicturePreview,
-                priceProfessionals: req.body.PriceProfessionals,
-                priceHome: req.body.PriceHome
+                name: req.body['product[heading]'],
+                heading: req.body['product[heading]'],
+                description: req.body['product[description]'],
+                category: req.body['product[category]'],
+                subCategory: req.body['product[subCategory]'],
+                inventoryId: req.body['product[inventoryId]'],
+                priceProfessionals: req.body['product[priceProfessional]'],
+                priceHome: req.body['product[priceHome]']
             })
 
-            product.save(function (err) {
-                if (err) {
-                    res.status(400);
-                    res.json(err);
-                } else {
-                    res.status(200);
-                    res.json('Product saved successfully!');
-                }
-            });
+            product.pictureOthers = [];
+
+            if (req.body['product[fileType]'] == 'productImagesMain') {
+                let mainImage = req.files['product[mainImage]'];
+                mainImage.mv('public/src/app/assets/' + 'productImagesMain' + '/' + mainImage.name + '.jpg', function (err) {
+                    if (err) 
+                        return res.status(500).send(err);
+                    product.picturePreview = mainImage.name+'.jpg';
+                });
+            }
+
+            if (req.body['product[additionalImage]']) {
+                let additionalImage = req.files['product[additionalImage]'];
+                additionalImage.mv('public/src/app/assets/' + 'productImagesOthers' + '/' + req.files.additionalImage.name + '.jpg', function (err) {
+                    if (err) 
+                        return res.status(500).send(err);
+                    product.pictureOthers[0]=additionalImage.name+'.jpg';
+                });
+            }
+
+             if (req.body['product[additionalImageSecond]']) {
+                let additionalImageSecond = req.files['product[additionalImageSecond]'];
+                additionalImageSecond.mv('public/src/app/assets/' + 'productImagesOthers' + '/' + req.files.additionalImageSecond.name + '.jpg', function (err) {
+                    if (err) 
+                        return res.status(500).send(err);
+                    product.pictureOthers[1]=additionalImage.name+'.jpg';
+                });
+            }
+
+            if (req.body['product[additionalImageThird]']) {
+                let additionalImageThird = req.files['product[additionalImageThird]'];
+                additionalImageThird.mv('public/src/app/assets/' + 'productImagesOthers' + '/' + req.files.additionalImageThird.name + '.jpg', function (err) {
+                    if (err) 
+                        return res.status(500).send(err);
+                    product.pictureOthers[2]=additionalImage.name+'.jpg';
+                });
+            }
+
+            product
+                .save(function (err) {
+                    if (err) {
+                        res.status(400);
+                        res.json(err);
+                        return;
+                    } else {
+                        res.status(200);
+                        resjson('Product saved successfully!');
+                    }
+                });
         });
+
+    app.post('/api/upload/images', function (req, res) {
+        console.log(req.headers.imagetype)
+        if (!req.files) 
+            return res.status(400).send('No files were uploaded.');
+        
+        if (req.body.fileType == 'productImagesMain') {
+            let mainImage = req.files.mainImage;
+            mainImage.mv('public/src/app/assets/' + req.body.fileType + '/' + req.files.mainImage.name + '.jpg', function (err) {
+                if (err) 
+                    return res.status(500).send(err);
+                
+                res.send('File uploaded!');
+            });
+        }
+    })
+
+    // The name of the input field (i.e. "sampleFile") is used to retrieve the
+    // uploaded file Use the mv() method to place the file somewhere on your server
 
     app
         .route('/api/products/edit/:id')
@@ -205,7 +261,7 @@ module.exports = function (app) {
             let dbId = req.params.id;
 
             Product
-                .findOneAndRemove({ '_id': dbId })
+                .findOneAndRemove({'_id': dbId})
                 .exec(function (err, doc) {
                     if (err) {
                         res.status(400);
@@ -224,10 +280,13 @@ module.exports = function (app) {
                 {
                     name: 'Нагреввател',
                     heading: 'Професионален нагревател',
-                    description: '<span>НАГРЕВАТЕЛ - Професионален нагревател за кола.Професионален крем за бръчки описание.Професионален крем за бръчки описание.</span>',
+                    description: '<span>НАГРЕВАТЕЛ - Професионален нагревател за кола.Професионален крем за бръчки' +
+                            ' описание.Професионален крем за бръчки описание.</span>',
                     category: 'Козметика за лице',
                     brand: 'Depileve',
-                    subCategory: ['Епилация', 'Нагреватели'],
+                    subCategory: [
+                        'Епилация', 'Нагреватели'
+                    ],
                     inventoryId: 4,
                     picturePreview: 'pic.png',
                     picturesOthers: ['picOthers'],
@@ -237,7 +296,8 @@ module.exports = function (app) {
                 }, {
                     name: 'Крем за бръчки',
                     heading: 'Професионален крем за бръчки',
-                    description: '<span>Професионален крем за бръчки описание.Професионален крем за бръчки описание.Професионален крем за бръчки описание. </span>',
+                    description: '<span>Професионален крем за бръчки описание.Професионален крем за бръчки описани' +
+                            'е.Професионален крем за бръчки описание. </span>',
                     category: 'Козметика за лице',
                     brand: 'ANESI',
                     subCategory: ['Нормална кожа'],
@@ -267,16 +327,9 @@ module.exports = function (app) {
 
                 })
 
-
-
                 proudctToSave.save(function (err) {
-                    if (err) {
-
-                    } else {
-
-                    }
+                    if (err) {} else {}
                 });
-
 
             }
 
