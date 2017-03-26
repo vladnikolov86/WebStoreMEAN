@@ -112,37 +112,25 @@
         <div><span>Име на продукта</span> <input ng-model="admin.newProduct.name" type="text"></div>
         <div><span>Заглавие на продукта</span> <input ng-model="admin.newProduct.heading" type="text"></div>
         <div><span>Бранд на продукта</span> <input ng-model="admin.newProduct.brand" type="text"></div>
-        <div><span>Каталожен номер</span> <input ng-model="admin.newProduct.iventoryId" type="number"></div>
+        <div><span>Каталожен номер</span> <input ng-model="admin.newProduct.inventoryId" type="number"></div>
         <textarea froala ng-model="admin.newProduct.description"></textarea>
-        <div><span>Upload main picture</span> </div>
-        <div><span>Upload other pictures</span></div>
-        <!--<form ref='uploadForm' id='uploadForm' action='http://localhost:3030/api/upload/images' method='post' encType="multipart/form-data">
-            <input type="file" name="sampleFile" />
-            <input type='submit' value='Upload!' />
-        </form>-->
-        <form name="form">
-            Single Image with validations
-            <div class="button" ngf-select ng-model="admin.newProduct.mainImage" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="2MB">Select</div>
+        Single Image with validations
+        <div class="btn btn-info block btn-upload" ngf-select ng-model="admin.newProduct.mainImage" name="file" ngf-pattern="'image/*'"
+            ngf-accept="'image/*'" ngf-max-size="2MB">Main image</div>
+        <div>{{admin.newProduct.mainImage.name}}</div>
 
-            <div class="button" ngf-select ng-model="admin.newProduct.secondImage" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="2MB">Select</div>
-            
-            <div class="button" ngf-select ng-model="admin.newProduct.thirdImage" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="2MB">Select</div>
-            
-            <div class="button" ngf-select ng-model="admin.newProduct.forthImage" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="2MB">Select</div>
-            <button type="submit" ng-click="admin.upload()">submit</button>
-        </form>
-        <!--<form  name="form">
-            Single Image with validations
-            <div class="button" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB"
-                ngf-min-height="100" ngf-resize="{width: 100, height: 100}">Select</div>
-            Multiple files
-            <div class="button" ngf-select ng-model="files" ngf-multiple="true">Select</div>
-            Drop files:
-            <div ngf-drop ng-model="files" class="drop-box">Drop</div>
-            <button type="submit" ng-click="submit()">submit</button>
-        </form>-->
+        <div class="btn btn-info block btn-upload" ngf-select ng-model="admin.newProduct.secondImage" name="file" ngf-pattern="'image/*'"
+            ngf-accept="'image/*'" ngf-max-size="2MB">Second image</div>
+        <div>{{admin.newProduct.secondImage.name}}</div>
 
+        <div class="btn btn-info block btn-upload" ngf-select ng-model="admin.newProduct.thirdImage" name="file" ngf-pattern="'image/*'"
+            ngf-accept="'image/*'" ngf-max-size="2MB">Third image</div>
+        <div>{{admin.newProduct.thirdImage.name}}</div>
 
+        <div class="btn btn-info block btn-upload" ngf-select ng-model="admin.newProduct.forthImage" name="file" ngf-pattern="'image/*'"
+            ngf-accept="'image/*'" ngf-max-size="2MB">Forth image</div>
+
+        <div>{{admin.newProduct.forthImage.name}}</div>
 
         <div><span>Цена за корпоративни клиенти</span> <input ng-model="admin.newProduct.priceProfessional" type="number"></div>
         <div><span>Цена за клиенти</span> <input ng-model="admin.newProduct.priceHome" type="number"></div>
@@ -150,7 +138,7 @@
                 type="number"></div>
         <div><span>Промоционална цена за клиенти</span> <input ng-model="admin.newProduct.pricePromotionalHome" type="number"></div>
         <div><span>Промоционална цена за клиенти</span> <input ng-model="admin.newProduct.quantity" type="number"></div>
-
+        <div class="btn btn-success" ng-click="admin.upload()">submit</button>
     </div>
 
 

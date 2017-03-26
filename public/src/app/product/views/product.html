@@ -1,8 +1,8 @@
-<div class="background-product-catalog row">
+<div class="background-product-catalog wrapper-product-display row">
 
     <div class="inline-block row">
         <div class="col-md-4 col-xs-4">
-        <img src="/app/assets/imgExample.jpg" width="100%" height="100%" />
+        <img ng-src="{{'/app/assets/productImagesMain/'+product.product.picturePreview}}" width="100%" height="100%" />
         </div>
         <div class="col-md-7 col-xs-7">
         <div class="product-heading"><strong>{{product.product.heading}}</strong></div>
@@ -11,10 +11,10 @@
         <div class="price-content">Каталожен номер: <strong>{{product.product.inventoryId}}</strong></div>
         <div>
             <div class="price-content">Други снимки:</div>
-              <img src="/app/assets/imgExample.jpg" width="80px" height="80px" />
-               <img src="/app/assets/imgExample.jpg" width="80px" height="80px" />
-                <img src="/app/assets/imgExample.jpg" width="80px" height="80px" />
-                 <img src="/app/assets/imgExample.jpg" width="80px" height="80px" />
+              <img ng-show='product.product.picturesOthers[0].length>0' ng-src="{{'/app/assets/productImagesOthers/'+product.product.picturesOthers[0]}}" width="80px" height="80px" />
+               <img ng-show='product.product.picturesOthers[1].length>0' ng-src="{{'/app/assets/productImagesOthers/'+product.product.picturesOthers[1]}}" width="80px" height="80px" />
+                <img ng-show='product.product.picturesOthers[2].length>0' ng-src="{{'/app/assets/productImagesOthers/'+product.product.picturesOthers[2]}}" width="80px" height="80px" />
+                 <img ng-show='product.product.picturesOthers[3].length>0' ng-src="{{'/app/assets/productImagesOthers/'+product.product.picturesOthers[3]}}" width="80px" height="80px" />
         </div>
 <div class="buttons-products">
 <button class="btn btn-success custom-button"><span class="glyphicon glyphicon-shopping-cart"></span> Купи</button>

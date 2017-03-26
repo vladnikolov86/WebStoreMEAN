@@ -128,64 +128,77 @@ module.exports = function (app) {
     //authorize!
     app
         .route('/api/products/add')
-        .post(function (req, res) {
-            // var productIsValid = validateProduct(req.body);
-            // if (typeof productIsValid == 'string') {
-            //     res.status(400);
-            //     res.json(productIsValid);
-            //     return;
-            // }
+        .post(authorizeAdmin, function (req, res) {
+            // var productIsValid = validateProduct(req.body); if (typeof productIsValid ==
+            // 'string') {     res.status(400);     res.json(productIsValid);     return; }
 
             if (!req.files) 
                 return res.status(400).send('No files were uploaded.');
             
             var product = new Product({
-                name: req.body['product[heading]'],
+                name: req.body['product[name]'],
+                brand: req.body['product[brand]'],
                 heading: req.body['product[heading]'],
                 description: req.body['product[description]'],
                 category: req.body['product[category]'],
-                subCategory: req.body['product[subCategory]'],
                 inventoryId: req.body['product[inventoryId]'],
-                priceProfessionals: req.body['product[priceProfessional]'],
+                priceProfessional: req.body['product[priceProfessional]'],
                 priceHome: req.body['product[priceHome]']
             })
 
-            product.pictureOthers = [];
+            product.picturesOthers = [];
+            product.subCategory = [];
+
+            if(req.body['product[subCategory][0]']){
+                product.subCategory.push(req.body['product[subCategory][0]']);
+            }
+
+            if(req.body['product[subCategory][1]']){
+                 product.subCategory.push(req.body['product[subCategory][1]']);
+            }
 
             if (req.body['product[fileType]'] == 'productImagesMain') {
                 let mainImage = req.files['product[mainImage]'];
-                mainImage.mv('public/src/app/assets/' + 'productImagesMain' + '/' + mainImage.name + '.jpg', function (err) {
+                product.picturePreview = mainImage.name;
+                mainImage.mv('public/src/app/assets/productImagesMain/' + mainImage.name, function (err) {
                     if (err) 
-                        return res.status(500).send(err);
-                    product.picturePreview = mainImage.name+'.jpg';
+                        //   return res.status(500).send(err);
+                        return ''
+
                 });
             }
 
             if (req.body['product[additionalImage]']) {
-                let additionalImage = req.files['product[additionalImage]'];
-                additionalImage.mv('public/src/app/assets/' + 'productImagesOthers' + '/' + req.files.additionalImage.name + '.jpg', function (err) {
+                let additionalImage = req.files['product[secondImage]'];
+                product.picturesOthers[0] = additionalImage.name;
+                additionalImage.mv('public/src/app/assets/productImagesOthers/' + additionalImage.name, function (err) {
                     if (err) 
-                        return res.status(500).send(err);
-                    product.pictureOthers[0]=additionalImage.name+'.jpg';
+                        // return res.status(500).send(err);
+                        return ''
+
                 });
             }
 
-             if (req.body['product[additionalImageSecond]']) {
-                let additionalImageSecond = req.files['product[additionalImageSecond]'];
-                additionalImageSecond.mv('public/src/app/assets/' + 'productImagesOthers' + '/' + req.files.additionalImageSecond.name + '.jpg', function (err) {
+            if (req.body['product[additionalImageSecond]']) {
+                let additionalImageSecond = req.files['product[thirdImage]'];
+                product.picturesOthers[1] = additionalImageSecond.name
+                additionalImageSecond.mv('public/src/app/assets/productImagesOthers/' + additionalImageSecond.name, function (err) {
                     if (err) 
-                        return res.status(500).send(err);
-                    product.pictureOthers[1]=additionalImage.name+'.jpg';
-                });
+                        return ''
+                        // return res.status(500).send(err);;
+                    });
             }
 
             if (req.body['product[additionalImageThird]']) {
-                let additionalImageThird = req.files['product[additionalImageThird]'];
-                additionalImageThird.mv('public/src/app/assets/' + 'productImagesOthers' + '/' + req.files.additionalImageThird.name + '.jpg', function (err) {
+                let additionalImageThird = req.files['product[forthImage]'];
+                product.picturesOthers[2] = additionalImageThird.name;
+                additionalImageThird.mv('public/src/app/assets/productImagesOthers/' + additionalImageThird.name, function (err) {
                     if (err) 
-                        return res.status(500).send(err);
-                    product.pictureOthers[2]=additionalImage.name+'.jpg';
-                });
+                        return '';
+                        //      return res.status(500).send(err);
+
+                    }
+                );
             }
 
             product
@@ -196,7 +209,7 @@ module.exports = function (app) {
                         return;
                     } else {
                         res.status(200);
-                        resjson('Product saved successfully!');
+                        res.json('Product saved successfully!');
                     }
                 });
         });

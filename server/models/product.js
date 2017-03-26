@@ -8,7 +8,7 @@ module.exports = function (mongoose) {
         },
         inPromotion: {
             type: Boolean,
-            default: false,
+            default: false
         },
         heading: {
             type: String,
@@ -24,14 +24,15 @@ module.exports = function (mongoose) {
         },
         brand: {
             type: String,
-            required: true,
+            required: true
         },
         subCategory: {
             type: Array
         },
         inventoryId: {
             type: Number,
-            required: true
+            required: true,
+            unique: true
         },
         picturePreview: {
             type: String
