@@ -56,7 +56,7 @@ module.exports = function (mongoose) {
             type: 'Mixed'
         },
         quantity: {
-            type: Number
+            type: String
         },
         updated: {
             type: Date,

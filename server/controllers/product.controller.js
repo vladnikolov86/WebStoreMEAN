@@ -95,7 +95,7 @@ module.exports = function (app) {
 
             Product
                 .find({})
-                .sort({updated: 'desc'})
+                .sort({ updated: 'desc' })
                 .skip(productsByPage * (pageNumber - 1))
                 .limit(productsByPage)
                 .exec(function (err, response) {
@@ -117,7 +117,7 @@ module.exports = function (app) {
                                     response.priceHome = '';
                                     response.price = response.priceProfessional;
                                 }
-                            }, function () {})
+                            }, function () { })
                     }
 
                     res.send(response)
@@ -132,16 +132,18 @@ module.exports = function (app) {
             // var productIsValid = validateProduct(req.body); if (typeof productIsValid ==
             // 'string') {     res.status(400);     res.json(productIsValid);     return; }
 
-            if (!req.files) 
+            if (!req.files)
                 return res.status(400).send('No files were uploaded.');
-            
+
             var product = new Product({
                 name: req.body['product[name]'],
                 brand: req.body['product[brand]'],
                 heading: req.body['product[heading]'],
+                quantity: req.body['product[quantity]'],
                 description: req.body['product[description]'],
                 category: req.body['product[category]'],
                 inventoryId: req.body['product[inventoryId]'],
+                inPromotion: req.body['product[inPromotion]'],
                 priceProfessional: req.body['product[priceProfessional]'],
                 priceHome: req.body['product[priceHome]']
             })
@@ -149,19 +151,19 @@ module.exports = function (app) {
             product.picturesOthers = [];
             product.subCategory = [];
 
-            if(req.body['product[subCategory][0]']){
+            if (req.body['product[subCategory][0]']) {
                 product.subCategory.push(req.body['product[subCategory][0]']);
             }
 
-            if(req.body['product[subCategory][1]']){
-                 product.subCategory.push(req.body['product[subCategory][1]']);
+            if (req.body['product[subCategory][1]']) {
+                product.subCategory.push(req.body['product[subCategory][1]']);
             }
 
             if (req.body['product[fileType]'] == 'productImagesMain') {
                 let mainImage = req.files['product[mainImage]'];
                 product.picturePreview = mainImage.name;
                 mainImage.mv('public/src/app/assets/productImagesMain/' + mainImage.name, function (err) {
-                    if (err) 
+                    if (err)
                         //   return res.status(500).send(err);
                         return ''
 
@@ -172,7 +174,7 @@ module.exports = function (app) {
                 let additionalImage = req.files['product[secondImage]'];
                 product.picturesOthers[0] = additionalImage.name;
                 additionalImage.mv('public/src/app/assets/productImagesOthers/' + additionalImage.name, function (err) {
-                    if (err) 
+                    if (err)
                         // return res.status(500).send(err);
                         return ''
 
@@ -183,21 +185,21 @@ module.exports = function (app) {
                 let additionalImageSecond = req.files['product[thirdImage]'];
                 product.picturesOthers[1] = additionalImageSecond.name
                 additionalImageSecond.mv('public/src/app/assets/productImagesOthers/' + additionalImageSecond.name, function (err) {
-                    if (err) 
+                    if (err)
                         return ''
-                        // return res.status(500).send(err);;
-                    });
+                    // return res.status(500).send(err);;
+                });
             }
 
             if (req.body['product[additionalImageThird]']) {
                 let additionalImageThird = req.files['product[forthImage]'];
                 product.picturesOthers[2] = additionalImageThird.name;
                 additionalImageThird.mv('public/src/app/assets/productImagesOthers/' + additionalImageThird.name, function (err) {
-                    if (err) 
+                    if (err)
                         return '';
-                        //      return res.status(500).send(err);
+                    //      return res.status(500).send(err);
 
-                    }
+                }
                 );
             }
 
@@ -216,15 +218,15 @@ module.exports = function (app) {
 
     app.post('/api/upload/images', function (req, res) {
         console.log(req.headers.imagetype)
-        if (!req.files) 
+        if (!req.files)
             return res.status(400).send('No files were uploaded.');
-        
+
         if (req.body.fileType == 'productImagesMain') {
             let mainImage = req.files.mainImage;
             mainImage.mv('public/src/app/assets/' + req.body.fileType + '/' + req.files.mainImage.name + '.jpg', function (err) {
-                if (err) 
+                if (err)
                     return res.status(500).send(err);
-                
+
                 res.send('File uploaded!');
             });
         }
@@ -274,7 +276,7 @@ module.exports = function (app) {
             let dbId = req.params.id;
 
             Product
-                .findOneAndRemove({'_id': dbId})
+                .findOneAndRemove({ '_id': dbId })
                 .exec(function (err, doc) {
                     if (err) {
                         res.status(400);
@@ -294,7 +296,7 @@ module.exports = function (app) {
                     name: 'Нагреввател',
                     heading: 'Професионален нагревател',
                     description: '<span>НАГРЕВАТЕЛ - Професионален нагревател за кола.Професионален крем за бръчки' +
-                            ' описание.Професионален крем за бръчки описание.</span>',
+                    ' описание.Професионален крем за бръчки описание.</span>',
                     category: 'Козметика за лице',
                     brand: 'Depileve',
                     subCategory: [
@@ -310,7 +312,7 @@ module.exports = function (app) {
                     name: 'Крем за бръчки',
                     heading: 'Професионален крем за бръчки',
                     description: '<span>Професионален крем за бръчки описание.Професионален крем за бръчки описани' +
-                            'е.Професионален крем за бръчки описание. </span>',
+                    'е.Професионален крем за бръчки описание. </span>',
                     category: 'Козметика за лице',
                     brand: 'ANESI',
                     subCategory: ['Нормална кожа'],
@@ -341,7 +343,7 @@ module.exports = function (app) {
                 })
 
                 proudctToSave.save(function (err) {
-                    if (err) {} else {}
+                    if (err) { } else { }
                 });
 
             }

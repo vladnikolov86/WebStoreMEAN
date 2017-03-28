@@ -113,8 +113,8 @@
         <div><span>Заглавие на продукта</span> <input ng-model="admin.newProduct.heading" type="text"></div>
         <div><span>Бранд на продукта</span> <input ng-model="admin.newProduct.brand" type="text"></div>
         <div><span>Каталожен номер</span> <input ng-model="admin.newProduct.inventoryId" type="number"></div>
-        <textarea froala ng-model="admin.newProduct.description"></textarea>
-        Single Image with validations
+        <div><span>Разфасовка</span> <input ng-model="admin.newProduct.quantity" type="text"></div>
+        <textarea froala ng-model="admin.newProduct.description"></textarea> Single Image with validations
         <div class="btn btn-info block btn-upload" ngf-select ng-model="admin.newProduct.mainImage" name="file" ngf-pattern="'image/*'"
             ngf-accept="'image/*'" ngf-max-size="2MB">Main image</div>
         <div>{{admin.newProduct.mainImage.name}}</div>
@@ -134,12 +134,16 @@
 
         <div><span>Цена за корпоративни клиенти</span> <input ng-model="admin.newProduct.priceProfessional" type="number"></div>
         <div><span>Цена за клиенти</span> <input ng-model="admin.newProduct.priceHome" type="number"></div>
-        <div><span>Промоционална цена за корпоративни клиенти</span> <input ng-model="admin.newProduct.pricePromotionalProfessional"
-                type="number"></div>
-        <div><span>Промоционална цена за клиенти</span> <input ng-model="admin.newProduct.pricePromotionalHome" type="number"></div>
-        <div><span>Промоционална цена за клиенти</span> <input ng-model="admin.newProduct.quantity" type="number"></div>
+        <div><span>В промоция:</span>
+            <checkbox ng-model="admin.newProduct.inPromotion"></checkbox>
+        </div>
+        <div ng-show="admin.newProduct.inPromotion">
+            <div><span>Промоционална цена за корпоративни клиенти</span> <input ng-model="admin.newProduct.pricePromotionalProfessional"
+                    type="number"></div>
+            <div><span>Промоционална цена за клиенти</span> <input ng-model="admin.newProduct.pricePromotionalHome" type="number"></div>
+        </div>
         <div class="btn btn-success" ng-click="admin.upload()">submit</button>
+        </div>
+
+
     </div>
-
-
-</div>
