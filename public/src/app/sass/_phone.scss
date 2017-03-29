@@ -78,6 +78,12 @@ border-radius:8px;
   margin-left:10px;
   max-width:300px;
 }
+.product-heading-dashboard{
+  height:3em;
+  line-height: 1.5em;
+  overflow: hidden;
+}
+
 //endregion
 
 
@@ -97,6 +103,12 @@ border-radius:8px;
 }
 .wrapper-product-display{
   padding:15px;
+}
+.product-heading-color{
+  color:$blue-green-color;
+}
+.price-font-size{
+  font-size:$price-size;
 }
 
 //endregion

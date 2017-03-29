@@ -1,10 +1,10 @@
-<div class="inline-block col-md-3 col-sm-3 col-xs-4 padding-15px">
-  <div>
+<div class="inline-block col-xs-4 col-sm-4 col-md-4 col-lg-3 padding-15px">
+  <div class="text-center">
     <img ng-src="{{'/app/assets/productImagesMain/'+product.picturePreview}}"
-      width="99%" height="99%">
+      width="150px" height="150px">
   </div>
-  <div class="text-center">{{product.heading}}</div>
-  <div class="text-center">Цена: {{product.price}}</div>
+  <div class="text-center product-heading-color product-heading-dashboard"><strong>{{product.name}}</strong></div>
+  <div class="text-center price-font-size">{{product.price}} лв.</div>
   <div class="text-center">
     <div class="btn btn-primary" ui-sref="main.dashboard.product({id:product.inventoryId})">Детайли</div>
   </div>
