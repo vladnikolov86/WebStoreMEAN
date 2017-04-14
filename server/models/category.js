@@ -1,18 +1,22 @@
-module.exports = function (mongoose) {
-    var Schema = mongoose.Schema;
+var AutoIncrement = require('mongoose-sequence');
+var mongoose = require('mongoose');
 
-    var Category = mongoose.model('Category', new Schema({
-        name: {
-            type: String,
-            required: true
-        },
-        subCategories: {
-            type: 'Mixed',
-            required: false,
-            unique: false
-        }
-    }));
+CategorySchema = mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    subCategories: {
+        type: 'Mixed',
+        required: false,
+        unique: false
+    }
+}, {_id: false});
+CategorySchema.plugin(AutoIncrement);
 
+module.exports = function () {
 
-    return Category;
+    var model = mongoose.model('Category', CategorySchema);
+
+    return model;
 };

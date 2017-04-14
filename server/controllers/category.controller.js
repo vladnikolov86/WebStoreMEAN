@@ -60,7 +60,6 @@ module.exports = function (app) {
                 name: req.body.name,
                 subCategories: req.body.subCategories || null
             });
-           
 
             Category.update({
                 '_id': dbId
@@ -139,6 +138,7 @@ module.exports = function (app) {
             ];
 
             for (let category of categories) {
+                
                 let categoryToSave = new Category({
                     name: category.name,
                     subCategories: category.subCategories || null
@@ -148,9 +148,9 @@ module.exports = function (app) {
                     if (err) {} else {}
                 });
 
-                res.status(200);
-                res.send('Added');
             }
+            res.status(200);
+            res.send('Added');
 
             // var category = new Category({     name: 'Козметика за лице', subCategories:
             // req.body.subCategories || null }); category.save(function (err) {     if

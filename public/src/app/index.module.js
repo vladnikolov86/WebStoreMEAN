@@ -56,6 +56,13 @@
           controllerAs: 'product'
         })
 
+        .state('main.dashboard.category', {
+          templateUrl: 'app/product/views/product.html',
+          url: '/category/:category/:subCategory/:subSubCategory',
+          controller: 'ProductController',
+          controllerAs: 'product'
+        })
+
         .state('main.login', {
           templateUrl: 'app/users/login/views/login.html',
           url: '/login',
