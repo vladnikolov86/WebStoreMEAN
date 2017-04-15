@@ -3,49 +3,92 @@
 
   angular
     .module('spaStore.users')
-    .factory('productService',
-      function (CONSTANTS, $http, $q) {
+    .factory('productService', function (CONSTANTS, $http, $q) {
 
-        var productService = this;
-        var baseEndPoint = CONSTANTS.BASE,
-          productEndPoint = CONSTANTS.PRODUCT_ENDPOINT;
+      var productService = this;
+      var baseEndPoint = CONSTANTS.BASE,
+        productEndPoint = CONSTANTS.PRODUCT_ENDPOINT;
 
+      productService.getAllProducts = function () {
 
-        productService.getAllProducts = function () {
-        
-          var deferred = $q.defer();
-
-          $http.get(baseEndPoint +productEndPoint,  {
-            headers: {}
-          }).success(function (response) {
+        var deferred = $q.defer();
+console.log(baseEndPoint + productEndPoint)
+        $http
+          .get(baseEndPoint + productEndPoint, {headers: {}})
+          .success(function (response) {
             deferred.resolve(response);
-          }).error(function (err) {
+          })
+          .error(function (err) {
             deferred.reject(err);
           });
 
-          return deferred.promise;
-        };
+        return deferred.promise;
+      };
 
+      productService.getProductsById = function (inventoryId) {
 
-        productService.getProductsById = function (inventoryId) {
-        
-          var deferred = $q.defer();
-          var url = baseEndPoint +productEndPoint+inventoryId;
+        var deferred = $q.defer();
+        var url = baseEndPoint + productEndPoint + inventoryId;
 
-          $http.get(url,{
+        $http
+          .get(url, {
             headers: {
-              'Content-type':'application/x-www-form-urlencoded'
+              'Content-type': 'application/x-www-form-urlencoded'
             }
-          }).success(function (response) {
+          })
+          .success(function (response) {
             deferred.resolve(response);
-          }).error(function (err) {
+          })
+          .error(function (err) {
             deferred.reject(err);
           });
 
-          return deferred.promise;
-        };
+        return deferred.promise;
+      };
 
+      productService.getProductForCategory = function (params) {
+        var deferred = $q.defer();
+        var url = baseEndPoint + productEndPoint + params.category + '/' + params.subCategory + '/' + params.subSubCategory;
 
-        return productService;
-      });
+        $http
+          .get(url, {
+            headers: {
+              'Content-type': 'application/x-www-form-urlencoded'
+            }
+          })
+          .success(function (response) {
+            deferred.resolve(response);
+          })
+          .error(function (err) {
+            deferred.reject(err);
+          });
+
+        return deferred.promise;
+      }
+
+      productService.getProductForCategoryAndPage = function (params) {
+        var deferred = $q.defer();
+        var url = baseEndPoint + productEndPoint + params.category + '/' + params.subCategory + '/' + params.subSubCategory;
+        var pageNumber = params.page,
+          productsByPage = 20;
+        $http
+          .get(url, {
+            headers: {
+              'Content-type': 'application/x-www-form-urlencoded',
+              'productsbypage': productsByPage,
+              'pagenumber':pageNumber
+            }
+          })
+          .success(function (response) {
+            deferred.resolve(response);
+          })
+          .error(function (err) {
+            deferred.reject(err);
+          });
+
+        return deferred.promise;
+      }
+
+      return productService;
+    });
 }());

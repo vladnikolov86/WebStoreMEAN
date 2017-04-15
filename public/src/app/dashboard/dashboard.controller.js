@@ -3,7 +3,7 @@
 
   angular
     .module('spaStore')
-    .controller('DashboardController', function ($q, $rootScope, userInfoService, dashboardService,productService) {
+    .controller('DashboardController', function ($q, $rootScope, userInfoService, dashboardService, productService, $state, $timeout) {
       var vm = this;
 
       //region Caroussel
@@ -31,94 +31,53 @@
         dashboardService
           .getCategories()
           .then(function (res) {
+            
             vm.mainCategories = res;
           }, function (err) {
             console.log(err)
           })
       }
+      var currentState = $state.current.name;
 
-      // vm.mainCategories = [
-      //   {
-      //     name: 'Козметика за лице',
-      //     subCategories: [
-      //       {
-      //         name: 'Суха Кожа',
-      //         subCategories: [
-      //           {
-      //             name: 'TestovaCategoriq1'
-      //           }, {
-      //             name: 'TestovaCategoriq2'
-      //           }
-      //         ]
-      //       }, {
-      //         name: 'Нормална Кожа',
-      //         subCategories: []
-      //       }
-      //     ]
-      //   }, {
-      //     name: 'Козметика за тяло',
-      //     subCategories: []
-      //   }
-      // ];
-
-      // vm.products = [
-      //   {
-      //     name: 'Крем за лице Аква Витал',
-      //     heading: 'Крем Аква Витал',
-      //     description: 'Някакъв примерен дескрипшън, тестов. Много хубав крем.',
-      //     category: 'Козметика за лице',
-      //     subCategory: ['За суха кожа'],
-      //     iventoryId: 5,
-      //     picturePreview: 'http://anesibeaute.com/sites/default/files/styles/product_full/public/product/an' +
-      //         'esi_haute_protection_creme_50ml_a_2.png?itok=FGV8xdvx',
-      //     price: 40,
-      //     reviews: ['Супер кремче', 'Тест ревю']
-      //   }, {
-      //     name: 'Крем за лице Аква Витал',
-      //     heading: 'Крем Аква Витал',
-      //     description: 'Някакъв примерен дескрипшън, тестов. Много хубав крем.',
-      //     category: 'Козметика за лице',
-      //     subCategory: ['За суха кожа'],
-      //     iventoryId: 5,
-      //     picturePreview: 'http://anesibeaute.com/sites/default/files/styles/product_full/public/product/an' +
-      //         'esi_haute_protection_creme_50ml_a_2.png?itok=FGV8xdvx',
-      //     price: 40,
-      //     reviews: ['Супер кремче', 'Тест ревю']
-
-      //   },
-      //   {
-      //     name: 'Крем за лице Аква Витал',
-      //     heading: 'Крем Аква Витал',
-      //     description: 'Някакъв примерен дескрипшън, тестов. Много хубав крем.',
-      //     category: 'Козметика за лице',
-      //     subCategory: ['За суха кожа'],
-      //     iventoryId: 5,
-      //     picturePreview: 'http://anesibeaute.com/sites/default/files/styles/product_full/public/product/an' +
-      //         'esi_haute_protection_creme_50ml_a_2.png?itok=FGV8xdvx',
-      //     price: 40,
-      //     reviews: ['Супер кремче', 'Тест ревю']
-      //   },
-      //   {
-      //     name: 'Крем за лице Аква Витал',
-      //     heading: 'Крем Аква Витал',
-      //     description: 'Някакъв примерен дескрипшън, тестов. Много хубав крем.',
-      //     category: 'Козметика за лице',
-      //     subCategory: ['За суха кожа'],
-      //     iventoryId: 5,
-      //     picturePreview: 'http://anesibeaute.com/sites/default/files/styles/product_full/public/product/an' +
-      //         'esi_haute_protection_creme_50ml_a_2.png?itok=FGV8xdvx',
-      //     price: 40,
-      //     reviews: ['Супер кремче', 'Тест ревю']
-      //   }
-      // ]
-
-        productService.getAllProducts()
-        .then(function (res) {
-          vm.products = res;
-        }, function (err) {
-
-        })
-
+      if (currentState == 'main.dashboard') {
+        productService
+          .getAllProducts()
+          .then(function (res) {
+            vm.products = res;
+            
+          }, function (err) {})
+      } else if (currentState == 'main.category') {
+        productService
+          .getProductForCategory($state.params)
+          .then(function (res) {
+            
+            vm.products = res;
+          }, function (err) {})
+        vm.goToNextPage = function () {
+          $state.go('main.category-page', {
+            category: $state.params.category,
+            subCategory: $state.params.subCategory,
+            subSubCategory: $state.params.subSubCategory,
+            page: 2
+          })
+        }
+      } else if (currentState == 'main.category-page') {
+        productService
+          .getProductForCategoryAndPage($state.params)
+          .then(function (res) {
+            
+            vm.products = res;
+          }, function (err) {})
+        vm.goToNextPage = function () {
+          var page = $state.params.page + 1;
+          $state.go('main.category-page', {
+            category: $state.params.category,
+            subCategory: $state.params.subCategory,
+            subSubCategory: $state.params.subSubCategory,
+            page: page
+          })
+        }
+      }
 
     });
 })();

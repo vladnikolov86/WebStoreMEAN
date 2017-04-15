@@ -22,6 +22,7 @@ module.exports = function (jwt, token, user) {
                 jwt.verify(token, secretKey, function (err, success) {
                     if (err) {
                        //TODO Redirect user to get new token
+                       console.log(err)
                         console.log('Expired')
                         reject(err);
                     } else {

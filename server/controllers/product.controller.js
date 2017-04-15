@@ -27,6 +27,26 @@ function addProducts(products, token) {
     return allProductsDTO;
 }
 
+function returnProductsFromDbQuery(err, products, req, res) {
+    if (err) {
+        res.status(400);
+        res.send(err + ' An error occured while retrieving products!');
+    } else {
+        var productsToReturn = products;
+        tokenFromRequest(req).then(function (response) {
+            var productsDTO = addProducts(products, response)
+
+            res.send(productsDTO);
+            res.status(200);
+        }, function (err) {
+            var productsDTO = addProducts(products, err)
+
+            res.send(productsDTO);
+            res.status(200);
+        })
+    }
+}
+
 module.exports = function (app) {
     //Get by product ID - receives number
     app
@@ -46,19 +66,7 @@ module.exports = function (app) {
                         res.send('No products found, matching the criteria');
                         return;
                     }
-                    tokenFromRequest(req)
-                        .then(function (response) {
-                            var productsDTO = addProducts(products, response)
-
-                            res.send(productsDTO);
-                            res.status(200);
-                        }, function (err) {
-                            var productsDTO = addProducts(products, err)
-
-                            res.send(productsDTO);
-                            res.status(200);
-                        })
-
+                    returnProductsFromDbQuery(err, products, req, res);
                 }
             })
         });
@@ -67,72 +75,79 @@ module.exports = function (app) {
         .route('/api/products')
         .get(function (req, res) {
             Product
-                .find({}, function (err, products) {
-                    if (err) {
-                        res.status(400);
-                        res.send(err + ' An error occured while retrieving products!');
-                    } else {
-                        var productsToReturn = products;
-                        tokenFromRequest(req).then(function (response) {
-                            var productsDTO = addProducts(products, response)
+                .find({})
+                .sort({updated: 'desc'})
+                .exec(function (err, products) {
+                    returnProductsFromDbQuery(err, products, req, res);
 
-                            res.send(productsDTO);
-                            res.status(200);
-                        }, function (err) {
-                            var productsDTO = addProducts(products, err)
-
-                            res.send(productsDTO);
-                            res.status(200);
-                        })
-                    }
                 })
+
         });
 
     app
         .route('/api/products/:categoryId/:subCategoryIndex/:subSubCategoryIndex')
         .get(function (req, res) {
             let categoryId = Number.parseInt(req.params.categoryId);
+            var objectToFilter = {};
 
             Category.find({
                 '_id': categoryId
             }, function (err, category) {
-                if (err) {
+                if (err || category.length == 0) {
                     res.status(400);
                     res.send(err + ' An error occured while retrieving products!');
                     return;
                 } else {
-                    var categoryFromId = 'За Козметици',
-                        subCategoryName = category[0].subCategories[req.params.subCategoryIndex].name,
-                        subSubCategoryName = category[0].subCategories[req.params.subCategoryIndex].subCategories[req.params.subSubCategoryIndex].name;
+                    var categoryFromId = req.params.categoryId.name,
+                        subCategoryName = req.params.subCategoryIndex == -1
+                            ? 'noSubCategory'
+                            : category[0].subCategories[req.params.subCategoryIndex].name,
+                        subSubCategoryName = (req.params.subSubCategoryIndex == -1 || subCategoryName == 'noSubCategory' || !category[0].subCategories[req.params.subCategoryIndex].subCategories || !category[0].subCategories[req.params.subCategoryIndex].subCategories.length < req.params.subSubCategoryIndex)
+                            ? 'noSubSubCategory'
+                            : category[0].subCategories[req.params.subCategoryIndex].subCategories[req.params.subSubCategoryIndex].name;
 
-                    Product.find({
-                        'category': categoryFromId,
-                        "subCategory": {
-                            "$elemMatch": {
-                               $eq:subCategoryName,
-                               $eq:subSubCategoryName
-                               
+                    objectToFilter = {
+                        $and: [
+                            {
+                                'category': category[0].name
+                            }, {
+                                "subCategory": {
+                                    $elemMatch: {
+                                        $eq: subCategoryName
+                                    }
+                                }
+                            }, {
+                                "subCategory": {
+                                    $elemMatch: {
+                                        $eq: subSubCategoryName
+                                    }
+                                }
                             }
-                        }
-                    }, function (err, products) {
-                        if (err) {
-                            res.status(400);
-                            res.send(err + ' An error occured while retrieving products!');
-                        } else {
-                            var productsToReturn = products;
-                            tokenFromRequest(req).then(function (response) {
-                                var productsDTO = addProducts(products, response)
+                        ]
+                    };
 
-                                res.send(productsDTO);
-                                res.status(200);
-                            }, function (err) {
-                                var productsDTO = addProducts(products, err)
+                    if (req.headers.productsbypage && req.headers.pagenumber) {
+                        var productsByPage = Number.parseInt(req.headers.productsbypage),
+                            pageNumber = Number.parseInt(req.headers.pagenumber);
+                    } else {
+                        var productsByPage = 20,
+                            pageNumber = 1;
+                    }
 
-                                res.send(productsDTO);
-                                res.status(200);
-                            })
-                        }
-                    })
+                    if (subCategoryName == 'noSubCategory') {
+                        objectToFilter['$and'].splice(1, 2);
+                    } else if (subSubCategoryName == 'noSubSubCategory') {
+                        objectToFilter['$and'].splice(2, 1);
+                    }
+
+                    Product
+                        .find(objectToFilter)
+                        .sort({updated: 'desc'})
+                        .skip(productsByPage * (pageNumber - 1))
+                        .limit(productsByPage)
+                        .exec(function (err, products) {
+                            returnProductsFromDbQuery(err, products, req, res);
+                        })
                 }
             })
         });
@@ -149,29 +164,8 @@ module.exports = function (app) {
                 .sort({updated: 'desc'})
                 .skip(productsByPage * (pageNumber - 1))
                 .limit(productsByPage)
-                .exec(function (err, response) {
-                    if (err) {
-                        res.send(err);
-                        res.status(400);
-                        return;
-                    }
-                    if (req.headers.authorization) {
-                        var tokenFromBody = req
-                            .headers
-                            .authorization
-                            .split(' ')[1];
-
-                        var role = roleService(jwt, tokenFromBody)
-                            .getRole()
-                            .then(function (role) {
-                                if (role.user.role == 'admin') {
-                                    response.priceHome = '';
-                                    response.price = response.priceProfessional;
-                                }
-                            }, function () {})
-                    }
-
-                    res.send(response)
+                .exec(function (err, products) {
+                    returnProductsFromDbQuery(err, products, req, res);
                 })
 
         });

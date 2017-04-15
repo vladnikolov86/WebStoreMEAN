@@ -14,7 +14,7 @@
                     .put(CONSTANTS.BASE + 'category/delete/' + id, {'Content-Type': 'application/json'})
                     .success(function (response) {
                         deferred.resolve(response);
-                        console.log(response);
+  
                     })
                     .error(function (err) {
                         deferred.reject(err)
@@ -30,7 +30,7 @@
                     .post(CONSTANTS.BASE + 'category/', category, {'Content-Type': 'application/json'})
                     .success(function (response) {
                         deferred.resolve(response);
-                        console.log(response);
+           
                     })
                     .error(function (err) {
                         deferred.reject(err)

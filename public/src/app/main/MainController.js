@@ -6,20 +6,6 @@
     .controller('MainController', function ($q, userInfoService,$rootScope,commonMethods) {
       var vm = this;
 
-      // vm.getUnpaidServices = function () {
-      //   var deferred = $q.defer();
-      //
-      //   $http.get("http://localhost:3030/main1", {
-      //     'Content-Type': 'application/json'
-      //   }).success(function (response) {
-      //     console.log(response);
-      //   }).error(function (err) {
-      //     console.log(err)
-      //   });
-      // };
-
-      // vm.getUnpaidServices();
-
       vm.navbarLinkItems = [
         'Начало', 'За Козметици', 'Проомоции'
       ];

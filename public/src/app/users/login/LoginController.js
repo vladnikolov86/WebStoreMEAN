@@ -5,7 +5,7 @@
     .module('spaStore')
     .controller('LoginController', function (loginService, toastr, $timeout, $location, commonMethods, $rootScope, userInfoService) {
       var vm = this;
-console.log('here')
+
       vm.welcomeText = 'Добре дошли в kozmetikabg.eu! Моля, въведете портребителско име и парола!';
 
       vm.loginUser = function () {

@@ -185,7 +185,7 @@
                 }
 
                 // categoriesServices     .uploadProduct(vm.newProduct)     .then(function (res)
-                // {         console.log(res);         console.log('succeeded')     }, function
+                // {         ;         console.log('succeeded')     }, function
                 // (err) {         console.log(err);     })
 
                 Upload.upload({
