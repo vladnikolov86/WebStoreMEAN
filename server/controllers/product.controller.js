@@ -16,6 +16,9 @@ var tokenFromRequest = require('../services/getTokenFromRequest');
 
 var jwt = require('jsonwebtoken');
 
+const mainImageAssetsPath = 'public/src/app/assets/productImagesMain/';
+const otherImagesAssetsPath = 'public/src/app/assets/productImagesOthers/';
+
 function addProducts(products, token) {
     var allProductsDTO = [];
     var productsDTO = [];
@@ -208,61 +211,66 @@ module.exports = function (app) {
                     .push(req.body['product[subCategory][1]']);
             }
 
-            if (req.body['product[fileType]'] == 'productImagesMain') {
-                let mainImage = req.files['product[mainImage]'];
-                product.picturePreview = mainImage.name;
-                mainImage.mv('public/src/app/assets/productImagesMain/' + mainImage.name, function (err) {
-                    if (err) 
-                        //   return res.status(500).send(err);
-                        return ''
+            async function addProduct() {
+                var errorOccured = false;
+                var errorMessage = '';
+                
+                function writeFileToFileSystem(mainImage, imagePath) {
+                    return new Promise(function (resolve, reject) {
+                        mainImage
+                            .mv(imagePath, function (err) {
+                                if (err) {
+                                    errorOccured = true;
+                                    errMessage = err;
+                                    reject('err');
+                                }
+                                resolve('ok');
+                            });
+                    })
+                }
 
-                });
+                if (req.body['product[fileType]'] == 'productImagesMain') {
+                    product.picturePreview = req.files['product[mainImage]'].name;
+                    await writeFileToFileSystem(req.files['product[mainImage]'], mainImageAssetsPath + req.files['product[mainImage]'].name)
+                }
+
+                if (req.body['product[additionalImage]']) {
+                    product.picturesOthers[0] = req.files['product[secondImage]'].name;
+                    await writeFileToFileSystem(req.files['product[secondImage]'], otherImagesAssetsPath + req.files['product[secondImage]'].name)
+                }
+
+                if (req.body['product[additionalImageSecond]']) {
+                    product.picturesOthers[1] = req.files['product[thirdImage]'].name;
+                    await writeFileToFileSystem(req.files['product[thirdImage]'], otherImagesAssetsPath + req.files['product[thirdImage]'].name)
+                }
+
+                if (req.body['product[additionalImageThird]']) {
+                    product.picturesOthers[2] = req.files['product[forthImage]'].name;
+                    await writeFileToFileSystem(req.files['product[forthImage]'], otherImagesAssetsPath + req.files['product[forthImage]'].name)
+                }
+
+                function addProductToDb() {
+                    product
+                        .save()
+                        .then(function (response) {
+                            res.status(200);
+                            res.json('Product saved successfully!');
+                        }, function (err) {
+                            res.status(400);
+                            res.json(err);
+                        });
+                }
+
+                if (!errorOccured) {
+                    addProductToDb();
+                } else {
+                    res.status(400);
+                    res.json(errorMessage);
+                }
+
             }
+            addProduct();
 
-            if (req.body['product[additionalImage]']) {
-                let additionalImage = req.files['product[secondImage]'];
-                product.picturesOthers[0] = additionalImage.name;
-                additionalImage.mv('public/src/app/assets/productImagesOthers/' + additionalImage.name, function (err) {
-                    if (err) 
-                        // return res.status(500).send(err);
-                        return ''
-
-                });
-            }
-
-            if (req.body['product[additionalImageSecond]']) {
-                let additionalImageSecond = req.files['product[thirdImage]'];
-                product.picturesOthers[1] = additionalImageSecond.name
-                additionalImageSecond.mv('public/src/app/assets/productImagesOthers/' + additionalImageSecond.name, function (err) {
-                    if (err) 
-                        return ''
-                        // return res.status(500).send(err);;
-                    });
-            }
-
-            if (req.body['product[additionalImageThird]']) {
-                let additionalImageThird = req.files['product[forthImage]'];
-                product.picturesOthers[2] = additionalImageThird.name;
-                additionalImageThird.mv('public/src/app/assets/productImagesOthers/' + additionalImageThird.name, function (err) {
-                    if (err) 
-                        return '';
-                        //      return res.status(500).send(err);
-
-                    }
-                );
-            }
-
-            product
-                .save(function (err) {
-                    if (err) {
-                        res.status(400);
-                        res.json(err);
-                        return;
-                    } else {
-                        res.status(200);
-                        res.json('Product saved successfully!');
-                    }
-                });
         });
 
     app.post('/api/upload/images', function (req, res) {
