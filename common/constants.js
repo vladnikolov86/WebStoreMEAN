@@ -19,7 +19,7 @@ var config ={
         connectionString: 'mongodb://localhost:8086/spaStore'
     }, common:{
         host: 'localhost',
-        port: 3030
+        port: 8080
     }
 };
 
