@@ -15,7 +15,7 @@ var config ={
         secret: 'ilovescotchyscotch',
         mongoDbCommand: "mongod --dbpath "+currentDirNormalized+ " --port 8086 --smallfiles"
     }, production:{
-        connectionString: 'mongodb://dasdasdas'
+        connectionString: 'mongodb://localhost:8086/spaStore'
     }, common:{
         host: 'localhost',
         port: 3030

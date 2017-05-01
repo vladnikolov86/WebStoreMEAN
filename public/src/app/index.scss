@@ -4,6 +4,22 @@
  */
 $icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/";
 
+@font-face {
+  font-family: "cousine-regular";
+  src: url('/app/assets/fonts/COUSINE-REGULAR.ttf') format("truetype");
+}
+
+@font-face {
+  font-family: "cousine-bold";
+  src: url('/app/assets/fonts/COUSINE-BOLD.ttf') format("truetype");
+}
+div{
+font-family:"cousine-regular"!important;
+}
+strong{
+  font-family:"cousine-bold"!important;
+}
+
 /**
  *  Do not remove the comments below. It's the markers used by wiredep to inject
  *  sass dependencies when defined in the bower.json of your dependencies
@@ -17,6 +33,7 @@ $menu-color: #b3ecff;
 $button-color: #b3ecff;
 $box-shadow:7px 7px 6px #888888;
 $blue-green-color:#0066c0;
+$grey-color:#5b4040;
 //endregion
 
 //region fonts

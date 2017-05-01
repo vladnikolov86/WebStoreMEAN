@@ -214,7 +214,7 @@ module.exports = function (app) {
             async function addProduct() {
                 var errorOccured = false;
                 var errorMessage = '';
-                
+
                 function writeFileToFileSystem(mainImage, imagePath) {
                     return new Promise(function (resolve, reject) {
                         mainImage
@@ -223,8 +223,10 @@ module.exports = function (app) {
                                     errorOccured = true;
                                     errMessage = err;
                                     reject('err');
+                                } else {
+                                    resolve('ok');
                                 }
-                                resolve('ok');
+
                             });
                     })
                 }

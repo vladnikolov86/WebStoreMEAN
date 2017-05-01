@@ -4,7 +4,9 @@
   "description": "web store appication",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "heroku-prebuild": "npm install && node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm install && node server.js"
   },
   "author": "Vladislav Nikolov",
   "license": "ISC",
