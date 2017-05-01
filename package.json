@@ -7,9 +7,9 @@
     "node": "7.9.0"
   },
   "scripts": {
-    "heroku-prebuild": "npm install && node server.js",
+    "heroku-prebuild": "npm install",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm install && node server.js"
+    "start": "node server.js"
   },
   "author": "Vladislav Nikolov",
   "license": "ISC",
