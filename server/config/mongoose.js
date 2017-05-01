@@ -17,7 +17,7 @@ module.exports = function (constants, env) {
     db.once('open', function (err) {
         if (err) {
             console.log('Database could not connect: ' + err);
-            return;
+             throw new Error(err);
         }
         console.log('Database is running');
     });
