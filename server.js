@@ -14,7 +14,6 @@ require('./server/config/mongoose')(constants, env);
 
 //routes require('./server/config/routes')(app);
 
-// app.listen(constants.common.port, function () {
-//     console.log('Server started on port ' + constants.common.port);
-//     return 'ok'
-// });
+app.listen(constants.common.port, function () {
+    console.log('Server started on port ' + constants.common.port);
+});

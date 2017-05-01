@@ -19,11 +19,6 @@ module.exports = function (constants, env) {
             console.log('Database could not connect: ' + err);
             return;
         }
-        app
-            .listen(constants.common.port, function () {
-                console.log('Server started on port ' + constants.common.port);
-                return 'ok'
-            });
         console.log('Database is running');
     });
     db.on('error', function (err) {
