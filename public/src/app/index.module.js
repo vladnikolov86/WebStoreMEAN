@@ -1,3 +1,5 @@
+var port = process.env.PORT || '3030';
+
 (function () {
   'use strict';
 
@@ -15,7 +17,7 @@
   ])
     .constant({
       CONSTANTS: {
-        BASE: 'http://localhost:3030/api/',
+        BASE: 'http://localhost:'+port+'/api/',
         USERS_ENDPOINT: 'users/',
         DEVELOPMENT: {
           DEVELOPMENT_BASE: 'http://localhost:3030/api/'
