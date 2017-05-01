@@ -88,6 +88,7 @@
     })
     .run(function ($rootScope, $state) {
       $rootScope.$state = $state;
+      console.log('started');
     })
 
 })();
