@@ -7,7 +7,7 @@
       function (CONSTANTS, $http, $q) {
 
         var registerService = this;
-        var baseEndPoint = CONSTANTS.DEVELOPMENT.DEVELOPMENT_BASE,
+        var baseEndPoint = CONSTANTS.BASE,
           usersEndPoint = CONSTANTS.USERS_ENDPOINT;
 
 
