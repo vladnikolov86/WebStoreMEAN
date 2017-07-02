@@ -1,0 +1,39 @@
+<md-toolbar class="header-wrapper">
+  <div class="full-width">
+
+
+
+
+    <form class="inline-block">
+      <md-input-container class="inline-block input-header">
+        <input mdInput placeholder="Username" type="text">
+      </md-input-container>
+
+         <md-input-container class="inline-block input-header">
+        <input mdInput placeholder="Password" type="password">
+      </md-input-container>
+      <button md-button>Login</button>
+    </form>
+
+
+
+
+
+    <popover-content #viber placement="auto right" [animation]="true" [closeOnClickOutside]="true">
+      <div>Viber: 0878 43 66 23</div>
+
+    </popover-content>
+
+
+
+
+    <div class="pull-right header-margin">
+      Намерете ни:
+      <img class="icons" src="assets/icons/mail.png" />
+      <a href="https://www.facebook.com/Anesi.Bulgaria/" target="_blank"> <img class="icons " src="assets/icons/facebook.png" /></a>
+      <img class="icons hand" src="assets/icons/viber.png" [popover]="viber" [popoverOnHover]="true" />
+      <a href="https://www.youtube.com/channel/UCwFW1bXhP6F7EqfEfcSdrCQ/videos" target="_blank"><img class="icons " src="assets/icons/youtube.png" /></a>
+    </div>
+  </div>
+</md-toolbar>
+

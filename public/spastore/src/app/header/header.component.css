@@ -1,0 +1,34 @@
+.header-wrapper{
+    font-size:1.5em;
+}
+
+.header-spa{
+    color:#777777;
+}
+md-toolbar{
+    background-color:#F7F7F7;
+}
+form{
+    font-size:16px!important;
+    margin-top:13px;
+}
+.input-header{
+    max-width:250px;
+}
+.icons{
+    width:30px; 
+    height: 30px;
+}
+.header-margin{
+    margin-right:5%;
+    padding-top:26px;
+}
+
+
+.example-form {
+  width: 500px;
+}
+
+.example-full-width {
+  width: 100%;
+}

@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+body{
+    font-family: "Roboto"!important;
+    font-size:16px;
+}
+.hand{
+    cursor: hand;
+}
+
+
+.inline-block{
+    display:inline-block!important;
+}
+.full-width{
+    width:100%!important;
+}
+.center-text{
+    text-align:center;
+}
+
