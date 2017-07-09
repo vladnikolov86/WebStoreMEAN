@@ -1,39 +1,21 @@
-<md-toolbar class="header-wrapper">
-  <div class="full-width">
+<div class="header-wrapper row">
+  <div class="col-xs-6">
+    <app-main-navigation></app-main-navigation>
+    <button md-button class="header-color">Логин</button>
+    <button md-button class="header-color">Регистрация</button>
+  </div>
 
-
-
-
-    <form class="inline-block">
-      <md-input-container class="inline-block input-header">
-        <input mdInput placeholder="Username" type="text">
-      </md-input-container>
-
-         <md-input-container class="inline-block input-header">
-        <input mdInput placeholder="Password" type="password">
-      </md-input-container>
-      <button md-button>Login</button>
-    </form>
-
-
-
-
-
-    <popover-content #viber placement="auto right" [animation]="true" [closeOnClickOutside]="true">
-      <div>Viber: 0878 43 66 23</div>
-
-    </popover-content>
-
-
-
-
-    <div class="pull-right header-margin">
-      Намерете ни:
-      <img class="icons" src="assets/icons/mail.png" />
-      <a href="https://www.facebook.com/Anesi.Bulgaria/" target="_blank"> <img class="icons " src="assets/icons/facebook.png" /></a>
-      <img class="icons hand" src="assets/icons/viber.png" [popover]="viber" [popoverOnHover]="true" />
-      <a href="https://www.youtube.com/channel/UCwFW1bXhP6F7EqfEfcSdrCQ/videos" target="_blank"><img class="icons " src="assets/icons/youtube.png" /></a>
+  <div class="col-xs-5 col-md-4 pull-right wrap-right">
+    <div class="pull-right cart-wrapper" class="header-color">
+      <button md-button>Количка</button>
+      <img class="icon" src="assets/icons/cart.png">
     </div>
   </div>
-</md-toolbar>
+</div>
 
+<div class="logo-container rowv">
+Спа Трейд ООД
+<div class="pull-right">
+      <img class="logo" src="assets/logos/anesi.jpg">
+</div>
+</div>

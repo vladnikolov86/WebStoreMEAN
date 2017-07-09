@@ -1,34 +1,37 @@
 .header-wrapper{
     font-size:1.5em;
+    padding:5px;
+    background-color:#FBF5F4!important;
+  
+}
+.icon{
+    width:25px;
+    height: 25px;
+}
+.cart-wrapper{
+    margin-right:15px;
+      color:#313131!important;
+}
+.wrap-right{
+    text-align:right;
+    margin-right:20px;
 }
 
-.header-spa{
-    color:#777777;
+.logo-container{
+    font-size:24px;
+    padding:20px 30px 20px 30px;
+    margin-top:30px;
 }
-md-toolbar{
-    background-color:#F7F7F7;
+.logo{
+    height:40px;
+    width:200px;
+    margin-right:40px;
 }
-form{
-    font-size:16px!important;
-    margin-top:13px;
+@media(max-width: 460px){
+  .logo{
+   display:none;
+}  
 }
-.input-header{
-    max-width:250px;
-}
-.icons{
-    width:30px; 
-    height: 30px;
-}
-.header-margin{
-    margin-right:5%;
-    padding-top:26px;
-}
-
-
-.example-form {
-  width: 500px;
-}
-
-.example-full-width {
-  width: 100%;
+.header-color{
+      color:#313131!important;
 }

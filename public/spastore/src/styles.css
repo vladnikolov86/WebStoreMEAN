@@ -1,6 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+@media(max-width:640px){
+@import '_mobile.css';
+}
+
 body{
     font-family: "Roboto"!important;
     font-size:16px;
@@ -19,4 +24,7 @@ body{
 .center-text{
     text-align:center;
 }
+
+
+
 

@@ -14,11 +14,13 @@ import {PopoverModule} from "ng2-popover";
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
+import { MainNavigationComponent } from './main-navigation/main-navigation.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
+    MainNavigationComponent,
   ],
   imports: [
     BrowserModule,
