@@ -1,0 +1,8 @@
+<div class="col-xs-2 hidden-phone hidden-tablet">
+  <div *ngFor="let item of menuItems; let i = index">
+    
+    {{item.mainCategory}}
+<div *ngFor="let subItem of item.subCategories; let i = index">&nbsp;&nbsp;{{subItem.name}}</div>
+
+  </div>
+</div>

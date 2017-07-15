@@ -9,7 +9,6 @@ export class MainNavigationComponent implements OnInit {
 
   @HostListener('mousedown', ['$event'])click(eventData) {
 
-    
     if (eventData.target.id == 'navigationToggler') {
       this.elementRef.nativeElement.childNodes[0].style.width = '250px';
     }
@@ -17,6 +16,7 @@ export class MainNavigationComponent implements OnInit {
     if (eventData.target.className == 'closebtn') {
       this.elementRef.nativeElement.childNodes[0].style.width = 0;
     }
+
   }
 
 }

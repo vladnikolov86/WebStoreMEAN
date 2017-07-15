@@ -2,9 +2,18 @@
 
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
-@media(max-width:640px){
-@import '_mobile.css';
-}
+
+  @import "_mobile.css";
+
+
+@import '_tablet.css';
+
+  @import "_desktop.css";
+
+
+
+
+
 
 body{
     font-family: "Roboto"!important;
