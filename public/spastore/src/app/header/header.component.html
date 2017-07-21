@@ -1,8 +1,8 @@
 <div class="header-wrapper row">
   <div class="col-xs-6">
     <app-main-navigation></app-main-navigation>
-    <button md-button class="header-color">Логин</button>
-    <button md-button class="header-color">Регистрация</button>
+    <button md-button class="header-color" [routerLink]="['/login']">Логин</button>
+    <button md-button class="header-color" [routerLink]="['/register']">Регистрация</button>
   </div>
 
   <div class="col-xs-5 col-md-4 pull-right wrap-right">

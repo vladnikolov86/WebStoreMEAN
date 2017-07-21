@@ -1,0 +1,17 @@
+<div class="container center-text">
+  <form [formGroup]="registerForm"  (ngSubmit)="loginUser()">
+    <div>
+      <md-input-container>
+        <input mdInput placeholder="Username" minlength="3"  formControlName="username" type="text">
+      </md-input-container>
+    </div>
+    <div>
+      <md-input-container>
+        <input mdInput placeholder="Password"   formControlName="password" type="password" >
+      </md-input-container>
+    </div>
+    <div>
+      <button md-raised-button>Register</button>
+    </div>
+  </form>
+</div>
