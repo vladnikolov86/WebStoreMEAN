@@ -15,8 +15,9 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { MainNavigationComponent } from './main-navigation/main-navigation.component';
 import { DesktopNavComponent } from './desktop-nav/desktop-nav.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
+
+import { LoginComponent } from './user/login/login.component';
+import { RegisterComponent } from './user/register/register.component';
 
 const appRoutes : Routes = [
   {path: 'login',component: LoginComponent},

@@ -1,0 +1,50 @@
+<div class="page-header text-center">
+  <h1>Регистрация</h1>
+</div>
+
+<form (ngSubmit)="registerUser()" [formGroup]="registrationForm">
+  <div class="form-group">
+    <md-input-container class="input-register margin-right-2">
+      <input mdInput placeholder="Име" minlength="3" formControlName="firstName" type="text">
+    </md-input-container>
+
+    <md-input-container class="input-register">
+      <input mdInput placeholder="Фамилия" formControlName="lastName" type="text">
+    </md-input-container>
+  </div>
+
+  <div class="form-group">
+    <md-input-container class="input-register margin-right-2">
+      <input mdInput placeholder="Email" formControlName="email" type="email">
+    </md-input-container>
+
+    <md-input-container class="input-register">
+      <input mdInput placeholder="Телефон" formControlName="phone" type="text">
+    </md-input-container>
+  </div>
+
+  <div class="form-group">
+    <textarea class="form-control" rows="5" placeholder="Адрес" formControlName="address">
+      </textarea>
+  </div>
+
+  <div class="form-group">
+    <md-input-container class="input-register margin-right-2">
+      <input mdInput placeholder="Козметичен салон" minlength="3" formControlName="officeName" type="text">
+    </md-input-container>
+
+    <md-input-container class="input-register">
+      <input mdInput placeholder="Служебен телефон" formControlName="corporatePhone" type="text">
+    </md-input-container>
+  </div>
+
+  <div class="form-group">
+    <textarea class="form-control" rows="5" placeholder="Данни за фактура" formControlName="invoiceDetails">
+      </textarea>
+  </div>
+
+  <div class="text-center">
+    <button class="margin-right-2" md-raised-button type="submit">Регистриране</button>
+    <button type="reset" md-raised-button>Изчисти полета</button>
+  </div>
+</form>
