@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit {
     this.registrationForm = this
       .fb
       .group({
-         username: [
+        username: [
           '',
           [
             Validators.required, Validators.minLength(5)
@@ -47,7 +47,10 @@ export class RegisterComponent implements OnInit {
           '', Validators.requiredTrue
         ],
         password: [
-          '', [Validators.required,Validators.minLength(4)]
+          '',
+          [
+            Validators.required, Validators.minLength(4)
+          ]
         ],
         confirmPassword: [
           '', Validators.required
@@ -61,7 +64,10 @@ export class RegisterComponent implements OnInit {
   }
 
   registerUser = function () {
-    console.log(this.registrationForm)
+    if (!this.registrationForm.valid) {
+      return;
+    }
+    
     let user = new User(this.registrationForm.value);
     this
       .userService
