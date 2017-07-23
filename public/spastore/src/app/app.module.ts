@@ -1,30 +1,33 @@
-import { BrowserModule } from '@angular/platform-browser';
+import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
-import { NgModule } from '@angular/core';
-import { FormsModule,ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import {Routes,RouterModule} from '@angular/router';
-
+import {NgModule} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpModule} from '@angular/http';
+import {Routes, RouterModule} from '@angular/router';
 
 import {MdToolbarModule} from '@angular/material';
 import {MaterialModule, MdNativeDateModule} from '@angular/material';
 import {PopoverModule} from "ng2-popover";
 
-import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { MainNavigationComponent } from './main-navigation/main-navigation.component';
-import { DesktopNavComponent } from './desktop-nav/desktop-nav.component';
+import {AppComponent} from './app.component';
+import {HeaderComponent} from './header/header.component';
+import {MainNavigationComponent} from './main-navigation/main-navigation.component';
+import {DesktopNavComponent} from './desktop-nav/desktop-nav.component';
+import {LoginComponent} from './user/login/login.component';
+import {RegisterComponent} from './user/register/register.component';
 
-import { LoginComponent } from './user/login/login.component';
-import { RegisterComponent } from './user/register/register.component';
+import {UserService} from './user/user.service';
 
 const appRoutes : Routes = [
-  {path: 'login',component: LoginComponent},
-  {path: 'register',component: RegisterComponent}
+  {
+    path: 'login',
+    component: LoginComponent
+  }, {
+    path: 'register',
+    component: RegisterComponent
+  }
 ]
-
-
 
 @NgModule({
   declarations: [
@@ -33,7 +36,7 @@ const appRoutes : Routes = [
     MainNavigationComponent,
     DesktopNavComponent,
     LoginComponent,
-    RegisterComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -44,12 +47,9 @@ const appRoutes : Routes = [
     MaterialModule,
     MdNativeDateModule,
     PopoverModule,
-    RouterModule.forRoot(
-      appRoutes,
-      { enableTracing: true } 
-    )
+    RouterModule.forRoot(appRoutes)
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

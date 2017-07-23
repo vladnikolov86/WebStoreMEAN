@@ -12,6 +12,19 @@
       <input mdInput placeholder="Фамилия" formControlName="lastName" type="text">
     </md-input-container>
   </div>
+  <md-input-container class="input-register margin-right-2">
+    <input mdInput placeholder="Потребителско име" minlength="3" formControlName="username" type="text">
+  </md-input-container>
+
+  <div class="form-group">
+    <md-input-container class="input-register margin-right-2">
+      <input mdInput placeholder="Парола" formControlName="password" type="password">
+    </md-input-container>
+
+    <md-input-container class="input-register">
+      <input mdInput placeholder="Потвърди парола" formControlName="confirmPassword" type="password">
+    </md-input-container>
+  </div>
 
   <div class="form-group">
     <md-input-container class="input-register margin-right-2">
@@ -43,8 +56,14 @@
       </textarea>
   </div>
 
-  <div class="text-center">
+  <div class="text-center form-group">
+    <md-checkbox color="primary" formControlName="disclaimer">Съгласен съм с общите условия</md-checkbox>
+  </div>
+
+  <div class="text-center form-group">
+
     <button class="margin-right-2" md-raised-button type="submit">Регистриране</button>
     <button type="reset" md-raised-button>Изчисти полета</button>
   </div>
+
 </form>
