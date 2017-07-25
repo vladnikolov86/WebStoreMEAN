@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators, AbstractControl } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { User } from '../../user/user.model';
 import { UserService } from '../user.service';
@@ -13,12 +14,10 @@ export class RegisterComponent implements OnInit {
   registrationForm: FormGroup;
   loading: boolean = false;
 
-  constructor(private fb: FormBuilder, private userService: UserService, private toastr: ToastrService) {
+  constructor(private fb: FormBuilder, private userService: UserService,private router:Router, private toastr: ToastrService) {
   }
 
   ngOnInit() {
-    this.toastr.success('proba');
-
     this.registrationForm = this
       .fb
       .group({
@@ -77,8 +76,8 @@ export class RegisterComponent implements OnInit {
       .userService
       .create(user)
       .subscribe(data => {
-        console.log('registered');
-        console.log(data)
+        this.toastr.success(CONSTANTS.NOTIFICATIONS.registrationSuccess);
+        this.router.navigate(['login']);
       }, error => {
         console.log(error)
         this.loading = false;
