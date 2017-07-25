@@ -1,20 +1,24 @@
-import {Component, OnInit} from '@angular/core';
-import {FormGroup, FormBuilder, FormControl, Validators, AbstractControl} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, FormControl, Validators, AbstractControl } from '@angular/forms';
 
-import {User} from '../../user/user.model';
-import {UserService} from '../user.service';
-import {Validation} from '../../shared/validators';
+import { User } from '../../user/user.model';
+import { UserService } from '../user.service';
+import { Validation } from '../../shared/validators';
 import * as CONSTANTS from '../../shared/global';
+import { ToastrService } from '../../shared/toastr.service';
 
-@Component({selector: 'app-register', templateUrl: './register.component.html', styleUrls: ['./register.component.css']})
+@Component({ selector: 'app-register', templateUrl: './register.component.html', styleUrls: ['./register.component.css'] })
 export class RegisterComponent implements OnInit {
 
-  registrationForm : FormGroup;
-  loading : boolean = false;
+  registrationForm: FormGroup;
+  loading: boolean = false;
 
-  constructor(private fb : FormBuilder, private userService : UserService) {}
+  constructor(private fb: FormBuilder, private userService: UserService, private toastr: ToastrService) {
+  }
 
   ngOnInit() {
+    this.toastr.success('proba');
+
     this.registrationForm = this
       .fb
       .group({
@@ -60,14 +64,14 @@ export class RegisterComponent implements OnInit {
         officeName: new FormControl(),
         corporatePhone: new FormControl(),
         invoiceDetails: new FormControl()
-      }, {validator: Validation.MatchPassword})
+      }, { validator: Validation.MatchPassword })
   }
 
   registerUser = function () {
     if (!this.registrationForm.valid) {
       return;
     }
-    
+
     let user = new User(this.registrationForm.value);
     this
       .userService

@@ -18,6 +18,7 @@ import {LoginComponent} from './user/login/login.component';
 import {RegisterComponent} from './user/register/register.component';
 
 import {UserService} from './user/user.service';
+import {ToastrService} from './shared/toastr.service';
 
 const appRoutes : Routes = [
   {
@@ -49,7 +50,7 @@ const appRoutes : Routes = [
     PopoverModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [UserService],
+  providers: [UserService,ToastrService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
