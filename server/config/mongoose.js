@@ -6,7 +6,7 @@ var express = require('express');
 var app = express();
 
 module.exports = function (constants, env) {
-  mongoose.connect(constants[env].connectionString);
+  mongoose.connect(constants[env].connectionString, { useMongoClient: true });
     mongoose.Promise = global.Promise;
     var db = mongoose.connection;
 
