@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormControl } from '@angular/forms';
+import * as CONSTANTS from '../../shared/global';
+import {ToastrService} from '../../shared/toastr.service';
+import {UserService} from '../user.service';
+
 
 import { UserService } from '../user.service';
 import { Observable } from 'rxjs/Observable';

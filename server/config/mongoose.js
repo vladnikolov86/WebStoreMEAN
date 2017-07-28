@@ -6,11 +6,7 @@ var express = require('express');
 var app = express();
 
 module.exports = function (constants, env) {
-    // Start mongodb daemon var commandToExexute =
-    // constants.development.herokuDeploy; exec(commandToExexute, function (error,
-    // stdout, stderr) {     console.log(error); }); Connect to db
-    // mongoose.connect(constants[env].connectionString);
-    mongoose.connect('mongodb://vvn050:temppass1@ds127321.mlab.com:27321/heroku_gj7csjsn')
+  mongoose.connect(constants[env].connectionString, { useMongoClient: true });
     mongoose.Promise = global.Promise;
     var db = mongoose.connection;
 
