@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import { UserService } from '../user/user.service';
+import { LoggedUser } from '../user/loggedUser.model';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  loggedUser: LoggedUser
+
+  constructor(private userService: UserService) {
+
+    
+  }
 
   ngOnInit() {
+    this.userService.userChanged.subscribe(user => {
+      this.loggedUser = user;
+      console.log(user);
+     });
   }
 
 }

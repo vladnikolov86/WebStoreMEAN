@@ -1,22 +1,44 @@
-import {Injectable} from '@angular/core';
-import {Http, Headers, RequestOptions, Response} from '@angular/http';
-import {Observable} from 'rxjs/Observable';
-
-import {User} from '../user/user.model';
+import { Injectable } from '@angular/core';
+import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { Subject } from 'rxjs/Subject';
+import { User } from '../user/user.model';
 
 import * as CONSTANTS from '../shared/global';
+
+import { LoggedUser } from '../user/loggedUser.model';
+
 
 @Injectable()
 
 export class UserService {
-    usersEndpoint : string = CONSTANTS.BASE_URL + CONSTANTS.USER_ENDPOINT;
-    constructor(private http : Http) {}
+    usersEndpoint: string = CONSTANTS.BASE_URL + CONSTANTS.USER_ENDPOINT;
+    loginEndPoint: string = CONSTANTS.BASE_URL + '/token'
 
-    create(user : User) {
+    currentlyLoggedUser: LoggedUser;
+    public userChangedSource = new Subject<LoggedUser>();
+    userChanged = this.userChangedSource.asObservable();
+
+
+
+
+    constructor(private http: Http) { }
+
+    login(username: string, password: string) {
+        let user = {
+            username: username,
+            password: password
+        }
+        return this
+            .http
+            .post(this.loginEndPoint, user)
+            .map((response: Response) => response.json());
+    }
+
+    create(user: User) {
         return this
             .http
             .post(this.usersEndpoint, user)
-            .map((response : Response) => response.json());
+            .map((response: Response) => response.json());
     }
 
 }
