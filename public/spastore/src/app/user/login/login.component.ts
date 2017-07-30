@@ -61,6 +61,12 @@ export class LoginComponent implements OnInit {
           this
             .commonService
             .setInLocalStorage('currentUser', loggedUser);
+        } else {
+          this.authService.storageInUse = 'sessionStorage';
+
+          this
+            .commonService
+            .setInSessionStorage('currentUser', loggedUser);
         }
 
       }, error => {

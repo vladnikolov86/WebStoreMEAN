@@ -27,10 +27,18 @@ export class AuthenticationService {
         this.username = 'Гост';
         this.role = '';
         this.isLogged = false;
-        if (this.storageInUse == 'localStorage') {
+        let user = this
+            .commonService
+            .getFromLocalStorage('currentUser');
+        if (user) {
             this
                 .commonService
                 .removeFromLocalStorage('currentUser');
+        }
+        {
+            this
+                .commonService
+                .removeFromSessionStorage('currentUser');
         }
 
     }
