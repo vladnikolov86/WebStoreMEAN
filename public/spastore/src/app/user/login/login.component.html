@@ -1,16 +1,20 @@
 <div class="container center-text">
-  <form [formGroup]="loginForm"  (ngSubmit)="loginUser()">
+  <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
     <div>
       <md-input-container>
-        <input mdInput placeholder="Username" minlength="3"  formControlName="username" type="text">
+        <input mdInput placeholder="Username" minlength="3" formControlName="username" type="text">
       </md-input-container>
     </div>
     <div>
       <md-input-container>
-        <input mdInput placeholder="Password"   formControlName="password" type="password" >
+        <input mdInput placeholder="Password" formControlName="password" type="password">
       </md-input-container>
     </div>
     <div>
+      <md-checkbox color="primary" formControlName="rememberMe">Запомни ме!</md-checkbox>
+    </div>
+    <div>
+
       <button md-raised-button>Login</button>
     </div>
   </form>

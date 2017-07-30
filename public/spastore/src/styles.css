@@ -33,6 +33,9 @@ body{
 .center-text{
     text-align:center;
 }
+.ng2-dropdown-button{
+     background-color: #FBF5F4!important;
+}
 
 
 

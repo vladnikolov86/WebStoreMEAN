@@ -23,9 +23,9 @@ export class UserService {
 
     constructor(private http: Http) { }
 
-    login(username: string, password: string) {
+    login(loginUsername: string, password: string) {
         let user = {
-            username: username,
+            username: loginUsername,
             password: password
         }
         return this

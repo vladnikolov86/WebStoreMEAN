@@ -1,7 +1,36 @@
 <div class="header-wrapper row">
   <div class="col-xs-6">
     <app-main-navigation></app-main-navigation>
-    <button md-button class="header-color" [routerLink]="['/login']">Логин</button>
+    <button md-button class="header-color" [routerLink]="['/login']" *ngIf="!loggedUser">Логин</button>
+
+    <ng2-dropdown *ngIf="loggedUser" class="inline-block dropdown-background-color">
+      <ng2-dropdown-button>
+        {{loggedUser.username}}
+      </ng2-dropdown-button>
+      <ng2-dropdown-menu>
+        <ng2-menu-item>
+          Начало
+        </ng2-menu-item>
+
+        <ng2-menu-item>
+          Виж профил
+        </ng2-menu-item>
+
+        <ng2-menu-item (click)="logout()">
+          Logout
+        </ng2-menu-item>
+        <div class='ng2-menu-divider'></div>
+      </ng2-dropdown-menu>
+    </ng2-dropdown>
+
+
+
+
+
+
+
+
+
     <button md-button class="header-color" [routerLink]="['/register']">Регистрация</button>
   </div>
 
@@ -14,8 +43,8 @@
 </div>
 
 <div class="logo-container rowv">
-Спа Трейд ООД
-<div class="pull-right">
-      <img class="logo" src="assets/logos/anesi.jpg">
-</div>
+  Спа Трейд ООД
+  <div class="pull-right">
+    <img class="logo" src="assets/logos/anesi.jpg">
+  </div>
 </div>

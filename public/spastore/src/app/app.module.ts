@@ -8,6 +8,7 @@ import {Routes, RouterModule} from '@angular/router';
 
 import {MdToolbarModule} from '@angular/material';
 import {MaterialModule, MdNativeDateModule} from '@angular/material';
+import { Ng2DropdownModule } from 'ng2-material-dropdown';
 import {PopoverModule} from "ng2-popover";
 
 import {AppComponent} from './app.component';
@@ -18,12 +19,17 @@ import {LoginComponent} from './user/login/login.component';
 import {RegisterComponent} from './user/register/register.component';
 
 import {UserService} from './user/user.service';
+import {AuthenticationService} from './user/auth.service';
+import {CanActivateLogin} from './user/login.guard';
+import {CommonService} from './shared/common.service';
+
 import {ToastrService} from './shared/toastr.service';
 
 const appRoutes : Routes = [
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
+    canActivate: [CanActivateLogin]
   }, {
     path: 'register',
     component: RegisterComponent
@@ -48,9 +54,10 @@ const appRoutes : Routes = [
     MaterialModule,
     MdNativeDateModule,
     PopoverModule,
+    Ng2DropdownModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [UserService,ToastrService],
+  providers: [UserService,ToastrService,AuthenticationService,CommonService,CanActivateLogin],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

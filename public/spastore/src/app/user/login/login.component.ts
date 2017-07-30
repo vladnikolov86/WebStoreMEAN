@@ -1,20 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormControl } from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, Validators, FormControl} from '@angular/forms';
 import * as CONSTANTS from '../../shared/global';
 import {ToastrService} from '../../shared/toastr.service';
+import {CommonService} from '../../shared/common.service';
+
 import {UserService} from '../user.service';
+import {AuthenticationService} from '../auth.service';
+import {Observable} from 'rxjs/Observable';
 
+import {LoggedUser} from '../../user/loggedUser.model';
 
-import { UserService } from '../user.service';
-import { Observable } from 'rxjs/Observable';
-
-import { LoggedUser } from '../../user/loggedUser.model';
-
-@Component({ selector: 'app-login', templateUrl: './login.component.html', styleUrls: ['./login.component.css'] })
+@Component({selector: 'app-login', templateUrl: './login.component.html', styleUrls: ['./login.component.css']})
 export class LoginComponent implements OnInit {
 
+  public htmlText = {
+    login: 'Логин'
+  }
 
-  constructor(public fb: FormBuilder, private userService: UserService) { }
+  constructor(public fb : FormBuilder, private userService : UserService, private authService : AuthenticationService, private commonService : CommonService) {}
 
   public loginForm = this
     .fb
@@ -22,25 +25,44 @@ export class LoginComponent implements OnInit {
       username: [
         "", Validators.required
       ],
-      password: ["", Validators.required]
+      password: [
+        "", Validators.required
+      ],
+      rememberMe: []
     });
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   loginUser = function () {
-    console.log(this.loginForm.value)  
+    let username = this.loginForm.value.username;
+    let rememberMeChecked = this.loginForm.value.rememberMe;
     this
       .userService
-      .login('vvn050','parola')
+      .login(this.loginForm.value.username, this.loginForm.value.password)
       .subscribe(data => {
         let loggedUser = {
-          username: 'vvn050',
-          role:data.role
+          username: username,
+          role: data.role
         }
         this.currentlyLoggedUser = new LoggedUser(loggedUser);
-        this.userService.userChangedSource.next(this.currentlyLoggedUser);
+        this
+          .userService
+          .userChangedSource
+          .next(this.currentlyLoggedUser);
+        this.loading = false;
 
-        console.log(data)
+        this.authService.username = username;
+        this.authService.role = data.role;
+        this.authService.isLogged = true;
+
+        if (rememberMeChecked) {
+          this.authService.storageInUse = 'localStorage';
+
+          this
+            .commonService
+            .setInLocalStorage('currentUser', loggedUser);
+        }
+
       }, error => {
         console.log(error)
         this.loading = false;

@@ -86,7 +86,7 @@ module.exports = function (app) {
                     res.json({
                         success: true,
                         token: token,
-                        role:user.role
+                        role:user.role                  
                     });
                 }
             })
