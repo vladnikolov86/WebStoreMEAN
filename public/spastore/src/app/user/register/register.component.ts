@@ -14,7 +14,7 @@ export class RegisterComponent implements OnInit {
   registrationForm: FormGroup;
   loading: boolean = false;
 
-  constructor(private fb: FormBuilder, private userService: UserService,private router:Router, private toastr: ToastrService) {
+  constructor(private fb: FormBuilder, private userService: UserService, private router: Router, private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -68,6 +68,7 @@ export class RegisterComponent implements OnInit {
 
   registerUser = function () {
     if (!this.registrationForm.valid) {
+      this.toastr.error(CONSTANTS.NOTIFICATIONS.invalidRegistrationForm);
       return;
     }
 

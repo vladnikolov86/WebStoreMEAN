@@ -4,20 +4,18 @@ import * as CONSTANTS from '../../shared/global';
 import {ToastrService} from '../../shared/toastr.service';
 import {CommonService} from '../../shared/common.service';
 
+
 import {UserService} from '../user.service';
 import {AuthenticationService} from '../auth.service';
 import {Observable} from 'rxjs/Observable';
+
 
 import {LoggedUser} from '../../user/loggedUser.model';
 
 @Component({selector: 'app-login', templateUrl: './login.component.html', styleUrls: ['./login.component.css']})
 export class LoginComponent implements OnInit {
 
-  public htmlText = {
-    login: 'Логин'
-  }
-
-  constructor(public fb : FormBuilder, private userService : UserService, private authService : AuthenticationService, private commonService : CommonService) {}
+  constructor(public fb : FormBuilder, private userService : UserService, private authService : AuthenticationService, private commonService : CommonService, private toastr: ToastrService) {}
 
   public loginForm = this
     .fb
@@ -71,6 +69,7 @@ export class LoginComponent implements OnInit {
 
       }, error => {
         console.log(error)
+        this.toastr.error(error._body);
         this.loading = false;
       });
   }
