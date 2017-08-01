@@ -1,40 +1,30 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
-import {NgModule} from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
-import {Routes, RouterModule} from '@angular/router';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
-import {MdToolbarModule} from '@angular/material';
-import {MaterialModule, MdNativeDateModule} from '@angular/material';
+import { MdToolbarModule } from '@angular/material';
+import { MaterialModule, MdNativeDateModule } from '@angular/material';
 import { Ng2DropdownModule } from 'ng2-material-dropdown';
-import {PopoverModule} from "ng2-popover";
+import { PopoverModule } from "ng2-popover";
 
-import {AppComponent} from './app.component';
-import {HeaderComponent} from './header/header.component';
-import {MainNavigationComponent} from './main-navigation/main-navigation.component';
-import {DesktopNavComponent} from './desktop-nav/desktop-nav.component';
-import {LoginComponent} from './user/login/login.component';
-import {RegisterComponent} from './user/register/register.component';
+import { AppRoutingModule } from './app.routing.module';
 
-import {UserService} from './user/user.service';
-import {AuthenticationService} from './user/auth.service';
-import {CanActivateLogin} from './user/login.guard';
-import {CommonService} from './shared/common.service';
+import { AppComponent } from './app.component';
+import { HeaderComponent } from './header/header.component';
+import { MainNavigationComponent } from './main-navigation/main-navigation.component';
+import { DesktopNavComponent } from './desktop-nav/desktop-nav.component';
+import { LoginComponent } from './user/login/login.component';
+import { RegisterComponent } from './user/register/register.component';
 
-import {ToastrService} from './shared/toastr.service';
+import { UserService } from './user/user.service';
+import { AuthenticationService } from './user/auth.service';
+import { CanActivateLogin } from './user/login.guard';
+import { CommonService } from './shared/common.service';
+import { ToastrService } from './shared/toastr.service';
 
-const appRoutes : Routes = [
-  {
-    path: 'login',
-    component: LoginComponent,
-    canActivate: [CanActivateLogin]
-  }, {
-    path: 'register',
-    component: RegisterComponent
-  }
-]
 
 @NgModule({
   declarations: [
@@ -46,6 +36,7 @@ const appRoutes : Routes = [
     RegisterComponent
   ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
@@ -54,10 +45,9 @@ const appRoutes : Routes = [
     MaterialModule,
     MdNativeDateModule,
     PopoverModule,
-    Ng2DropdownModule,
-    RouterModule.forRoot(appRoutes)
+    Ng2DropdownModule
   ],
-  providers: [UserService,ToastrService,AuthenticationService,CommonService,CanActivateLogin],
+  providers: [UserService, ToastrService, AuthenticationService, CommonService, CanActivateLogin],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
