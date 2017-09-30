@@ -17,11 +17,11 @@ import {AppComponent} from './app.component';
 import {LoginComponent} from './user/login/login.component';
 import {RegisterComponent} from './user/register/register.component';
 
-import {UserService} from './user/user.service';
-import {AuthenticationService} from './user/auth.service';
-import {CanActivateLogin} from './user/login.guard';
-import {CommonService} from './shared/common.service';
-import {ToastrService} from './shared/toastr.service';
+import {UserService} from './user/services/user.service';
+import {AuthenticationService} from './user/services/auth.service';
+import {CanActivateLogin} from './user/services/login.guard';
+import {CommonService} from './shared/services/common.service';
+import {ToastrService} from './shared/services/toastr.service';
 
 @NgModule({
   declarations: [

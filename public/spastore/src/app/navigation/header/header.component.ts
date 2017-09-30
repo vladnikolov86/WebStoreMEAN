@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {NgIf} from '@angular/common';
-import {UserService} from '../../user/user.service';
-import {AuthenticationService} from '../../user/auth.service';
-import {LoggedUser} from '../../user/loggedUser.model';
+import {UserService} from '../../user/services/user.service';
+import {AuthenticationService} from '../../user/services/auth.service';
+import {LoggedUser} from '../../user/models/loggedUser.model';
 
 
 @Component({selector: 'app-header', templateUrl: './header.component.html', styleUrls: ['./header.component.css']})

@@ -1,16 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators, FormControl} from '@angular/forms';
-import * as CONSTANTS from '../../shared/global';
-import {ToastrService} from '../../shared/toastr.service';
-import {CommonService} from '../../shared/common.service';
+import * as CONSTANTS from '../../shared/constants/global';
+import {ToastrService} from '../../shared/services/toastr.service';
+import {CommonService} from '../../shared/services/common.service';
 
 
-import {UserService} from '../user.service';
-import {AuthenticationService} from '../auth.service';
+import {UserService} from '../services/user.service';
+import {AuthenticationService} from '../services/auth.service';
 import {Observable} from 'rxjs/Observable';
 
 
-import {LoggedUser} from '../../user/loggedUser.model';
+import {LoggedUser} from '../../user/models/loggedUser.model';
 
 @Component({selector: 'app-login', templateUrl: './login.component.html', styleUrls: ['./login.component.css']})
 export class LoginComponent implements OnInit {

@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { User } from '../../user/user.model';
-import { UserService } from '../user.service';
-import { Validation } from '../../shared/validators';
-import * as CONSTANTS from '../../shared/global';
-import { ToastrService } from '../../shared/toastr.service';
+import { User } from '../../user/models/user.model';
+import { UserService } from '../services/user.service';
+import { Validation } from '../../shared/services/validators';
+import * as CONSTANTS from '../../shared/constants/global';
+import { ToastrService } from '../../shared/services/toastr.service';
 
 @Component({ selector: 'app-register', templateUrl: './register.component.html', styleUrls: ['./register.component.css'] })
 export class RegisterComponent implements OnInit {

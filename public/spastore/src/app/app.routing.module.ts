@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { CanActivateLogin } from './user/login.guard';
+import { CanActivateLogin } from './user/services/login.guard';
 
 
 import { LoginComponent } from './user/login/login.component';

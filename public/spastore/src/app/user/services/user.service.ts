@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Subject } from 'rxjs/Subject';
-import { User } from '../user/user.model';
+import { User } from '../../user/models/user.model';
 
-import * as CONSTANTS from '../shared/global';
+import * as CONSTANTS from '../../shared/constants/global';
 
-import { LoggedUser } from '../user/loggedUser.model';
+import { LoggedUser } from '../../user/models/loggedUser.model';
 
 
 @Injectable()
