@@ -9,6 +9,7 @@ if (currentDir.indexOf("\\common") > 0) {
 }
 var currentDirNormalized = path.join(dirOfProject, '\data');
 
+
 var config = {
     development: {
         connectionString: 'mongodb://localhost:8086/spaStore',
@@ -22,7 +23,8 @@ var config = {
     },
     common: {
         host: 'localhost',
-        port: 8080
+        port: 8080,
+        baseDir: dirOfProject
     }
 };
 

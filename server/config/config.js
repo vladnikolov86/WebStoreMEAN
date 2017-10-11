@@ -4,21 +4,25 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
     path = require('path'),
-    fileUpload = require('express-fileupload');
+    fileUpload = require('express-fileupload'),
+    loggerService = require('../services/common/logger.service');
+const constants = require('../../common/constants');
 
 module.exports = function (app) {
+
+    const basePath = constants.common.baseDir;
+    var loggerConfig = {
+        storagePath: basePath + '/data/' + 'logs'
+    }
 
     //Set path for all public resources
     app.use(express.static(__dirname + '/../../public/dist'));
 
+    app.use(loggerService(loggerConfig));
+
     app.use(bodyParser.urlencoded({extended: false}));
     app.use(bodyParser.json());
     app.use(fileUpload());
-
-    app.get('/api/about', function (req, res) {
-        // var requestHost = req.get('host');
-        res.send({proba: 'test'});
-    });
 
     app
         .route('/about')
@@ -33,7 +37,8 @@ module.exports = function (app) {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
         res.header("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type,Auth" +
-                "orization, Access-Control-Request-Method, Access-Control-Request-Headers,pagenumber,productsbypage")
+                "orization, Access-Control-Request-Method, Access-Control-Request-Headers,pagenum" +
+                "ber,productsbypage")
         next();
 
     });
