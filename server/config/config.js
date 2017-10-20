@@ -12,7 +12,8 @@ module.exports = function (app) {
 
     const basePath = constants.common.baseDir;
     var loggerConfig = {
-        storagePath: basePath + '/data/' + 'logs'
+        storagePath: basePath + '/data/' + 'logs',
+        logType: 'day'
     }
 
     //Set path for all public resources
