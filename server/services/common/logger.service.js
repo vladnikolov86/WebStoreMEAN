@@ -1,9 +1,14 @@
-var fs = require('fs');
+var fs = require('fs'),
+    path = require('path');
 
 const defaultOptions = {
     storagePath: __dirname + '/logs',
-    logType: 'day'
+    logType: 'day',
+    logNameSeparator: '-'
 };
+
+var logDirectoryExists = false,
+    logFileName = '';
 
 function checkDirectory(directory, callback) {
     return new Promise((resolve, reject) => {
@@ -22,18 +27,29 @@ function checkDirectory(directory, callback) {
 
 }
 
-function checkIfFileExists(config) {
-   //get the file name in this case date  var fileName = 
+function getCurrentLogFileName(config) {
     switch (config.logType) {
         case 'day':
-        
-        
-        break;
-        default: console.log('Not supported, yet!');
-            break;
+            var currentDate = new Date();
+            let date = currentDate
+                    .getUTCDate()
+                    .toString(),
+                month = currentDate
+                    .getUTCMonth()
+                    .toString(),
+                year = currentDate
+                    .getUTCFullYear()
+                    .toString();
+
+            var logNameSeparator = defaultOptions.logNameSeparator;
+            return date + logNameSeparator + month + logNameSeparator + year + '.txt';
+        default:
+            console.log('Not supported, yet!');
+            return new Date().toString();
+
     }
 
-    fs.existsSync(dirPath)
+    // fs.existsSync(dirPath)
 }
 
 module.exports = function (options) {
@@ -41,19 +57,41 @@ module.exports = function (options) {
         options = JSON.parse(JSON.stringify(defaultOptions));
     }
 
-    return function (req, res, next) {
-        req
-            .on("end", async function () {
-                console.log(options)
-                await checkDirectory(options.storagePath, function (result) {
-                    console.log('there')
-                }, function () {
-                    console.log('err')
-                });
-                console.log('here')
-                //console.log(res)
-                next()
+    return async function (req, res, next) {
+        //The check should be performed only once, on app initialization
+        if (!logDirectoryExists) {
+            await checkDirectory(options.storagePath, function (result) {
+                console.log('there')
+                logDirectoryExists = true;
+            }, function () {
+                logDirectoryExists = false;
+                console.log('err')
             });
-        next()
-    }
+        }
+
+        //Check for new day to start a new File
+        var currentLogName = getCurrentLogFileName(options);
+        if (logFileName.length == 0 || currentLogName !== logFileName) {
+            logFileName = currentLogName;
+        }
+
+        var logStream = fs.createWriteStream(path.join(options.storagePath + '/') + logFileName, {
+            'flags': 'a',
+            'encoding': 'UTF8'
+        });
+        console.log(path.join(options.storagePath) + logFileName)
+        console.log(req.message)
+        logStream.write("Request headers:" +JSON.stringify(req.headers));
+          logStream.write('\r\n');
+       //  logStream.write("Response details:");
+        logStream.write('\r\n');
+        logStream.end(function () {
+            console.log('done');
+        });
+
+        req.on("end", async function () {
+            console.log('here')
+            next()
+        });
+        next()}
 }
